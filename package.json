@@ -6,5 +6,9 @@
   "scripts": {
     "dev": "cd client && npm run dev",
     "install": "cd client && npm install && cd ../server && npm install"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "prettier-plugin-tailwindcss": "^0.5.13"
   }
 }
