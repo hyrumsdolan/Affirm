@@ -1,0 +1,9 @@
+{
+  "name": "start-today-server",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "cd client && npm run dev"
+  }
+}
