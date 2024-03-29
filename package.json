@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cd client && npm run dev",
-    "install": "cd client && npm install && cd ../server && npm install"
+    "install": "npm i && cd client && npm i && cd ../server && npm i"
   },
   "devDependencies": {
     "prettier": "^3.2.5",
