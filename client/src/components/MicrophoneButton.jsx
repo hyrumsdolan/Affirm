@@ -1,14 +1,22 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
-import { FaMicrophoneLines } from 'react-icons/fa6';
+import { HiOutlineMicrophone, HiMiniMicrophone } from "react-icons/hi2";
 
 function MicrophoneButton({ onTranscript }) {
   const {
     transcript,
     listening,
-    resetTranscript,
     browserSupportsSpeechRecognition
   } = useSpeechRecognition();
+
+  const [latestTranscript, setLatestTranscript] = useState('');
+
+  useEffect(() => {
+    if (transcript && transcript !== latestTranscript) {
+      setLatestTranscript(transcript);
+      onTranscript(transcript);
+    }
+  }, [transcript, latestTranscript, onTranscript]);
 
   if (!browserSupportsSpeechRecognition) {
     return <span>Browser doesn't support speech recognition.</span>;
@@ -22,20 +30,19 @@ function MicrophoneButton({ onTranscript }) {
     }
   };
 
-  React.useEffect(() => {
-    onTranscript(transcript);
-  }, [onTranscript, transcript]);
-
   return (
-    <div>
-      <button
-        className={`microphone-button ${listening ? 'listening' : ''}`}
-        onClick={toggleListening}
-      >
-        <FaMicrophoneLines />
-      </button>
-      {listening && <button onClick={resetTranscript}>Reset</button>}
-    </div>
+    <button
+      className={`microphone-button ${listening ? 'listening' : ''}`}
+      onClick={toggleListening}
+    >
+      <span className="icon-wrapper">
+        {listening ? (
+          <HiMiniMicrophone className="animate-pulse" color="#6E95D3" />
+        ) : (
+          <HiOutlineMicrophone color="#6E95D3" />
+        )}
+      </span>
+    </button>
   );
 }
 
