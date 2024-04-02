@@ -1,8 +1,66 @@
+
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+h1 {
+  font-family: "Source Sans 3", sans-serif;
+  font-weight: 100;
+  font-size: 4em;
+}
+
+p {
+  font-family: "Source Sans 3", sans-serif;
+  font-weight: 300;
+  font-size: 1.5em;
+}
+
+textarea {
+  font-family: "Source Sans 3", sans-serif;
+  font-weight: 300;
+  font-size: 1em;
+  width: 100%;
+  padding: 1em;
+  margin: 1em 0;
+  border: 1px solid #ccc;
+  border-radius: 20 20 20 20;
+  background-color: #E4E4E4;
+}
+
+.icon-wrapper {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid #D5D5D5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.speaker-button {
+  color: #6E95D3;
+  font-size: 1em;
+}
+
+.icon-wrapper.speaker-button {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.icon-wrapper.speaker-button button {
+  padding: 0;
+  margin: 0;
+}
+
+.microphone-button {
+  color: #6E95D3;
+  font-size: 1.5em;
 }
 
 .logo {
