@@ -1,10 +1,9 @@
-const { User } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { User } = require("../models");
+const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    me: async (parent, args, context) => {
-
+    me: async (_parent, _args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
@@ -12,7 +11,7 @@ const resolvers = {
     },
   },
   Mutation: {
-    loginUser: async (_, { email, password }) => {
+    loginUser: async (_parent, { email, password }) => {
       const user = await User.findOne({ email });
 
       if (!user) {
@@ -29,13 +28,14 @@ const resolvers = {
 
       return { token, user };
     },
-    addUser: async (parent, { firstName, lastName, email, password }) => {
+    addUser: async (_parent, { firstName, lastName, email, password }) => {
       const user = await User.create({ firstName, lastName, email, password });
       const token = signToken(user);
+      console.log(token);
 
       return { token, user };
     },
-  }
+  },
 };
 
 module.exports = resolvers;

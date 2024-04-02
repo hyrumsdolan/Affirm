@@ -1,20 +1,22 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+// import './App.css';
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  createHttpLink,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-import AuthService from './utils/auth';
+  createHttpLink
+} from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
+import AuthService from "./utils/auth";
+import "./css/tailwind.css";
+import { addDarkMode } from "./helpers/toggleDarkMode";
+import SettingsDropdown from "./components/settingsDropdown";
 
-import { Outlet } from 'react-router-dom';
-
+import { Outlet } from "react-router-dom";
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: "/graphql"
 });
 
 const authLink = setContext((_, { headers }) => {
@@ -24,20 +26,23 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
+      authorization: token ? `Bearer ${token}` : ""
+    }
   };
 });
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   // uri: '/graphql',
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache()
 });
+
+addDarkMode();
 
 function App() {
   return (
     <ApolloProvider client={client}>
+      <SettingsDropdown />
       <Outlet />
     </ApolloProvider>
   );
