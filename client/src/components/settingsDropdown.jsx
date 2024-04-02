@@ -5,19 +5,35 @@ import { toggleDarkMode } from "../helpers/toggleDarkMode";
 const SettingsDropdown = () => {
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
 
-  //   const closeMenuIfOpen = e => {
-  //     if (settingsMenuOpen && e.target.id !== "settingsMenu") {
-  //       const settingsIcon = document.getElementById("settingsIcon");
-  //       settingsIcon.classList.add("animate-rotateFullBackwards");
-  //       settingsIcon.classList.remove("animate-rotateFullForwards");
-  //       setSettingsMenuOpen(false);
-  //     }
-  //   };
+  const closeMenuIfOpen = e => {
+    const settingsIcon = document.getElementById("settingsIcon");
+    const settingsMenu = document.getElementById("settingsMenu");
+    if (settingsMenu.children[0].contains(e.target)) return;
 
-  //   useEffect(() => {
-  //     document.removeEventListener("click", closeMenuIfOpen, true);
-  //     document.addEventListener("click", closeMenuIfOpen, true);
-  //   }, [settingsMenuOpen]);
+    if (
+      settingsMenuOpen &&
+      !settingsMenu.contains(e.target) &&
+      !settingsIcon.contains(e.target)
+    ) {
+      settingsIcon.classList.add("animate-rotateFullBackwards");
+      settingsIcon.classList.remove("animate-rotateFullForwards");
+      settingsMenu.classList.remove("duration-200");
+      settingsMenu.classList.add("duration-1000");
+      settingsMenu.classList.remove("w-32");
+      settingsMenu.classList.add("w-0");
+      setSettingsMenuOpen(false);
+
+      setTimeout(() => {
+        settingsMenu.classList.add("duration-200");
+        settingsMenu.classList.remove("duration-1000");
+      }, 1000);
+    }
+  };
+
+  useEffect(() => {
+    document.removeEventListener("click", closeMenuIfOpen, true);
+    document.addEventListener("click", closeMenuIfOpen, true);
+  }, [settingsMenuOpen]);
 
   return (
     <div className="absolute right-6 top-6 text-black outline-none transition-all duration-200 dark:text-white">
