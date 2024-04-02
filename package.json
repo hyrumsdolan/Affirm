@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "apollo-server-express": "^3.13.0",
-    "mongodb": "^6.5.0"
+    "mongodb": "^6.5.0",
+    "react-speech-recognition": "^3.10.0"
   }
 }
