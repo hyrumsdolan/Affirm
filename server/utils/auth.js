@@ -1,17 +1,10 @@
+const { AuthenticationError } = require('apollo-server-express');
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { GraphQLError } = require('graphql');
-
-// set token secret and expiration date
-const secret = 'mysecretsshhhhh';
+const secret = process.env.AUTH_SECRET;
 const expiration = '2h';
 
 module.exports = {
-  // function for our authenticated routes
-  AuthenticationError: new GraphQLError('Could not authenticate user.', {
-    extensions: {
-      code: 'UNAUTHENTICATED',
-    },
-  }),
   authMiddleware: function ({ req }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
 
@@ -28,13 +21,14 @@ module.exports = {
       req.user = data;
     } catch {
       console.log('Invalid token');
+      throw new AuthenticationError('Invalid token!');
     }
 
     return req;
   },
-  signToken: function ({ email, _id }) {
-    const payload = { email, _id };
 
+  signToken: function ({ email, name, _id }) {
+    const payload = { email, name, _id };
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
 };
