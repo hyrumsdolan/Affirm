@@ -1,7 +1,5 @@
 .DS_Store
 **/node_modules/
-server/.env
-.env
-
+# server/.env
 dist/
 build/

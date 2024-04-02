@@ -1,8 +1,8 @@
-const { AuthenticationError } = require('apollo-server-express');
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
+const { AuthenticationError } = require("apollo-server-express");
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const secret = process.env.AUTH_SECRET;
-const expiration = '2h';
+const expiration = "2h";
 
 module.exports = {
   authMiddleware: function ({ req }) {
@@ -20,8 +20,8 @@ module.exports = {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.user = data;
     } catch {
-      console.log('Invalid token');
-      throw new AuthenticationError('Invalid token!');
+      console.log("Invalid token");
+      throw new AuthenticationError("Invalid token!");
     }
 
     return req;

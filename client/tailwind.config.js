@@ -1,16 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src{/**/*,/*}.{js,ts,jsx,tsx}"],
+  content: ["./src/**/*.{js,jsx}"],
+  darkMode: "class",
   theme: {
     extend: {
-      animation: {
-        "spin-slow": "spin 10s linear infinite"
+      keyframes: {
+        rotateFullForwards: {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" }
+        },
+        rotateFullBackwards: {
+          "0%": { transform: "rotate(360deg)" },
+          "100%": { transform: "rotate(0deg)" }
+        }
       },
-      dropShadow: {
-        glow: [
-          "0 0px 20px rgba(255,255, 255, 0.35)",
-          "0 0px 65px rgba(255, 255,255, 0.2)"
-        ]
+      animation: {
+        rotateFullForwards: "rotateFullForwards 1s ease-in-out",
+        rotateFullBackwards: "rotateFullBackwards 1s ease-in-out"
       }
     }
   },
