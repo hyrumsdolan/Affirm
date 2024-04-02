@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import 'regenerator-runtime/runtime';
 
 import App from './App.jsx';
 
