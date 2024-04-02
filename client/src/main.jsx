@@ -6,6 +6,7 @@ import App from './App.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
+import TenYearDreamPage from './pages/TenYearDreamPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       }, {
         path: '/signup',
         element: <SignupPage />
+      },
+      {
+        path: '/ten-year-dream',
+        element: <TenYearDreamPage />
       }
     ]
   }
