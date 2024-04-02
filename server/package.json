@@ -1,16 +1,24 @@
 {
-  "name": "start-today-server",
+  "name": "server",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "node server.js"
+    "start": "node server.js",
+    "watch": "nodemon server.js"
   },
   "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.19.2"
+    "@apollo/server": "^4.7.1",
+    "apollo-server-express": "^3.13.0",
+    "bcrypt": "^5.0.0",
+    "express": "^4.17.1",
+    "graphql": "^16.6.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }
