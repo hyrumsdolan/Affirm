@@ -1,34 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import { FaMicrophoneLines } from 'react-icons/fa6';
 
-function MicrophoneButton() {
-  const [isListening, setIsListening] = useState(false);
+function MicrophoneButton({ onTranscript }) {
+  const {
+    transcript,
+    listening,
+    resetTranscript,
+    browserSupportsSpeechRecognition
+  } = useSpeechRecognition();
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
 
   const toggleListening = () => {
-    setIsListening(!isListening);
-    if (!isListening) {
-      startSpeechRecognition();
+    if (listening) {
+      SpeechRecognition.stopListening();
     } else {
-      stopSpeechRecognition();
+      SpeechRecognition.startListening({ continuous: true });
     }
   };
 
-  const startSpeechRecognition = () => {
-    // TODO: Implement speech recognition logic
-    console.log('Starting speech recognition...');
-  };
-
-  const stopSpeechRecognition = () => {
-    // TODO: Implement speech recognition logic
-    console.log('Stopping speech recognition...');
-  };
+  React.useEffect(() => {
+    onTranscript(transcript);
+  }, [onTranscript, transcript]);
 
   return (
-    <button
-      className={`microphone-button ${isListening ? 'listening' : ''}`}
-      onClick={toggleListening}
-    >
-      {isListening ? 'Stop' : 'Start'}
-    </button>
+    <div>
+      <button
+        className={`microphone-button ${listening ? 'listening' : ''}`}
+        onClick={toggleListening}
+      >
+        <FaMicrophoneLines />
+      </button>
+      {listening && <button onClick={resetTranscript}>Reset</button>}
+    </div>
   );
 }
 

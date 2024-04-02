@@ -1,12 +1,33 @@
-import TenYearDreamForm from '../components/TenYearDreamForm';
+import React, { useState } from 'react';
+import MicrophoneButton from '../components/MicrophoneButton';
 
-function DreamPage() {
+function DreamForm() {
+  const [dreamText, setDreamText] = useState('');
+
+  const handleChange = (event) => {
+    setDreamText(event.target.value);
+  };
+
+  const handleTranscript = (transcript) => {
+    setDreamText(prevText => prevText + ' ' + transcript);
+  };
+
+  const handleSave = () => {
+    // TODO: Save the dreamText to a backend API or local storage
+    console.log('Saving dream:', dreamText);
+  };
+
   return (
-    <div className="dream-page">
-      <h1>Ten Year Dream.</h1>
-      <TenYearDreamForm />
+    <div className="dream-form">
+      <textarea
+        value={dreamText}
+        onChange={handleChange}
+        placeholder="Type or speak your dream into the box below"
+      />
+      <MicrophoneButton onTranscript={handleTranscript} />
+      <button onClick={handleSave}>Save &amp; continue</button>
     </div>
   );
 }
 
-export default DreamPage;
+export default DreamForm;
