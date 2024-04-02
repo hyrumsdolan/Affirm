@@ -12,6 +12,10 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req }) => {
+    const token = req.headers.authorization || '';
+    return { token };
+  },
 });
 
 const startApolloServer = async () => {

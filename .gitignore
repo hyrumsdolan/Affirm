@@ -1,9 +1,7 @@
 .DS_Store
-<<<<<<< Updated upstream
-node_modules
-**/node_modules
-server/.env
-=======
 **/node_modules/
 server/.env
->>>>>>> Stashed changes
+.env
+
+dist/
+build/
