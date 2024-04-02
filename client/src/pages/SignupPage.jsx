@@ -13,8 +13,9 @@ const SignupForm = () => {
     password: "",
   });
 
-  const [showAlert, setShowAlert] = useState(false);
+  const [error, setError] = useState();
 
+  const loading = false;
   const [addUser] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
@@ -23,6 +24,7 @@ const SignupForm = () => {
   };
 
   const handleFormSubmit = async (event) => {
+    setError("");
     event.preventDefault();
 
     console.log(userFormData);
@@ -31,18 +33,22 @@ const SignupForm = () => {
       event.stopPropagation();
     } else {
       try {
-        const { data } = await addUser({
+        const { data, token } = await addUser({
           variables: { ...userFormData },
         });
 
-        console.log("look here FOR DATA");
-        console.log(data);
-        Auth.login(data.addUser.token);
-        window.location.assign("/home");
+        console.log(data, token);
+        Auth.login(token);
+
+        console.log("User successfully signed up!");
+        window.location.href = "/home";
       } catch (err) {
-        console.log("look here FOR ERROR");
-        console.error(err);
-        setShowAlert(true);
+        if (err.message.includes("dup key:")) {
+          const errorKey = err.message.split("dup key: { ")[1].split(":")[0];
+          setError(
+            `Error signing up! An account with this ${errorKey} already exists`
+          );
+        }
       }
     }
   };
@@ -59,10 +65,8 @@ const SignupForm = () => {
       ) : (
         <>
           <form onSubmit={handleFormSubmit}>
-            <div >
-              <label htmlFor="firstName" >
-                First Name:
-              </label>
+            <div>
+              <label htmlFor="firstName">First Name:</label>
               <input
                 type="text"
                 id="firstName"
@@ -72,10 +76,8 @@ const SignupForm = () => {
                 required
               />
             </div>
-            <div >
-              <label htmlFor="lastName" >
-                Last Name:
-              </label>
+            <div>
+              <label htmlFor="lastName">Last Name:</label>
               <input
                 type="text"
                 id="lastName"
@@ -85,10 +87,8 @@ const SignupForm = () => {
                 required
               />
             </div>
-            <div >
-              <label htmlFor="email" >
-                Email:
-              </label>
+            <div>
+              <label htmlFor="email">Email:</label>
               <input
                 type="email"
                 id="email"
@@ -98,10 +98,8 @@ const SignupForm = () => {
                 required
               />
             </div>
-            <div >
-              <label htmlFor="password" >
-                Password:
-              </label>
+            <div>
+              <label htmlFor="password">Password:</label>
               <input
                 type="password"
                 id="password"
@@ -111,14 +109,18 @@ const SignupForm = () => {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={loading}
+            >
               Sign Up
             </button>
           </form>
           <p>
             Already have an account? <a href="/">Login here</a>
           </p>
-          {showAlert && <div>Sign up failed</div>}
+          {error && <div>{error}</div>}
         </>
       )}
     </>

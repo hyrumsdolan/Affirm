@@ -2,7 +2,7 @@ import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'regenerator-runtime/runtime';
 
-import App from './App.jsx';
+import App from "./App.jsx";
 
 import LoginPage from './pages/LoginPage.jsx';
 import HomePage from './pages/HomePage.jsx';
@@ -11,18 +11,20 @@ import TenYearDreamPage from './pages/TenYearDreamPage.jsx';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
-    errorElement: <h1 className='display-2'>Wrong page!</h1>,
+    errorElement: <h1 className="display-2">Wrong page!</h1>,
     children: [
       {
         index: true,
         element: <LoginPage />
-      }, {
-        path: '/home',
+      },
+      {
+        path: "/home",
         element: <HomePage />
-      }, {
-        path: '/signup',
+      },
+      {
+        path: "/signup",
         element: <SignupPage />
       },
       {
@@ -33,8 +35,6 @@ const router = createBrowserRouter([
   }
 ]);
 
-const container = document.getElementById('root');
+const container = document.getElementById("root");
 const root = createRoot(container);
-root.render(
-  <RouterProvider router={router} />
-);
+root.render(<RouterProvider router={router} />);
