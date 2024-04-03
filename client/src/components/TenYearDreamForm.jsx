@@ -1,5 +1,6 @@
-import { useState } from "react";
-import MicrophoneButton from "./MicrophoneButton";
+import { useState } from 'react';
+import MicrophoneButton from './MicrophoneButton';
+import Button from './Button';
 
 function TenYearDreamForm() {
   const [dreamText, setDreamText] = useState("");
@@ -40,12 +41,7 @@ placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:
           <MicrophoneButton onTranscript={handleTranscript} />
         </div>
       </div>
-      <button
-        className="mt-4 inline-flex w-full justify-center rounded-md border px-4 py-2"
-        onClick={handleSave}
-      >
-        Save &amp; continue
-      </button>
+<Button onClick={handleSave}>save & continue</Button>
     </div>
   );
 }
