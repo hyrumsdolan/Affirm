@@ -16,8 +16,11 @@ const server = new ApolloServer({
 
 const startApolloServer = async () => {
   await server.start();
+
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
+
+  // Apply the authMiddleware to the GraphQL endpoint
   app.use(
     "/graphql",
     expressMiddleware(server, {
@@ -27,6 +30,7 @@ const startApolloServer = async () => {
 
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/dist")));
+
     app.get("*", (req, res) => {
       res.sendFile(path.join(__dirname, "../client/dist/index.html"));
     });

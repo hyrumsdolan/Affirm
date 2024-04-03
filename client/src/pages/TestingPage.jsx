@@ -3,25 +3,21 @@ import InputBox from '../components/InputBox';
 import SettingsDropdown from '../components/settingsDropdown';
 import { useMutation } from '@apollo/client';
 import { gql } from '@apollo/client';
+import { CALL_CLAUDE } from '../utils/mutations';
 
-const CALL_CLAUDE_MUTATION = gql`
-  mutation CallClaude($input: String!) {
-    callClaude(input: $input)
-  }
-`;
 
 const TEST = () => {
   const [input, setInput] = useState('');
   const [response, setResponse] = useState('');
-  const [callClaude] = useMutation(CALL_CLAUDE_MUTATION);
+  const [callClaude] = useMutation(CALL_CLAUDE);
 
-  useEffect(() => {
-    // Retrieve the response from local storage when the component mounts
-    const storedResponse = localStorage.getItem('claudeResponse');
-    if (storedResponse) {
-      setResponse(storedResponse);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Retrieve the response from local storage when the component mounts
+  //   const storedResponse = localStorage.getItem('claudeResponse');
+  //   if (storedResponse) {
+  //     setResponse(storedResponse);
+  //   }
+  // }, []);
 
   const handleInputChange = (event) => {
     setInput(event.target.value);
@@ -54,7 +50,7 @@ const TEST = () => {
               onChange={handleInputChange}
               required
               minLength={2}
-              maxLength={50}
+              maxLength={100000}
               autoFocus
               className="name-input"
               style={{ width: '200px' }}
