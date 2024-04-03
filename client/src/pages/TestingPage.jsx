@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import InputBox from '../components/InputBox';
+import SettingsDropdown from '../components/settingsDropdown';
 
 const TEST = () => {
   // Feel free to change these states and functions to whatever you need
@@ -13,13 +14,14 @@ const TEST = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-  <div className="justify-center items-center">
+  <div className="justify-center items-center relative">
     {/* Please don't mess with the above classes, it centers the component */}
 
     <form>
       <label>
         Test:
         <InputBox
+        isTextArea
           type="text"
           placeholder="Enter your name"
           value={name}
@@ -34,6 +36,7 @@ const TEST = () => {
       </label>
     </form>
 
+    
 
 
     </div>

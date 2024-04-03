@@ -1,1 +1,2 @@
 // For the selectors like when you select what dreams you want to save, and when you click them they change color, but don't navigate.
+// should also have a bool to display an edit button that will disable or enable it as an input box

@@ -13,6 +13,8 @@ const InputBox = ({
   pattern = null,
   autoFocus = false,
   style = {},
+  isTextArea = false,
+  rows = 4,
   ...rest
 }) => {
   const inputStyle = {
@@ -25,6 +27,25 @@ const InputBox = ({
     marginLeft: '5px',
     ...style,
   };
+
+  if (isTextArea) {
+    return (
+      <textarea
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className={`input-box ${className}`}
+        disabled={disabled}
+        required={required}
+        minLength={minLength}
+        maxLength={maxLength}
+        autoFocus={autoFocus}
+        style={inputStyle}
+        rows={rows}
+        {...rest}
+      />
+    );
+  }
 
   return (
     <input
