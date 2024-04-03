@@ -5,9 +5,6 @@ export default {
   content: ["./src/**/*.{js,jsx}"],
   darkMode: "class",
   theme: {
-    colors: {
-      primaryBg: "var(--primary-bg)"
-    },
     extend: {
       borderRadius: {
         btnRadius: "30px"
