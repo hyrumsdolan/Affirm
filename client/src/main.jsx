@@ -1,9 +1,9 @@
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'regenerator-runtime/runtime';
-
+import { ApolloProvider } from '@apollo/client';
+import client from './utils/apolloClient';
 import App from "./App.jsx";
-
 import LoginPage from "./pages/LoginPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
@@ -29,14 +29,12 @@ const router = createBrowserRouter([
         element: <SignupPage />
       },
       {
-
         path: '/ten-year-dream',
         element: <TenYearDreamPage />
       },
-        {
+      {
         path: "/testing",
         element: <TestingPage />
-      
       }
     ]
   }
@@ -44,4 +42,9 @@ const router = createBrowserRouter([
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-root.render(<RouterProvider router={router} />);
+
+root.render(
+  <ApolloProvider client={client}>
+    <RouterProvider router={router} />
+  </ApolloProvider>
+);
