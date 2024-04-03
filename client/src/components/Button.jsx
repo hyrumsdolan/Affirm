@@ -10,9 +10,10 @@ const Button = ({
   children,
   ...rest
 }) => {
+    // TODO: Update with global variables.
   const buttonStyle = {
     borderRadius: '20px',
-    backgroundColor: '#4F46E5',
+    backgroundColor: '#819EC9',
     color: '#FFFFFF',
     padding: '10px 20px',
     border: 'none',
