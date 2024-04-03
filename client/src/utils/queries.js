@@ -5,12 +5,10 @@ export const GET_ME = gql`
         me {
             _id
             firstName
-            lastName
             email
             password
             entries {
                 _id
-                date
             }
         }
     }

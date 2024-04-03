@@ -8,9 +8,9 @@ import Auth from "../utils/auth";
 const SignupForm = () => {
   const [userFormData, setUserFormData] = useState({
     firstName: "",
-    lastName: "",
     email: "",
     password: "",
+    confirmPassword: ""
   });
 
   const [error, setError] = useState();
@@ -18,37 +18,88 @@ const SignupForm = () => {
   const loading = false;
   const [addUser] = useMutation(ADD_USER);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPWConfirmation, setShowPWConfirmation] = useState(false);
+
+  //password functions
+  const pwCompare = (password1, password2) => {
+    console.log(`pwCompare: ${password1 === password2}`);
+    return password1 === password2;
+  };
+  const toggleShowPassword = () => {
+    setShowPassword(prevState => !prevState);
+  };
+  const isEmailValid = email => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
-  const handleFormSubmit = async (event) => {
+  //Handle input Change function
+  const handleInputChange = event => {
+    const { name, value } = event.target;
+    setUserFormData({ ...userFormData, [name]: value });
+
+    let var1 = "";
+    let var2 = "";
+
+    if (name === "password") {
+      var1 = value;
+      var2 = userFormData.confirmPassword;
+      setShowPWConfirmation(pwCompare(var1, var2));
+    } else if (name === "confirmPassword") {
+      var2 = value;
+      var1 = userFormData.password;
+      setShowPWConfirmation(pwCompare(var1, var2));
+    }
+  };
+
+  //Handle form submit function
+  const handleFormSubmit = async event => {
     setError("");
     event.preventDefault();
+    console.log("Sign up button clicked");
 
-    console.log(userFormData);
-    const form = event.currentTarget;
-    if (!form.checkValidity()) {
-      event.stopPropagation();
+    if (!isEmailValid(userFormData.email)) {
+      console.log("Email not valid");
+      setError(`Please enter a valid email address.`);
     } else {
-      try {
-        const { data, token } = await addUser({
-          variables: { ...userFormData },
-        });
+      console.log(`showPassword ${showPWConfirmation}`);
+      if (
+        showPWConfirmation &&
+        userFormData.password &&
+        userFormData.confirmPassword
+      ) {
+        delete userFormData.confirmPassword;
+        console.log(userFormData);
 
-        console.log(data, token);
-        Auth.login(token);
+        const form = event.currentTarget;
+        if (!form.checkValidity()) {
+          event.stopPropagation();
+        } else {
+          try {
+            // Exclude confirmPassword from form data
+            const { data, token } = await addUser({
+              variables: { ...userFormData }
+            });
+            console.log("look here FOR DATA");
+ 
+            Auth.login(data.addUser.token);
 
-        console.log("User successfully signed up!");
-        window.location.href = "/home";
-      } catch (err) {
-        if (err.message.includes("dup key:")) {
-          const errorKey = err.message.split("dup key: { ")[1].split(":")[0];
-          setError(
-            `Error signing up! An account with this ${errorKey} already exists`
-          );
+            console.log("User successfully signed up!");
+            // window.location.href = "/home";
+          } catch (err) {
+            if (err.message.includes("dup key:")) {
+              const errorKey = err.message
+                .split("dup key: { ")[1]
+                .split(":")[0];
+              setError(
+                `Sorry... But an account with this ${errorKey} already exists`
+              );
+            }
+          }
         }
+      } else {
+        setError(`Password and confirmation password do not match!`);
       }
     }
   };
@@ -57,7 +108,7 @@ const SignupForm = () => {
     <>
       {Auth.loggedIn() ? (
         <>
-          <h1>Youre logged in boo!</h1>
+          <h1>Welcome!</h1>
           <p>
             <a href="/home">Go to home page</a>
           </p>
@@ -77,20 +128,9 @@ const SignupForm = () => {
               />
             </div>
             <div>
-              <label htmlFor="lastName">Last Name:</label>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={userFormData.lastName}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div>
               <label htmlFor="email">Email:</label>
               <input
-                type="email"
+                type="text"
                 id="email"
                 name="email"
                 value={userFormData.email}
@@ -101,20 +141,46 @@ const SignupForm = () => {
             <div>
               <label htmlFor="password">Password:</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"} // Show text or password
                 id="password"
                 name="password"
                 value={userFormData.password}
                 onChange={handleInputChange}
+                // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                // title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
                 required
               />
+              <button type="button" onClick={toggleShowPassword}>
+                Show Password
+              </button>
             </div>
+            <div>
+              <label htmlFor="confirmPassword">Confirm Password:</label>
+              <input
+                type={showPassword ? "text" : "password"} // Show text or password
+                id="confirmPassword"
+                name="confirmPassword"
+                value={userFormData.confirmPassword}
+                onChange={handleInputChange}
+                required
+              />
+              {showPWConfirmation ? (
+                <p>Passwords match</p>
+              ) : (
+                <p>Passwords do not match</p>
+              )}
+            </div>
+            {/* Password requirement info div! */}
+            {/* <div>
+              <p>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p>
+            </div> */}
+            {/* End of password requirement div */}
             <button
               type="submit"
               className="btn btn-primary"
               disabled={loading}
             >
-              Sign Up
+              Sign up!
             </button>
           </form>
           <p>
