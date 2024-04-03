@@ -1,6 +1,7 @@
 const { User, Entry } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
+const claudeAPICall = require('../utils/claudeAPI');
 
 
 const resolvers = {
@@ -32,13 +33,13 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError('Authentication required');
+        throw new AuthenticationError('user not found');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError('Authentication required');
+        throw new AuthenticationError('incorrect password');
       }
 
       const token = signToken(user);
@@ -85,6 +86,13 @@ const resolvers = {
           { $pull: { entries: _id } }
         );
         return entry;
+      }
+      throw new AuthenticationError('Authentication required');
+    },
+    callClaude: async (parent, { input }, context) => {
+      if (context.user) {
+        const response = await claudeAPICall(input);
+        return response;
       }
       throw new AuthenticationError('Authentication required');
     },

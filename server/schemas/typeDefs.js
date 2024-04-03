@@ -33,6 +33,7 @@ type User {
     createEntry(title: String!, content: String!): Entry
     updateEntry(_id: ID!, title: String, content: String): Entry
     deleteEntry(_id: ID!): Entry
+    callClaude(input: String!): String
   }
   `;
   
