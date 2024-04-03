@@ -1,5 +1,4 @@
 import Auth from "../utils/auth";
-import { toggleDarkMode } from "../helpers/toggleDarkMode";
 
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";

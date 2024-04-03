@@ -1,5 +1,4 @@
 import React from "react";
-// import './App.css';
 import {
   ApolloClient,
   InMemoryCache,
@@ -9,7 +8,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import AuthService from "./utils/auth";
 import "./css/tailwind.css";
-import { addDarkMode } from "./helpers/toggleDarkMode";
+import { addDarkMode } from "./utils/toggleDarkMode";
 import SettingsDropdown from "./components/settingsDropdown";
 
 import { Outlet } from "react-router-dom";
