@@ -31,13 +31,13 @@ const LoginForm = () => {
         const { data } = await loginUser({
           variables: { ...userFormData },
         });
-        console.log(data);
-
-        Auth.login(data);
+        console.log("look here FOR DATA");
+    
+        Auth.login(data.loginUser.token);
 
         setUserFormData({ email: "", password: "" });
         setShowAlert(false);
-        window.location.href = "/home";
+        // window.location.href = "/home";
       } catch (err) {
         console.error(err);
         setShowAlert(true);
@@ -49,7 +49,7 @@ const LoginForm = () => {
     <>
     {Auth.loggedIn() ? (
                 <>
-                  <h1>Youre logged in boo!</h1>
+                  <h1>Welcome!</h1>
                   <p>
                   <a href="/home">Go to home page</a>
                   </p>

@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const InputBox = ({
-  type = 'text',
-  placeholder = '',
+  type = "text",
+  placeholder = "",
   value,
   onChange,
-  className = '',
+  className = "",
   disabled = false,
   required = false,
   minLength = null,
@@ -18,14 +18,14 @@ const InputBox = ({
   ...rest
 }) => {
   const inputStyle = {
-    borderRadius: '10px',
-    backgroundColor: '#E4E4E4',
-    borderColor: '#819EC9',
-    borderStyle: 'solid',
-    borderWidth: '1px',
-    padding: '5px',
-    marginLeft: '5px',
-    ...style,
+    borderRadius: "10px",
+    backgroundColor: "#E4E4E4",
+    borderColor: "#819EC9",
+    borderStyle: "solid",
+    borderWidth: "1px",
+    padding: "5px",
+    marginLeft: "5px",
+    ...style
   };
 
   if (isTextArea) {
