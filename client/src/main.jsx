@@ -9,6 +9,10 @@ import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import TestingPage from "./pages/TestingPage.jsx";
 import TenYearDreamPage from './pages/TenYearDreamPage.jsx';
+import OneGoalPage from './pages/OneGoal.jsx';
+import AndNextPage from './pages/AndNext.jsx';
+import SummaryDreamsPage from './pages/SummaryDreams.jsx';
+import WelcomeBackPage from './pages/WelcomeBack.jsx';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +39,22 @@ const router = createBrowserRouter([
       {
         path: "/testing",
         element: <TestingPage />
+      },
+      {
+        path: "/and-next",
+        element: <AndNextPage />
+      },
+      {
+        path: "/summary-dreams-page",
+        element: <SummaryDreamsPage />
+      },
+      {
+        path: "/welcome-back",
+        element: <WelcomeBackPage />
+      },
+      {
+        path: "/one-goal",
+        element: <OneGoalPage />
       }
     ]
   }

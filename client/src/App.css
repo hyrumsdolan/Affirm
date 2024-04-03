@@ -98,3 +98,301 @@ textarea {
 .read-the-docs {
   color: #888;
 }
+
+
+
+/* POSSIBLE STYLING FOR ONEGOAL PAGE */
+
+
+.app {
+  text-align: center;
+  color: #333;
+}
+
+.app-header {
+  background-color: #fff;
+  padding: 20px;
+  font-size: 24px;
+}
+
+.main-content {
+  margin: 50px auto;
+  width: 80%;
+  max-width: 600px;
+}
+
+h2 {
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.goal-input {
+  width: 100%;
+  padding: 10px;
+  margin: 20px 0;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.submit-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+/* POSSIBLE STYLING FOR SUMMARYDREAMS PAGE */
+
+
+.summary-dreams {
+  text-align: center;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.summary-header {
+  background-color: #fff;
+  padding: 20px;
+  font-size: 24px;
+}
+
+.summary-header h2 {
+  margin-top: 10px;
+}
+
+.dreams-content {
+  margin: 50px auto;
+  width: 80%;
+  max-width: 600px;
+}
+
+.dreams-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.dream-button {
+  padding: 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.dream-button:hover {
+  background-color: #0056b3;
+}
+
+.core-dream {
+  margin-top: 30px;
+}
+
+.core-dream .core {
+  background-color: #4b4b4b; 
+}
+
+.summary-footer {
+  margin-top: 30px;
+}
+
+.continue-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.continue-button:hover {
+  background-color: #218838;
+}
+
+ /* POSSIBLE STYLING FOR ANDNEXT PAGE */
+
+.and-next-page {
+  text-align: center;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.and-next-header {
+  background-color: #fff;
+  padding: 20px;
+  font-size: 24px;
+}
+
+.and-next-header h2 {
+  margin-top: 10px;
+}
+
+.dreams-selection {
+  margin: 50px auto;
+  width: 80%;
+  max-width: 600px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.dream-item {
+  padding: 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative; 
+}
+
+.dream-item:hover {
+  background-color: #d0d0d0;
+}
+
+.dream-item.selected {
+  background-color: #007bff;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #333;
+}
+
+.and-next-footer {
+  margin-top: 30px;
+}
+
+.continue-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.continue-button:hover {
+  background-color: #218838;
+}
+
+
+
+/* POSSIBLE STYLING FOR WELCOMEBACK PAGE */
+
+
+
+.welcome-back-page {
+  text-align: center;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+}
+
+.welcome-header {
+  background-color: #fff;
+  padding: 20px;
+  font-size: 24px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px auto;
+  width: 80%;
+  max-width: 960px;
+}
+
+.gratitudes-section {
+  width: 50%;
+}
+
+.gratitude-item {
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px
+  ;padding: 15px;
+  position: relative;
+  }
+  
+  .gratitude-item input {
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  font-size: 16px;
+  }
+  
+  .gratitude-item .edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #333;
+  }
+  
+  .main-dream-section {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  }
+  
+  .main-dream {
+  margin-bottom: 10px;
+  }
+  
+  .main-dream span {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 5px;
+  }
+  
+  .dream-button {
+  padding: 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%; 
+  }
+  
+  .dream-button:hover {
+  background-color: #0056b3;
+  }
+  
+  .welcome-footer {
+  margin-top: 30px;
+  }
+  
+  .continue-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #28a745;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  }
+  
+  .continue-button:hover {
+  background-color: #218838;
+  }
