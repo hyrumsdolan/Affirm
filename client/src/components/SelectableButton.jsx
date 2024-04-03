@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 
-const SelectableButton = ({ initialText, onSelect, onTextChange }) => {
+// use this button component like this:
+// <SelectableButton initialText="Button 1" onSelect={handleSelect} onTextChange={handleTextChange} disabled={false} />
+// <SelectableButton initialText="Button 2" onSelect={handleSelect} onTextChange={handleTextChange} disabled={true} />
+
+const SelectableButton = ({ initialText, onSelect, onTextChange, disabled = false }) => {
   const [isSelected, setIsSelected] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [buttonText, setButtonText] = useState(initialText);
 
   const handleSelect = () => {
-    const newIsSelected = !isSelected;
-    setIsSelected(newIsSelected);
-    onSelect(newIsSelected);
+    if (!disabled) {
+      const newIsSelected = !isSelected;
+      setIsSelected(newIsSelected);
+      onSelect(newIsSelected);
+    }
   };
 
   const handleEdit = () => {
@@ -34,9 +40,9 @@ const SelectableButton = ({ initialText, onSelect, onTextChange }) => {
     padding: '10px',
     borderRadius: '5px',
     border: 'none',
-    backgroundColor: isSelected ? '#8B9CB6' : '#CCCCCC',
+    backgroundColor: isSelected && !disabled ? '#8B9CB6' : '#CCCCCC',
     color: '#ffffff',
-    cursor: 'pointer',
+    cursor: disabled ? 'default' : 'pointer',
     outline: 'none',
   };
 
@@ -49,7 +55,7 @@ const SelectableButton = ({ initialText, onSelect, onTextChange }) => {
     borderRadius: '50%',
     border: '2px solid #ffffff',
     marginRight: '10px',
-    backgroundColor: isSelected ? '#ECFFCC' : 'transparent',
+    backgroundColor: isSelected && !disabled ? '#ECFFCC' : 'transparent',
   };
 
   const checkmarkStyle = {
@@ -60,23 +66,25 @@ const SelectableButton = ({ initialText, onSelect, onTextChange }) => {
     width: '100%',
     padding: '5px',
     border: 'none',
-    borderBottom: '1px solid #FFFFFF',
+    borderBottom: '1px solid #2E7DFF',
     backgroundColor: 'transparent',
-    color: '#FFFFFF',
+    color: '#2E7DFF',
     outline: 'none',
   };
 
   const iconStyle = {
     marginLeft: 'auto',
-    color: '#FFFFFF',
+    color: '#2E7DFF',
     cursor: 'pointer',
   };
 
   return (
     <div style={buttonStyle} onClick={handleSelect}>
-      <div style={circleStyle}>
-        {isSelected && <FaCheck style={checkmarkStyle} />}
-      </div>
+      {!disabled && (
+        <div style={circleStyle}>
+          {isSelected && <FaCheck style={checkmarkStyle} />}
+        </div>
+      )}
       {isEditing ? (
         <input
           type="text"
