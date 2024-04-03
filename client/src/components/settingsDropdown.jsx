@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoMdSettings, IoMdSunny, IoMdMoon } from "react-icons/io";
-import { toggleDarkMode } from "../helpers/toggleDarkMode";
+import { toggleDarkMode } from "../utils/toggleDarkMode";
 
 const SettingsDropdown = () => {
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
@@ -69,7 +69,7 @@ const SettingsDropdown = () => {
       />
       <div
         id="settingsMenu"
-        className={`absolute right-0 mt-1 h-[100px] w-0 overflow-hidden text-nowrap rounded-md bg-zinc-900 uppercase text-white duration-200 ease-in-out dark:bg-white dark:text-black`}
+        className={`absolute right-0 z-50 mt-1 h-[100px] w-0 overflow-hidden text-nowrap rounded-md bg-zinc-900 uppercase text-white duration-200 ease-in-out dark:bg-white dark:text-black`}
       >
         <div className="m-auto text-center">
           <div className="flex w-32 flex-col pt-2 align-middle text-2xl">

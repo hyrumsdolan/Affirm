@@ -1,9 +1,20 @@
 /** @type {import('tailwindcss').Config} */
+import defaultTheme from "tailwindcss/defaultTheme";
+
 export default {
   content: ["./src/**/*.{js,jsx}"],
   darkMode: "class",
   theme: {
+    colors: {
+      primaryBg: "var(--primary-bg)"
+    },
     extend: {
+      borderRadius: {
+        btnRadius: "30px"
+      },
+      fontFamily: {
+        sans: ['"Source Sans 3"', ...defaultTheme.fontFamily.sans]
+      },
       keyframes: {
         rotateFullForwards: {
           "0%": { transform: "rotate(0deg)" },

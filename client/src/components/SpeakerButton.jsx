@@ -1,26 +1,42 @@
-import { useSpeechSynthesis } from 'react-speech-kit';
+import { useSpeechSynthesis } from "react-speech-kit";
 import { HiOutlineSpeakerWave, HiStop } from "react-icons/hi2";
-
+import { useEffect } from "react";
 
 function SpeakerButton({ text }) {
-    const { speak, cancel, speaking } = useSpeechSynthesis();
+  const { speak, cancel, speaking, voices } = useSpeechSynthesis();
 
-    const handleClick = () => {
-        if (speaking) {
-            cancel();
-        } else {
-            speak({ text });
-        }
-    };
+  const handleClick = () => {
+    console.log(voices);
+    if (speaking) {
+      cancel();
+    } else {
+      speak({
+        text,
+        voice: voices[10]
+      });
+    }
+  };
 
-    return (
-        <button
-            className="inline-flex items-center text-sm leading-4 font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150 speaker-button"
-            onClick={handleClick}
-        >
-            {speaking ? <HiStop/> : <HiOutlineSpeakerWave/>}
-        </button>
-    );
+  useEffect(() => {
+    window.addEventListener("visibilitychange", function () {
+      if (document.visibilityState === "hidden" && speaking) {
+        cancel();
+      }
+    });
+  }, []);
+
+  return (
+    <button
+      className="group rounded-full border-2 border-zinc-950 p-0.5 text-xl"
+      onClick={handleClick}
+    >
+      {speaking ? (
+        <HiStop className="group-hover:bg-black" />
+      ) : (
+        <HiOutlineSpeakerWave className="group-hover:bg-black" />
+      )}
+    </button>
+  );
 }
 
 export default SpeakerButton;

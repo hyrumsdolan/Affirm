@@ -1,5 +1,4 @@
 import Auth from "../utils/auth";
-import { toggleDarkMode } from "../helpers/toggleDarkMode";
 
 const HomePage = () => {
   return (
