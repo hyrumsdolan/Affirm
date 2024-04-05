@@ -4,7 +4,7 @@ const Anthropic = require("@anthropic-ai/sdk");
 
 async function claudeAPICall(input) {
   const anthropic = new Anthropic({
-    apiKey: process.env.ANTHROPIC_API_KEY,
+    apiKey: process.env.ANTHROPIC_API_KEY, // Your API key here
   });
 
   const msg = await anthropic.messages.create({
