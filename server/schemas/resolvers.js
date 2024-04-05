@@ -50,6 +50,9 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    setPageProgress: async (parent, { pageProgress }, context) => {
+
+    },
     createEntry: async (parent, { title, content }, context) => {
       if (context.user) {
         const entry = await Entry.create({

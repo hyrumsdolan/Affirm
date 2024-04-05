@@ -1,22 +1,23 @@
 const { Schema, model } = require('mongoose');
 
+
 const entrySchema = new Schema({
-  title: {
+  gratefulFor: [{
     type: String,
     required: true,
-    trim: true,
-  },
-  content: {
+  }],
+  dailyAffirmations: [{
+    type: String,
+    required: true,
+  }],
+  ultimateAffirmation: {
     type: String,
     required: true,
   },
   createdAt: {
     type: String,
     required: true,
-  },
-  updatedAt: {
-    type: String,
-    required: true,
+    default: new Date.now(),
   },
 });
 
