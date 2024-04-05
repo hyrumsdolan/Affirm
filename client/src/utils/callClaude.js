@@ -2,7 +2,7 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { CALL_CLAUDE } from './mutations';
 import  client  from './apolloClient';
 
-export const sendToClaude = async (input) => {
+export const sendToClaude = async (input, targetStorage=0) => {
   try {
     console.log("Sending to Claude:", input);
 
@@ -12,6 +12,7 @@ export const sendToClaude = async (input) => {
     });
 
     const result = data.callClaude;
+
     localStorage.setItem("claudeResponse", result);
     return result;
   } catch (error) {
