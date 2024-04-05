@@ -13,7 +13,6 @@ import OneGoalPage from './pages/OneGoal.jsx';
 import AndNextPage from './pages/AndNext.jsx';
 import SummaryDreamsPage from './pages/SummaryDreams.jsx';
 import WelcomeBackPage from './pages/WelcomeBack.jsx';
-import EntriesPage from './pages/EntriesPage.jsx';
 
 const router = createBrowserRouter([
   {
@@ -56,11 +55,7 @@ const router = createBrowserRouter([
       {
         path: "/one-goal",
         element: <OneGoalPage />
-      },
-      {
-      path: "/entries",
-      element: <EntriesPage />
-      },
+      }
     ]
   }
 ]);

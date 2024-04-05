@@ -50,9 +50,9 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    setPageProgress: async (parent, { pageProgress }, context) => {
-
-    },
+    // setPageProgress: async (parent, { pageProgress }, context) => {
+// What is this suppose to be? @Landon from Hyrum
+    // },
     createEntry: async (parent, { title, content }, context) => {
       if (context.user) {
         const entry = await Entry.create({

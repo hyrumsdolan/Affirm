@@ -17,7 +17,7 @@ const entrySchema = new Schema({
   createdAt: {
     type: String,
     required: true,
-    default: new Date.now(),
+    default: Date.now,
   },
 });
 

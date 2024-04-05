@@ -6,7 +6,7 @@ const littleDreamsSchema = new Schema({
         required: true,
     },
     selected:{
-        type: boolean,
+        type: Boolean,
         required: true,
         default: false,
     }

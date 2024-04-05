@@ -19,7 +19,7 @@ const userSchema = new Schema(
       required: true,
     },
     pageProgress: {
-        type: Integer,
+        type: Number,
         default: 0,
     },
     dream: {
