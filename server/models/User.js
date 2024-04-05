@@ -18,12 +18,24 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    pageProgress: {
+        type: Integer,
+        default: 0,
+    },
+    dream: {
+      type: Schema.Types.ObjectId,
+      ref: 'Dream',
+    },
     entries: [
       {
         type: Schema.Types.ObjectId,
         ref: 'Entry',
       },
     ],
+    theme: {
+      type: String,
+      required: true,
+    },
   },
   {
     toJSON: {

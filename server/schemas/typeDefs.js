@@ -5,15 +5,31 @@ type User {
     firstName: String
     email: String
     password: String
+    pageProgress: Int
+    dream: Dream
     entries: [Entry]
+    theme: String
+  }
+
+  type LittleDreams {
+    _id: ID
+    littleDream: String
+    selected: Boolean
   }
   
+  type Dream {
+    _id: ID
+    bigDream: String
+    littleDreams: [LittleDreams]
+    ultimateGoal: String
+  }
+
   type Entry {
     _id: ID
-    title: String
-    content: String
+    gratefulFor: [String]
+    dailyAffirmations: [String]
+    ultimateAffirmation: String
     createdAt: String
-    updatedAt: String
   }
   
   type Auth {
@@ -23,6 +39,7 @@ type User {
   
   type Query {
     me: User
+    myDream: Dream
     entries: [Entry]
     entry(_id: ID!): Entry
   }
