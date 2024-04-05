@@ -4,6 +4,7 @@ import SettingsDropdown from '../components/settingsDropdown';
 import { useMutation } from '@apollo/client';
 import { gql } from '@apollo/client';
 import { CALL_CLAUDE } from '../utils/mutations';
+import SelectableButton from '../components/SelectableButton';
 
 
 const TEST = () => {
@@ -39,29 +40,12 @@ const TEST = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="justify-center items-center relative">
-        <form onSubmit={handleSubmit}>
-          <label>
-            Test:
-            <InputBox
-              isTextArea
-              type="text"
-              placeholder="Enter your input"
-              value={input}
-              onChange={handleInputChange}
-              required
-              minLength={2}
-              maxLength={100000}
-              autoFocus
-              className="name-input"
-              style={{ width: '200px' }}
-            />
-          </label>
-          <button type="submit">Submit</button>
-        </form>
-        <div>
-          <h3>Response:</h3>
-          <p>{response}</p>
-        </div>
+
+
+      <SelectableButton initialText="Button 1" onSelect={handleSelect} onTextChange={handleTextChange} disabled={false} />
+<SelectableButton initialText="Button 2" onSelect={handleSelect} onTextChange={handleTextChange} disabled={true} />
+
+
       </div>
     </div>
   );
