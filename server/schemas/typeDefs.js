@@ -1,4 +1,3 @@
-
 const typeDefs = `
 type User {
     _id: ID
@@ -15,7 +14,7 @@ type User {
     _id: ID
     littleDream: String
     selected: Boolean
-  }
+  }  
   
   type Dream {
     _id: ID
@@ -41,17 +40,33 @@ type User {
     me: User
     myDream: Dream
     entries: [Entry]
-    entry(_id: ID!): Entry
   }
   
   type Mutation {
     addUser(firstName: String!, email: String!, password: String!): Auth
     loginUser(email: String!, password: String!): Auth
-    createEntry(title: String!, content: String!): Entry
-    updateEntry(_id: ID!, title: String, content: String): Entry
+    deleteUser(_id: ID!): User
+    setPageProgress(pageProgress: Int): User
+
+    createEntry(gratefulFor: [String], dailyAffirmations: [String], ultimateAffirmation: String): Entry
+    updateEntry(_id: ID!, gratefulFor: [String], dailyAffirmations: [String], ultimateAffirmation: String): Entry
     deleteEntry(_id: ID!): Entry
+
+    updateDream(_id: ID, bigDream: String, littleDreams: [LittleDreamsInput], ultimateGoal: String): Dream
+
     callClaude(input: String!): String
   }
+
+  input LittleDreamsInput {
+    littleDream: String
+    selected: Boolean
+  }
   `;
-  
-  module.exports = typeDefs;
+
+
+
+// createEntry(gratefulFor: [String], dailyAffirmations: [String], ultimateAffirmation: String): Entry
+// updateEntry(_id: ID!, gratefulFor: [String], dailyAffirmations: [String], ultimateAffirmation: String): Entry
+// deleteEntry(_id: ID!): Entry
+
+module.exports = typeDefs;

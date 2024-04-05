@@ -19,8 +19,8 @@ const userSchema = new Schema(
       required: true,
     },
     pageProgress: {
-        type: Integer,
-        default: 0,
+      type: Number,
+      default: 0,
     },
     dream: {
       type: Schema.Types.ObjectId,
@@ -34,7 +34,6 @@ const userSchema = new Schema(
     ],
     theme: {
       type: String,
-      required: true,
     },
   },
   {

@@ -3,11 +3,9 @@ const { Schema, model } = require('mongoose');
 const littleDreamsSchema = new Schema({
     littleDream:{
         type: String,
-        required: true,
     },
     selected:{
-        type: boolean,
-        required: true,
+        type: Boolean,
         default: false,
     }
 });

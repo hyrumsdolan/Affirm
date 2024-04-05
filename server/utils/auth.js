@@ -2,8 +2,9 @@ const { AuthenticationError } = require("apollo-server-express");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-const secret = process.env.AUTH_SECRET;
-console.log("secret: ", secret);
+//REALLY weird behavior here. I added the || "mysecret" for testing purposes. It was not working without it. Idk why it didn't find my .env file.
+const secret = process.env.AUTH_SECRET || "mysecret";
+
 const expiration = "2h";
 
 module.exports = {

@@ -1,4 +1,4 @@
-const { User, Entry } = require('../models');
+const { User, Entry, Dream, LittleDreams } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const claudeAPICall = require('../utils/claudeAPI');
@@ -6,12 +6,22 @@ const claudeAPICall = require('../utils/claudeAPI');
 
 const resolvers = {
   Query: {
+    //USER QUERIES ---------------------------------------------
     me: async (parent, args, context) => {
+      console.log(context)
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('entries');
+        return User.findOne({ _id: context.user._id });
       }
       throw new AuthenticationError('No Authenticated User Found, unable to get user data.');
     },
+    myDream: async (parent, args, context) => {
+      if (context.user) {
+        return User.findOne({ _id: context.user._id }).populate('dream');
+      }
+      throw new AuthenticationError('No Authenticated User Found, unable to get user dream.');
+    },
+
+    //ENTRY QUERIES ---------------------------------------------
     entries: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findOne({ _id: context.user._id }).populate('entries');
@@ -19,16 +29,17 @@ const resolvers = {
       }
       throw new AuthenticationError('No Authenticated User Found, unable to get user entries.');
     },
-    entry: async (parent, { _id }, context) => {
-      if (context.user) {
-        const user = await User.findOne({ _id: context.user._id }).populate('entries');
-        return user.entries.find(entry => entry._id.toString() === _id);
-      }
-      throw new AuthenticationError('No Authenticated User Found, unable to get user entry.');
-    },
+    // entry: async (parent, { _id }, context) => {
+    //   if (context.user) {
+    //     const user = await User.findOne({ _id: context.user._id }).populate('entries');
+    //     return user.entries.find(entry => entry._id.toString() === _id);
+    //   }
+    //   throw new AuthenticationError('No Authenticated User Found, unable to get user entry.');
+    // },
   },
 
   Mutation: {
+    //USER MUTATIONS ---------------------------------------------
     loginUser: async (_parent, { email, password }) => {
       const user = await User.findOne({ email });
 
@@ -51,47 +62,68 @@ const resolvers = {
       return { token, user };
     },
     setPageProgress: async (parent, { pageProgress }, context) => {
-
-    },
-    createEntry: async (parent, { title, content }, context) => {
       if (context.user) {
-        const entry = await Entry.create({
-          title,
-          content,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-        });
-        await User.findOneAndUpdate(
+        const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $push: { entries: entry._id } },
+          { pageProgress },
           { new: true }
         );
+        return updatedUser;
+      }
+      throw new AuthenticationError('User Not Logged in, unable to update page progress');
+    },
+
+    //ENTRY MUTATIONS ---------------------------------------------
+    createEntry: async (parent, { gratefulFor, dailyAffirmations, ultimateAffirmation }, context) => {
+      if (context.user) {
+        const entry = await Entry.create({
+          gratefulFor,
+          dailyAffirmations,
+          ultimateAffirmation,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        });
+
         return entry;
       }
       throw new AuthenticationError('User Not Logged in, unable to create entry');
     },
-    updateEntry: async (parent, { _id, title, content }, context) => {
+    updateEntry: async (parent, { _id, gratefulFor, dailyAffirmations, ultimateAffirmation }, context) => {
       if (context.user) {
-        const entry = await Entry.findOneAndUpdate(
+        const updatedEntry = await Entry.findOneAndUpdate(
           { _id },
-          { title, content, updatedAt: new Date().toISOString() },
+          {
+            gratefulFor,
+            dailyAffirmations,
+            ultimateAffirmation,
+            updatedAt: new Date(),
+          },
           { new: true }
         );
-        return entry;
+
+        return updatedEntry;
       }
       throw new AuthenticationError('User Not Logged in, unable to update entry');
     },
-    deleteEntry: async (parent, { _id }, context) => {
-      if (context.user) {
-        const entry = await Entry.findOneAndDelete({ _id });
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { entries: _id } }
-        );
-        return entry;
-      }
-      throw new AuthenticationError('User Not Logged in, unable to delete entry');
+    deleteEntry: async (_, { _id }) => {
+      const deletedEntry = await Entry.findByIdAndDelete(_id);
+      return deletedEntry;
     },
+
+    //DREAM MUTATIONS ---------------------------------------------
+    updateDream: async (parent, { _id, bigDream, littleDreams, ultimateGoal }, context) => {
+      if (context.user) {
+        const dream = await Dream.findOneAndUpdate(
+          { _id },
+          { bigDream, littleDreams, ultimateGoal },
+          { new: true }
+        );
+        return dream;
+      }
+      throw new AuthenticationError('User Not Logged in, unable to update dream');
+    },
+
+    //CLAUDE MUTATIONS ---------------------------------------------
     callClaude: async (parent, { input }, context) => {
       if (context.user) {
         const response = await claudeAPICall(input);
