@@ -24,6 +24,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.19.1",
     "apollo-server-express": "^3.13.0",
+    "ldrs": "^1.0.1",
     "mongodb": "^6.5.0",
     "react-icons": "^5.0.1",
     "react-speech-kit": "^3.0.1",
