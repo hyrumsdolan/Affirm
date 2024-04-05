@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useQuery } from '@apollo/client';
-import { GET_ENTRY } from '../utils/queries';
 import SelectableButton from '../components/SelectableButton';
 import EntryDetails from '../components/EntryDetails';
 
