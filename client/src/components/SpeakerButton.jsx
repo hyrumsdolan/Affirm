@@ -1,9 +1,11 @@
 import { useSpeechSynthesis } from "react-speech-kit";
 import { HiOutlineSpeakerWave, HiStop } from "react-icons/hi2";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function SpeakerButton({ text }) {
   const { speak, cancel, speaking, voices } = useSpeechSynthesis();
+
+  const [voiceNum, setVoiceNum] = useState(0);
 
   const handleClick = () => {
     console.log(voices);
@@ -12,7 +14,7 @@ function SpeakerButton({ text }) {
     } else {
       speak({
         text,
-        voice: voices[10]
+        voice: voices[voiceNum]
       });
     }
   };
@@ -26,16 +28,22 @@ function SpeakerButton({ text }) {
   }, []);
 
   return (
-    <button
-      className="group rounded-full border-2 border-zinc-950 p-0.5 text-xl"
-      onClick={handleClick}
-    >
-      {speaking ? (
-        <HiStop className="group-hover:bg-black" />
-      ) : (
-        <HiOutlineSpeakerWave className="group-hover:bg-black" />
-      )}
-    </button>
+    <>
+      <button
+        className={`group rounded-full border-zinc-950 p-0.5 text-xl transition-all duration-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 ${speaking ? "bg-zinc-100 dark:bg-zinc-800" : ""}`}
+        onClick={handleClick}
+      >
+        {speaking ? <HiStop /> : <HiOutlineSpeakerWave />}
+      </button>
+
+      {/* <button
+        onClick={() => {
+          setVoiceNum(voiceNum + 1);
+        }}
+      >
+        Go to next voice
+      </button> */}
+    </>
   );
 }
 

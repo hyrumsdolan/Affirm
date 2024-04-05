@@ -6,9 +6,6 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
-      borderRadius: {
-        btnRadius: "30px"
-      },
       fontFamily: {
         sans: ['"Source Sans 3"', ...defaultTheme.fontFamily.sans]
       },
