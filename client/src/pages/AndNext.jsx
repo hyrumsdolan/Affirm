@@ -32,7 +32,7 @@ const AndNext = () => {
       await addLittleDreams({
         variables: { littleDreams: selectedDreamsArray }
       });
-      navigate("/summary-dreams-page");
+      navigate("/one-goal");
     } catch (error) {
       console.error("Error:", error);
     }
@@ -54,7 +54,7 @@ const AndNext = () => {
       <Button
         onClick={handleSave}
         className="r-0 absolute right-0 m-10"
-        navigateTo="/and-next"
+        navigateTo="/one-goal"
       >
         save & continue
       </Button>
