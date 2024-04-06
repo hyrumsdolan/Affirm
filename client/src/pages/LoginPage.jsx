@@ -30,12 +30,14 @@ const LoginForm = () => {
       event.stopPropagation();
     } else {
       try {
-        console.log(userFormData);
+        console.log("User Form Data: ", userFormData);
         const { data } = await loginUser({
           variables: { ...userFormData },
         });
         console.log("look here FOR DATA");
-    
+
+        console.log("Login Page Data:", data);
+
         Auth.login(data.loginUser.token);
 
         setUserFormData({ email: "", password: "" });
@@ -49,67 +51,67 @@ const LoginForm = () => {
   };
 
   return (
-    <>
-              <div className="h-full flex flex-col md:flex-row">
-          <div className="w-full md:w-3/5 flex flex-col items-center justify-center relative">
-            
-            <h2 className="text-3xl md:text-5xl font-bold mb-4 text-center">let's improve together</h2>
-            <p className="text-center">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
-              vitae elit libero, a pharetra augue.
-            </p>
-          </div>
-          <div className="w-full md:w-2/5 flex flex-col items-center justify-center border-t md:border-t-0 md:border-l border-gray-200 p-8">
-            <form onSubmit={handleFormSubmit} className="w-full md:w-9/12">
-              <div className="mb-4">
-                <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-                  Email:
-                </label>
-                <InputBox
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={userFormData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <div className="mb-6">
-                <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
-                  Password:
-                </label>
-                <InputBox
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={userFormData.password}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-              </div>
-              <Button type="submit" 
-              className="w-full"
-              navigateTo="/ten-year-dream">
-                Login
-              </Button>
-            </form>
-            <p className="mt-4 text-center">
-              Don't have an account?{" "}
-              <a href="/signup" className="text-blue-500 hover:text-blue-700">
-                Sign up
-              </a>
-            </p>
-            {showAlert && (
-              <div className="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-                Sign in failed
-              </div>
-            )}
-          </div>
+    
+      <div className="h-full flex flex-col md:flex-row">
+        <div className="w-full md:w-3/5 flex flex-col items-center justify-center relative">
+
+          <h1 className="mb-4 text-center">let's improve together</h1>
+          <h2 className="text-center">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+            vitae elit libero, a pharetra augue.
+          </h2>
         </div>
-      
-    </>
+        <div className="w-full md:w-2/5 flex flex-col items-center justify-center border-t md:border-t-0 md:border-l border-gray-200 p-8">
+          <form onSubmit={handleFormSubmit} className="w-full md:w-9/12">
+            <div className="mb-4">
+              <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+                Email:
+              </label>
+              <InputBox
+                type="email"
+                id="email"
+                name="email"
+                value={userFormData.email}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div className="mb-6">
+              <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+                Password:
+              </label>
+              <InputBox
+                type="password"
+                id="password"
+                name="password"
+                value={userFormData.password}
+                onChange={handleInputChange}
+                required
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <Button type="submit"
+              onClick={handleFormSubmit}
+              className="w-full"
+            // navigateTo="/ten-year-dream"
+            >
+              Login
+            </Button>
+          </form>
+          <p className="mt-4 text-center">
+            Don't have an account?{" "}
+            <a href="/signup" className="text-blue-500 hover:text-blue-700">
+              Sign up
+            </a>
+          </p>
+          {showAlert && (
+            <div className="mt-4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+              Sign in failed
+            </div>
+          )}
+        </div>
+      </div>
   );
 }
 

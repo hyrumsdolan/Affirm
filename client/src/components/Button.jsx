@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { ADD_BIG_DREAM, ADD_LITTLE_DREAM, ADD_ULTIMATE_GOAL } from '../utils/mutations';
+import { ADD_BIG_DREAM, ADD_LITTLE_DREAMS, ADD_ULTIMATE_GOAL } from '../utils/mutations';
 
 const Button = ({
   type = 'button',
@@ -11,7 +11,7 @@ const Button = ({
   disabled = false,
   style = {},
   children,
-  input = '',
+  inputForDBSave = '',
   saveToUser = '',
   navigateTo = '',
   isEnabled = true,
@@ -19,22 +19,22 @@ const Button = ({
 }) => {
   const navigate = useNavigate();
   const [addBigDream] = useMutation(ADD_BIG_DREAM);
-  const [addLittleDream] = useMutation(ADD_LITTLE_DREAM);
+  const [addLittleDreams] = useMutation(ADD_LITTLE_DREAMS);
   const [addUltimateGoal] = useMutation(ADD_ULTIMATE_GOAL);
 
   const handleClick = async () => {
     if (!isEnabled) {
       return;
     }
-    console.log(user.me)
+    // console.log(user.me)
 
     if (saveToUser === 'bigdream') {
       console.log(user)
-      await addBigDream({ variables: { bigDream: input } });
+      await addBigDream({ variables: { bigDream: inputForDBSave } });
     } else if (saveToUser === 'littledream') {
-      await addLittleDream({ variables: { littleDream: input } });
+      await addLittleDreams({ variables: { littleDream: inputForDBSave } });
     } else if (saveToUser === 'ultimategoal') {
-      await addUltimateGoal({ variables: { ultimateGoal: input } });
+      await addUltimateGoal({ variables: { ultimateGoal: inputForDBSave } });
     }
 
     if (onClick) {

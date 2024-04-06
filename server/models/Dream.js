@@ -3,7 +3,8 @@ const { Schema, model } = require('mongoose');
 const dreamSchema = new Schema({
   bigDream: {
     type: String,
-    required: true,
+    // default: null,
+    // required: true,
   },
   littleDreams: [
     {
@@ -13,7 +14,8 @@ const dreamSchema = new Schema({
   ],
   ultimateGoal: {
     type: String,
-    required: true,
+    // default: null,
+    // required: true,
   },
 });
 

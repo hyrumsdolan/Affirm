@@ -7,6 +7,7 @@ import { GET_ME } from '../utils/queries';
 const PrivateRoute = ({ element: Component, ...rest }) => {
   const navigate = useNavigate();
   const isAuthenticated = AuthService.loggedIn();
+  console.log("isAuthenticated:", isAuthenticated)
 
   const { loading, error, data } = useQuery(GET_ME, {
     context: {
@@ -36,6 +37,7 @@ const PrivateRoute = ({ element: Component, ...rest }) => {
   }
 
   if (error) {
+    console.log("User Data:",data)
     console.error(error);
     // Handle the error state
     return <div>Error occurred</div>;

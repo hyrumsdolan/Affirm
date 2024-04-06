@@ -37,12 +37,12 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className="flex flex-col max-h-screen h-screen">
-        <div className="flex-none px-8 py-4">
+      <div className="flex flex-col h-screen w-screen">
+        <div className="flex-none">
           <Logo />
           <SettingsDropdown />
         </div>
-        <div className="flex-1 ">
+        <div className="flex flex-col h-full w-screen">
           <Outlet />
         </div>
       </div>
