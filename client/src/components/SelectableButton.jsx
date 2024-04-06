@@ -7,9 +7,16 @@ const SelectableButton = ({
   onTextChange,
   disabled = false,
   width = "485px",
-  height = "72px"
+  height = "72px",
+  // Added new prop to control the visibility of the edit button
+  showEditButton = true,
+  // Added new prop to control the initial selected state of the button
+  initialSelected = false,
+  // Added new prop for placeholder text
+  placeholderText = ""
 }) => {
-  const [isSelected, setIsSelected] = useState(false);
+  // Updated the initial selected state based on the new prop
+  const [isSelected, setIsSelected] = useState(initialSelected);
   const [isEditing, setIsEditing] = useState(false);
   const [buttonText, setButtonText] = useState(initialText);
 
@@ -97,19 +104,24 @@ const SelectableButton = ({
           onBlur={handleSave}
           autoFocus
           style={inputStyle}
+          // Added placeholder text
+          placeholder={placeholderText}
         />
       ) : (
         <>
           <span>{buttonText}</span>
-          <span
-            style={iconStyle}
-            onClick={e => {
-              e.stopPropagation();
-              handleEdit();
-            }}
-          >
-            <FaEdit />
-          </span>
+          {/* Added conditional rendering of the edit button */}
+          {showEditButton && (
+            <span
+              style={iconStyle}
+              onClick={e => {
+                e.stopPropagation();
+                handleEdit();
+              }}
+            >
+              <FaEdit />
+            </span>
+          )}
         </>
       )}
     </div>

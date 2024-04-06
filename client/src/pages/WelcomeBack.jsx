@@ -4,13 +4,12 @@ import Button from "../components/Button";
 
 const WelcomeBack = () => {
   const [gratitudes, setGratitudes] = useState([
-    "The weather was so god damn beautiful today",
+    "The weather was so beautiful today",
     "",
     "",
     "",
     ""
   ]);
-  const [mainDream] = useState("Become Elon Bezos");
 
   const handleGratitudeChange = (index, value) => {
     const updatedGratitudes = [...gratitudes];
@@ -18,50 +17,30 @@ const WelcomeBack = () => {
     setGratitudes(updatedGratitudes);
   };
 
-  const renderGratitudeInputs = new Array(5).fill("enter a gratitude...");
-
-  const groupItems = (items, groupSize) => {
-    let grouped = [];
-    for (let i = 0; i < items.length; i += groupSize) {
-      grouped.push(items.slice(i, i + groupSize));
-    }
-    return grouped;
-  };
-  const groupedDreams = groupItems(renderGratitudeInputs, 3);
+  const renderGratitudeInputs = gratitudes.map((gratitude, index) => (
+    <div key={index}>
+      <SelectableButton
+        placeholderText = "What are you grateful for today?"
+        onTextChange={(value) => handleGratitudeChange(index, value)}
+        disabled={false}
+      />
+    </div>
+  ));
 
   return (
     <>
       <header className="mb-8 text-center">
-        <h1 className="mb-4 text-2xl">welcome back :)</h1>
-        <p className="text-lg">Let's get affirming.</p>
+        <h1 className="mb-4 text-2xl">Welcome back :)</h1>
+        <p className="text-lg">Let's express some gratitude.</p>
       </header>
-
       <main className="">
-        <div className="flex flex-col items-center">
-          {groupedDreams.map((group, index) => (
-            <div key={index} className="mb-4 flex justify-center gap-4">
-              {group.map((dream, index) => (
-                <div className="" key={index}>
-                  <SelectableButton initialText={dream} disabled={false} />
-                </div>
-              ))}
-            </div>
-          ))}
+        <div className="flex flex-col items-center gap-4">
+          {renderGratitudeInputs}
         </div>
-
-        <section className="mt-8 flex flex-col items-center text-center">
-          <div className="main-dream">
-            <span className="text-lg font-bold">The main dream</span>
-            <div className="mt-4">
-              <SelectableButton initialText={mainDream} disabled={true} />
-            </div>
-          </div>
-        </section>
       </main>
-
       <footer className="welcome-footer mt-8 text-center">
-        <Button className="m-auto" navigateTo="/next-page">
-          save & continue
+        <Button className="m-auto" navigateTo="/little-dreams">
+          Save & Continue
         </Button>
       </footer>
     </>
