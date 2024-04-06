@@ -1,9 +1,10 @@
 import { useState } from "react";
-
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
-
+import InputBox from "../components/InputBox";
+import Button from "../components/Button";
 import Auth from "../utils/auth";
+import { FiEyeOff, FiEye } from "react-icons/fi";
 
 const SignupForm = () => {
   const [userFormData, setUserFormData] = useState({
@@ -21,20 +22,20 @@ const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPWConfirmation, setShowPWConfirmation] = useState(false);
 
-  //password functions
+  // password functions
   const pwCompare = (password1, password2) => {
     console.log(`pwCompare: ${password1 === password2}`);
     return password1 === password2;
   };
   const toggleShowPassword = () => {
-    setShowPassword(prevState => !prevState);
+    setShowPassword(!showPassword);
   };
   const isEmailValid = email => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  //Handle input Change function
+  // Handle input Change function
   const handleInputChange = event => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
@@ -53,7 +54,7 @@ const SignupForm = () => {
     }
   };
 
-  //Handle form submit function
+  // Handle form submit function
   const handleFormSubmit = async event => {
     setError("");
     event.preventDefault();
@@ -114,80 +115,146 @@ const SignupForm = () => {
           </p>
         </>
       ) : (
-        <>
-          <form onSubmit={handleFormSubmit}>
-            <div>
-              <label htmlFor="firstName">First Name:</label>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                value={userFormData.firstName}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="email">Email:</label>
-              <input
-                type="text"
-                id="email"
-                name="email"
-                value={userFormData.email}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="password">Password:</label>
-              <input
-                type={showPassword ? "text" : "password"} // Show text or password
-                id="password"
-                name="password"
-                value={userFormData.password}
-                onChange={handleInputChange}
-                // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                // title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-                required
-              />
-              <button type="button" onClick={toggleShowPassword}>
-                Show Password
-              </button>
-            </div>
-            <div>
-              <label htmlFor="confirmPassword">Confirm Password:</label>
-              <input
-                type={showPassword ? "text" : "password"} // Show text or password
-                id="confirmPassword"
-                name="confirmPassword"
-                value={userFormData.confirmPassword}
-                onChange={handleInputChange}
-                required
-              />
-              {showPWConfirmation ? (
-                <p>Passwords match</p>
-              ) : (
-                <p>Passwords do not match</p>
-              )}
-            </div>
-            {/* Password requirement info div! */}
-            {/* <div>
-              <p>Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</p>
-            </div> */}
-            {/* End of password requirement div */}
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={loading}
-            >
-              Sign up!
-            </button>
-          </form>
-          <p>
-            Already have an account? <a href="/">Login here</a>
-          </p>
-          {error && <div>{error}</div>}
-        </>
+        <div className="flex h-full flex-col md:flex-row">
+          <div className="relative flex w-full flex-col items-center justify-center md:w-3/5">
+            <h2 className="mb-4 text-center text-3xl md:text-5xl">
+              let's improve together
+            </h2>
+            <p className="text-center">
+              An application to help you dream big, and stay on course to live
+              your best life.
+            </p>
+          </div>
+          <div className="flex w-full flex-col items-center justify-center border-t border-gray-200 p-8 md:w-2/5 md:border-l md:border-t-0">
+            <h2 className="mb-4 text-center text-3xl md:text-5xl">Signup</h2>
+            <form onSubmit={handleFormSubmit} className="w-full md:w-9/12">
+              <div className="mb-4">
+                <label
+                  htmlFor="firstName"
+                  className="mb-2 block font-bold text-gray-700"
+                >
+                  First Name:
+                </label>
+                <InputBox
+                  type="text"
+                  id="firstName"
+                  name="firstName"
+                  value={userFormData.firstName}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="email"
+                  className="mb-2 block font-bold text-gray-700"
+                >
+                  Email:
+                </label>
+                <InputBox
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={userFormData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="password"
+                  className="mb-2 block font-bold text-gray-700"
+                >
+                  Password:
+                </label>
+                <div className="relative">
+                  <InputBox
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name="password"
+                    value={userFormData.password}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 transform focus:outline-none"
+                    onClick={toggleShowPassword}
+                  >
+                    {showPassword ? (
+                      <FiEyeOff className="h-5 w-5 text-gray-500" />
+                    ) : (
+                      <FiEye className="h-5 w-5 text-gray-500" />
+                    )}
+                  </button>
+                </div>
+              </div>
+              <div className="mb-6">
+                <label
+                  htmlFor="confirmPassword"
+                  className="mb-2 block font-bold text-gray-700"
+                >
+                  Confirm Password:
+                </label>
+                <div className="relative">
+                  <InputBox
+                    type={showPassword ? "text" : "password"}
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    value={userFormData.confirmPassword}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <button
+                    type="button"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 transform focus:outline-none"
+                    onClick={toggleShowPassword}
+                  >
+                    {showPassword ? (
+                      <FiEyeOff className="h-5 w-5 text-gray-500" />
+                    ) : (
+                      <FiEye className="h-5 w-5 text-gray-500" />
+                    )}
+                  </button>
+                </div>
+                <div
+                  className={`mt-2 h-6 ${
+                    userFormData.password || userFormData.confirmPassword
+                      ? "opacity-100"
+                      : "opacity-0"
+                  } transition-opacity duration-300`}
+                >
+                  {showPWConfirmation ? (
+                    <p className="text-sm text-green-600">Passwords match</p>
+                  ) : (
+                    <p className="text-sm text-red-600">
+                      Passwords do not match
+                    </p>
+                  )}
+                </div>
+              </div>
+              <Button
+                type="submit"
+                className="w-full"
+                disabled={loading}
+                navigateTo="/ten-year-dream"
+              >
+                Sign up!
+              </Button>
+            </form>
+            <p className="mt-4 text-center">
+              Already have an account?{" "}
+              <a href="/" className="text-blue-500 hover:text-blue-700">
+                Login here
+              </a>
+            </p>
+            {error && <div className="mt-4 text-red-600">{error}</div>}
+          </div>
+        </div>
       )}
     </>
   );
