@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 
 const dreamSchema = new Schema({
   bigDream: {
@@ -9,7 +9,7 @@ const dreamSchema = new Schema({
   littleDreams: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'LittleDreams',
+      ref: "LittleDreams",
     },
   ],
   ultimateGoal: {
@@ -19,6 +19,6 @@ const dreamSchema = new Schema({
   },
 });
 
-const Dream = model('Dream', dreamSchema);
+const Dream = model("Dream", dreamSchema);
 
 module.exports = Dream;

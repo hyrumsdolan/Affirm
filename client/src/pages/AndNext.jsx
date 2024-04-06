@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { getClaudeResponse } from '../utils/callClaude';
-import SelectableButton from '../components/SelectableButton';
-import { useNavigate } from 'react-router-dom';
-import Button from '../components/Button';
-import { useMutation } from '@apollo/client';
-import { ADD_LITTLE_DREAMS } from '../utils/mutations';
+import React, { useState, useEffect } from "react";
+import { getClaudeResponse } from "../utils/callClaude";
+import SelectableButton from "../components/SelectableButton";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/Button";
+import { useMutation } from "@apollo/client";
+import { ADD_LITTLE_DREAMS } from "../utils/mutations";
 
 const AndNext = () => {
   const [selectedDreams, setSelectedDreams] = useState({});
@@ -18,7 +18,7 @@ const AndNext = () => {
   }, []);
 
   const toggleDreamSelection = (dream, isSelected) => {
-    setSelectedDreams((prevSelected) => ({
+    setSelectedDreams(prevSelected => ({
       ...prevSelected,
       [dream]: isSelected
     }));
@@ -26,30 +26,38 @@ const AndNext = () => {
 
   const handleSave = async () => {
     try {
-      const selectedDreamsArray = Object.keys(selectedDreams).filter(dream => selectedDreams[dream]);
-      await addLittleDreams({ variables: { littleDreams: selectedDreamsArray } });
-      navigate('/summary-dreams-page');
+      const selectedDreamsArray = Object.keys(selectedDreams).filter(
+        dream => selectedDreams[dream]
+      );
+      await addLittleDreams({
+        variables: { littleDreams: selectedDreamsArray }
+      });
+      navigate("/one-goal");
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   return (
     <div className="">
-      <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 justify-around">
+      <main className="grid grid-cols-1 justify-around gap-1 md:grid-cols-2 lg:grid-cols-3">
         {dreams.map((dream, index) => (
-          <div className='m-10' key={index}>
+          <div className="m-10" key={index}>
             <SelectableButton
               initialText={dream}
               disabled={selectedDreams[dream]}
-              onSelect={(isSelected) => toggleDreamSelection(dream, isSelected)}
+              onSelect={isSelected => toggleDreamSelection(dream, isSelected)}
             />
           </div>
         ))}
       </main>
-      <Button onClick={handleSave}
+      <Button
+        onClick={handleSave}
         className="r-0 absolute right-0 m-10"
-        navigateTo='/and-next'>save & continue</Button>
+        navigateTo="/one-goal"
+      >
+        save & continue
+      </Button>
     </div>
   );
 };

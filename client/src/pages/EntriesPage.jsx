@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { useQuery } from '@apollo/client';
-import SelectableButton from '../components/SelectableButton';
-import EntryDetails from '../components/EntryDetails';
+import React, { useState } from "react";
+import { useQuery } from "@apollo/client";
+import SelectableButton from "../components/SelectableButton";
+import EntryDetails from "../components/EntryDetails";
 
 const EntriesPage = () => {
   const { loading, error, data } = useQuery(GET_ENTRY);
@@ -17,7 +17,7 @@ const EntriesPage = () => {
 
   const entries = data?.entries || [];
 
-  const handleEntryClick = (entry) => {
+  const handleEntryClick = entry => {
     if (selectedEntry === entry) {
       setSelectedEntry(null);
     } else {
@@ -28,7 +28,7 @@ const EntriesPage = () => {
   return (
     <div>
       <h1>My Entries</h1>
-      {entries.map((entry) => (
+      {entries.map(entry => (
         <div key={entry._id}>
           <SelectableButton
             initialText={entry.createdAt}

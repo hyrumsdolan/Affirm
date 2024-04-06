@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { FaCheck, FaEdit } from 'react-icons/fa';
+import React, { useState } from "react";
+import { FaCheck, FaEdit } from "react-icons/fa";
 
 const SelectableButton = ({
   initialText,
   onSelect,
   onTextChange,
   disabled = false,
-  width = '485px',
-  height = '72px',
+  width = "485px",
+  height = "72px"
 }) => {
   const [isSelected, setIsSelected] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -25,7 +25,7 @@ const SelectableButton = ({
     setIsEditing(true);
   };
 
-  const handleTextChange = (e) => {
+  const handleTextChange = e => {
     setButtonText(e.target.value);
   };
 
@@ -35,51 +35,51 @@ const SelectableButton = ({
   };
 
   const buttonStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-start",
     width: width,
     height: height,
-    padding: '10px',
-    borderRadius: '5px',
-    border: 'none',
-    backgroundColor: isSelected && !disabled ? '#8B9CB6' : '#CCCCCC',
-    color: isSelected && !disabled ? '#ECFFCC' :'#ffffff',
-    cursor: disabled ? 'default' : 'pointer',
-    outline: 'none',
-    transition: 'background-color 0.3s ease',
+    padding: "10px",
+    borderRadius: "5px",
+    border: "none",
+    backgroundColor: isSelected && !disabled ? "#8B9CB6" : "#CCCCCC",
+    color: isSelected && !disabled ? "#ECFFCC" : "#ffffff",
+    cursor: disabled ? "default" : "pointer",
+    outline: "none",
+    transition: "background-color 0.3s ease"
   };
 
   const circleStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '24px',
-    height: '24px',
-    borderRadius: '50%',
-    border: '2px solid #ffffff',
-    marginRight: '10px',
-    backgroundColor: isSelected && !disabled ? '#ECFFCC' : 'transparent',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "24px",
+    height: "24px",
+    borderRadius: "50%",
+    border: "2px solid #ffffff",
+    marginRight: "10px",
+    backgroundColor: isSelected && !disabled ? "#ECFFCC" : "transparent"
   };
 
   const checkmarkStyle = {
-    color: '#A39191',
+    color: "#A39191"
   };
 
   const inputStyle = {
-    width: '100%',
-    padding: '5px',
-    border: 'none',
-    borderBottom: '1px solid #2E7DFF',
-    backgroundColor: 'transparent',
-    color: '#2E7DFF',
-    outline: 'none',
+    width: "100%",
+    padding: "5px",
+    border: "none",
+    borderBottom: "1px solid #2E7DFF",
+    backgroundColor: "transparent",
+    color: "#2E7DFF",
+    outline: "none"
   };
 
   const iconStyle = {
-    marginLeft: 'auto',
-    color: isSelected && !disabled ? '#ffffff' : '#2E7DFF',
-    cursor: 'pointer',
+    marginLeft: "auto",
+    color: isSelected && !disabled ? "#ffffff" : "#2E7DFF",
+    cursor: "pointer"
   };
 
   return (
@@ -101,10 +101,13 @@ const SelectableButton = ({
       ) : (
         <>
           <span>{buttonText}</span>
-          <span style={iconStyle} onClick={(e) => {
-            e.stopPropagation();
-            handleEdit();
-          }}>
+          <span
+            style={iconStyle}
+            onClick={e => {
+              e.stopPropagation();
+              handleEdit();
+            }}
+          >
             <FaEdit />
           </span>
         </>

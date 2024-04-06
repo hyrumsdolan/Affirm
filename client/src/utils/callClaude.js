@@ -1,14 +1,14 @@
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import { CALL_CLAUDE } from './mutations';
-import  client  from './apolloClient';
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { CALL_CLAUDE } from "./mutations";
+import client from "./apolloClient";
 
-export const sendToClaude = async (input, targetStorage=0) => {
+export const sendToClaude = async (input, targetStorage = 0) => {
   try {
     console.log("Sending to Claude:", input);
 
     const { data } = await client.mutate({
       mutation: CALL_CLAUDE,
-      variables: { input },
+      variables: { input }
     });
 
     const result = data.callClaude;

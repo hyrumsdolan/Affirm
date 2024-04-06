@@ -97,7 +97,6 @@ const LoginForm = () => {
       setIsAccountLocked(true);
     }
   };
-
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
