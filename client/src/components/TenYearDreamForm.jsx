@@ -24,7 +24,8 @@ function TenYearDreamForm({ user }) {
   const handleSave = async () => {
     try {
       console.log("Saving dream:", dreamText);
-      navigate("/and-next");
+      await sendToClaude(dreamText);
+      navigate('/and-next');
     } catch (error) {
       console.error("Error:", error);
     }
@@ -46,7 +47,9 @@ function TenYearDreamForm({ user }) {
       <Button
         className="mt-4 w-full"
         user={user}
+        saveToUser='bigdream'
         isEnabled={dreamText.length > 10}
+        inputForDBSave={dreamText}
         onClick={handleSave}
       >
         save & continue

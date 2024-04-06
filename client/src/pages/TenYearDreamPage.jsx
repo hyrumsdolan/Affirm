@@ -32,10 +32,10 @@ Get ready to embark on a journey of self-discovery and growth. Your ideal future
   }
 
   return (
-    <div className="flex h-full items-center justify-center transition-all duration-200 dark:bg-zinc-950 dark:text-white">
-      <div className=" flex h-5/6 max-w-5xl justify-between font-sans">
-        <div className="w-1/2 pr-8">
-          <h1 className="text-center text-6xl font-light">Ten Year Dream.</h1>
+    
+      <div className="flex justify-between items-center h-full m-5">
+        <div className="flex-1 justify-between">
+          <h1 className="text-center ">Ten Year Dream.</h1>
           <p>
             <span className="inline-flex items-center">
               <SpeakerButton text={dreamText} />
@@ -43,11 +43,11 @@ Get ready to embark on a journey of self-discovery and growth. Your ideal future
             {dreamText}
           </p>
         </div>
-        <div className="h-full w-1/2 border-l border-gray-300 pl-8">
+        <div className="flex-1 justify-between h-full border-l border-gray-300 pl-8">
           <TenYearDreamForm user={data?.me} />
         </div>
       </div>
-    </div>
+  
   );
 }
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-// import './WelcomeBack.css'; 
+import SelectableButton from '../components/SelectableButton';
+import Button from '../components/Button';
 
 const WelcomeBack = () => {
   const [gratitudes, setGratitudes] = useState(['The weather was so god damn beautiful today', '', '', '', '']);
@@ -11,38 +12,63 @@ const WelcomeBack = () => {
     setGratitudes(updatedGratitudes);
   };
 
+  const renderGratitudeInputs = new Array(10).fill('enter a gratitude...');
+
+
+  const groupItems = (items, groupSize) => {
+    let grouped = [];
+    for (let i = 0; i < items.length; i += groupSize) {
+      grouped.push(items.slice(i, i + groupSize));
+    }
+    return grouped;
+  };
+  const groupedDreams = groupItems(renderGratitudeInputs, 3);
+
   return (
-    <div className="welcome-back-page">
-      <header className="welcome-header">
-        <h1>affirm.</h1>
-        <h2>welcome back :)</h2>
-        <p>Let’s get affirming.</p>
+    <>
+      <header className="text-center mb-8">
+        <h1 className="text-2xl mb-4">welcome back :)</h1>
+        <p className="text-lg">Let's get affirming.</p>
       </header>
-      <main className="content">
-        <section className="gratitudes-section">
-          {gratitudes.map((gratitude, index) => (
-            <div key={index} className="gratitude-item">
-              <input
-                type="text"
-                value={gratitude}
-                onChange={(e) => handleGratitudeChange(index, e.target.value)}
-                placeholder="input gratitude here..."
-              />
-              <span className="edit-icon">✏️</span>
-            </div>
-          ))}
-        </section>
-        <section className="main-dream-section">
+
+      <main className="">
+      <div className="flex flex-col items-center">
+    {groupedDreams.map((group, index) => (
+      <div key={index} className="flex justify-center gap-4 mb-4">
+        {group.map((dream, index) => (
+          <div className="" key={index}>
+            <SelectableButton
+              initialText={dream}
+              disabled={false}
+            />
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+
+        <section className="flex flex-col items-center text-center mt-8">
           <div className="main-dream">
-            <span>The main dream</span>
-            <button className="dream-button">{mainDream}</button>
+            <span className="text-lg font-bold">The main dream</span>
+            <div className="mt-4">
+              <SelectableButton
+                initialText={mainDream}
+                disabled={true}
+              />
+            </div>
           </div>
         </section>
       </main>
-      <footer className="welcome-footer">
-        <button className="continue-button">save & continue</button>
+
+      <footer className="welcome-footer text-center mt-8">
+        <Button
+          className="m-auto"
+          navigateTo="/next-page"
+        >
+          save & continue
+        </Button>
       </footer>
-    </div>
+    </>
   );
 };
 

@@ -1,6 +1,5 @@
-
 const typeDefs = `
-type User {
+  type User {
     _id: ID
     firstName: String
     email: String
@@ -16,7 +15,7 @@ type User {
     littleDream: String
     selected: Boolean
   }
-  
+
   type Dream {
     _id: ID
     bigDream: String
@@ -31,19 +30,19 @@ type User {
     ultimateAffirmation: String
     createdAt: String
   }
-  
+
   type Auth {
     token: ID!
     user: User
   }
-  
+
   type Query {
     me: User
     myDream: Dream
     entries: [Entry]
     entry(_id: ID!): Entry
   }
-  
+
   type Mutation {
     addUser(firstName: String!, email: String!, password: String!): Auth
     loginUser(email: String!, password: String!): Auth
@@ -52,9 +51,9 @@ type User {
     deleteEntry(_id: ID!): Entry
     callClaude(input: String!): String
     addBigDream(bigDream: String!): Dream
-  addLittleDream(littleDream: String!): LittleDreams
-  addUltimateGoal(ultimateGoal: String!): Dream
+    addLittleDreams(littleDreams: [String!]!): [LittleDreams]
+    addUltimateGoal(ultimateGoal: String!): Dream
   }
-  `;
-  
-  module.exports = typeDefs;
+`;
+
+module.exports = typeDefs;

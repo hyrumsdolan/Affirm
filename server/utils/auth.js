@@ -1,45 +1,33 @@
-const { AuthenticationError } = require("apollo-server-express");
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
-
+const { AuthenticationError } = require('apollo-server-express');
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
 const secret = process.env.AUTH_SECRET;
-console.log("secret: ", secret);
-const expiration = "2h";
+const expiration = '2h';
 
 module.exports = {
   authMiddleware: function ({ req }) {
-    const publicOperations = ['loginUser', 'addUser'];
+    let token = req.body.token || req.query.token || req.headers.authorization;
 
-    if (publicOperations.includes(req.body.operationName)) {
-      // Allow login and signup operations without authentication
-      return req;
-    }
-
-    let token = req.headers.authorization;
-
-    if (token) {
-      token = token.split(' ')[1];
+    if (req.headers.authorization) {
+      token = token.split(' ').pop().trim();
     }
 
     if (!token) {
-      throw new AuthenticationError("Token not provided!");
+      return req;
     }
 
     try {
-
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
       req.user = data;
-    } catch (error) {
-      console.log("Token verification error:", error.message);
-      throw new AuthenticationError("Invalid token!");
+    } catch {
+      console.log('Invalid token');
     }
 
     return req;
   },
 
-  signToken: function ({ email, firstName, _id }) {
-    const payload = { email, firstName, _id };
-    console.log("payload: ", payload);
+  signToken: function ({ email, name, _id }) {
+    const payload = { email, name, _id };
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
 };
