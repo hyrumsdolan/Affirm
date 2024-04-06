@@ -49,8 +49,8 @@ const LoginForm = () => {
   return (
     <div className="flex h-full flex-col md:flex-row">
       <div className="relative flex w-full flex-col items-center justify-center md:w-3/5">
-        <h1 className="mb-4 text-center">let's improve together</h1>
-        <h2 className="text-center">
+        <h1 className="my-4 text-center">let's improve together</h1>
+        <h2 className="my-4 text-center">
           An app to help you dream BIG and stay on track to achieve your vision.
         </h2>
       </div>
