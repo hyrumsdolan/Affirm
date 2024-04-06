@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import MicrophoneButton from './MicrophoneButton';
-import Button from './Button';
-import { sendToClaude } from '../utils/callClaude';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import MicrophoneButton from "./MicrophoneButton";
+import Button from "./Button";
+import { sendToClaude } from "../utils/callClaude";
 
 function TenYearDreamForm({ user }) {
   const [dreamText, setDreamText] = useState("");
@@ -24,20 +24,20 @@ function TenYearDreamForm({ user }) {
   const handleSave = async () => {
     try {
       console.log("Saving dream:", dreamText);
-      navigate('/and-next');
+      navigate("/and-next");
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
     }
   };
 
   return (
-    <div className="flex flex-col h-full pb-32">
+    <div className="flex h-full flex-col pb-32">
       <div className="relative flex flex-grow">
         <textarea
           className="block w-full resize-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
           value={dreamText}
           onChange={handleChange}
-          placeholder="Type or speak your dream into the box below"
+          placeholder="The best version of me is..."
         />
         <div className="absolute bottom-2 right-2">
           <MicrophoneButton onTranscript={handleTranscript} />
