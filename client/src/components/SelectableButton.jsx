@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck, FaEdit } from 'react-icons/fa';
 
-// use this button component like this:
-// <SelectableButton initialText="Button 1" onSelect={handleSelect} onTextChange={handleTextChange} disabled={false} />
-// <SelectableButton initialText="Button 2" onSelect={handleSelect} onTextChange={handleTextChange} disabled={true} />
-
-const SelectableButton = ({ initialText, onSelect, onTextChange, disabled = false }) => {
+const SelectableButton = ({
+  initialText,
+  onSelect,
+  onTextChange,
+  disabled = false,
+  width = '485px',
+  height = '72px',
+}) => {
   const [isSelected, setIsSelected] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [buttonText, setButtonText] = useState(initialText);
@@ -35,15 +38,16 @@ const SelectableButton = ({ initialText, onSelect, onTextChange, disabled = fals
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    width: '485px',
-    height: '72px',
+    width: width,
+    height: height,
     padding: '10px',
     borderRadius: '5px',
     border: 'none',
     backgroundColor: isSelected && !disabled ? '#8B9CB6' : '#CCCCCC',
-    color: '#ffffff',
+    color: isSelected && !disabled ? '#ECFFCC' :'#ffffff',
     cursor: disabled ? 'default' : 'pointer',
     outline: 'none',
+    transition: 'background-color 0.3s ease',
   };
 
   const circleStyle = {
@@ -74,17 +78,17 @@ const SelectableButton = ({ initialText, onSelect, onTextChange, disabled = fals
 
   const iconStyle = {
     marginLeft: 'auto',
-    color: '#2E7DFF',
+    color: isSelected && !disabled ? '#ffffff' : '#2E7DFF',
     cursor: 'pointer',
   };
 
   return (
     <div style={buttonStyle} onClick={handleSelect}>
-      {!disabled && (
+      {/* {!disabled && (
         <div style={circleStyle}>
           {isSelected && <FaCheck style={checkmarkStyle} />}
         </div>
-      )}
+      )} */}
       {isEditing ? (
         <input
           type="text"
@@ -101,7 +105,7 @@ const SelectableButton = ({ initialText, onSelect, onTextChange, disabled = fals
             e.stopPropagation();
             handleEdit();
           }}>
-            ✎
+            <FaEdit />
           </span>
         </>
       )}

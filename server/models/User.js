@@ -34,7 +34,7 @@ const userSchema = new Schema(
     ],
     theme: {
       type: String,
-      required: true,
+      // required: true, // Made not required, because I don't know what it is
     },
   },
   {

@@ -13,6 +13,7 @@ import OneGoalPage from './pages/OneGoal.jsx';
 import AndNextPage from './pages/AndNext.jsx';
 import SummaryDreamsPage from './pages/SummaryDreams.jsx';
 import WelcomeBackPage from './pages/WelcomeBack.jsx';
+import PrivateRoute from './components/PrivateRouter.jsx';
 
 const router = createBrowserRouter([
   {
@@ -34,27 +35,27 @@ const router = createBrowserRouter([
       },
       {
         path: '/ten-year-dream',
-        element: <TenYearDreamPage />
+        element: <PrivateRoute element={TenYearDreamPage} />
       },
       {
         path: "/testing",
-        element: <TestingPage />
+        element: <PrivateRoute element={TestingPage} />
       },
       {
         path: "/and-next",
-        element: <AndNextPage />
+        element: <PrivateRoute element={AndNextPage} />
       },
       {
         path: "/summary-dreams-page",
-        element: <SummaryDreamsPage />
+        element: <PrivateRoute element={SummaryDreamsPage} />
       },
       {
         path: "/welcome-back",
-        element: <WelcomeBackPage />
+        element: <PrivateRoute element={WelcomeBackPage} />
       },
       {
         path: "/one-goal",
-        element: <OneGoalPage />
+        element: <PrivateRoute element={OneGoalPage} />
       }
     ]
   }

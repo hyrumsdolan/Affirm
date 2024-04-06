@@ -51,6 +51,9 @@ type User {
     updateEntry(_id: ID!, title: String, content: String): Entry
     deleteEntry(_id: ID!): Entry
     callClaude(input: String!): String
+    addBigDream(bigDream: String!): Dream
+  addLittleDream(littleDream: String!): LittleDreams
+  addUltimateGoal(ultimateGoal: String!): Dream
   }
   `;
   

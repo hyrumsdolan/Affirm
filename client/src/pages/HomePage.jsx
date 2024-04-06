@@ -10,7 +10,7 @@ const HomePage = () => {
   if (!token) {
     return false;
   }
-  console.log(token);
+  
   
   const { data } = useQuery(GET_ME, {  
     context: {
@@ -18,6 +18,8 @@ const HomePage = () => {
         authorization: token ? `Bearer ${token}` : "",
       },
   }});
+
+ 
 
   return (
     <>

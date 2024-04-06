@@ -1,4 +1,4 @@
-const { User, Entry } = require('../models');
+const { User, Entry, Dream, LittleDreams } = require('../models');
 const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const claudeAPICall = require('../utils/claudeAPI');
@@ -50,9 +50,8 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    // setPageProgress: async (parent, { pageProgress }, context) => {
-// What is this suppose to be? @Landon from Hyrum
-    // },
+    // setPageProgress: async (parent, { pageProgress }, context) => { 
+
     createEntry: async (parent, { title, content }, context) => {
       if (context.user) {
         const entry = await Entry.create({
@@ -98,6 +97,40 @@ const resolvers = {
         return response;
       }
       throw new AuthenticationError('User unable to authenticate, unable to call Claude.');
+    },
+    addBigDream: async (parent, { bigDream }, context) => {
+      if (context.user) {
+        const dream = await Dream.findOneAndUpdate(
+          { _id: context.user.dream },
+          { bigDream },
+          { new: true, upsert: true }
+        );
+        return dream;
+      }
+      throw new AuthenticationError('User not logged in, unable to add big dream');
+    },
+
+    addLittleDream: async (parent, { littleDream }, context) => {
+      if (context.user) {
+        const dream = await Dream.findOne({ _id: context.user.dream });
+        const newLittleDream = await LittleDreams.create({ littleDream });
+        dream.littleDreams.push(newLittleDream);
+        await dream.save();
+        return newLittleDream;
+      }
+      throw new AuthenticationError('User not logged in, unable to add little dream');
+    },
+
+    addUltimateGoal: async (parent, { ultimateGoal }, context) => {
+      if (context.user) {
+        const dream = await Dream.findOneAndUpdate(
+          { _id: context.user.dream },
+          { ultimateGoal },
+          { new: true, upsert: true }
+        );
+        return dream;
+      }
+      throw new AuthenticationError('User not logged in, unable to add ultimate goal');
     },
   },
 };

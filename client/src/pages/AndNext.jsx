@@ -30,31 +30,24 @@ const AndNext = () => {
   };
 
   return (
-    <div className="and-next-page">
-      <header className="and-next-header">
-        <h1>affirm.</h1>
-        <h2>...and next</h2>
-        <p>
-          Now that you've painted your 10-year future, it's important to narrow your vision down to the 10 most
-          important factors of your dream. I've consolidated your dream down to several bullet points. Please
-          select the TEN that matter the most to you.
-        </p>
-      </header>
-      <main className="dreams-selection">
-        {dreams.map((dream, index) => (
-          <SelectableButton
-            key={index}
-            initialText={dream}
-            disabled={selectedDreams[dream]}
-            onClick={() => toggleDreamSelection(dream)}
-          />
-        ))}
-      </main>
-      <footer className="and-next-footer">
-        <Button onClick={handleSave} className="continue-button">save & continue</Button>
-      </footer>
+    <div className="">
+        <main className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1 justify-around">
+            {dreams.map((dream, index) => (
+              <div className='m-10'>
+                <SelectableButton
+                
+                    key={index}
+                    initialText={dream}
+                    disabled={selectedDreams[dream]}
+                    onClick={() => toggleDreamSelection(dream)}
+                />
+                </div>
+            ))}
+        </main>
+        <Button onClick={handleSave} className="r-0 absolute right-0 m-10">save & continue</Button>
     </div>
-  );
+);
+
 };
 
 export default AndNext;

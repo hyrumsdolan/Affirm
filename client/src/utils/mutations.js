@@ -61,3 +61,30 @@ export const CALL_CLAUDE = gql`
     callClaude(input: $input)
   }
 `;
+
+export const ADD_BIG_DREAM = gql`
+  mutation AddBigDream($bigDream: String!) {
+    addBigDream(bigDream: $bigDream) {
+      _id
+      bigDream
+    }
+  }
+`;
+
+export const ADD_LITTLE_DREAM = gql`
+  mutation AddLittleDream($littleDream: String!) {
+    addLittleDream(littleDream: $littleDream) {
+      _id
+      littleDream
+    }
+  }
+`;
+
+export const ADD_ULTIMATE_GOAL = gql`
+  mutation AddUltimateGoal($ultimateGoal: String!) {
+    addUltimateGoal(ultimateGoal: $ultimateGoal) {
+      _id
+      ultimateGoal
+    }
+  }
+`;

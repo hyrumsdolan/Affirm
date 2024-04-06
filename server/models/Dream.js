@@ -7,8 +7,8 @@ const dreamSchema = new Schema({
   },
   littleDreams: [
     {
-        type: Schema.Types.ObjectId,
-        ref: 'LittleDreams',
+      type: Schema.Types.ObjectId,
+      ref: 'LittleDreams',
     },
   ],
   ultimateGoal: {

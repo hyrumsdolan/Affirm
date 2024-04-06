@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import MicrophoneButton from './MicrophoneButton';
 import Button from './Button';
 import { sendToClaude } from '../utils/callClaude';
 
-function TenYearDreamForm() {
+function TenYearDreamForm({ user }) {
   const [dreamText, setDreamText] = useState("");
   const [lastAppendedTranscript, setLastAppendedTranscript] = useState("");
   const navigate = useNavigate();
@@ -24,7 +23,6 @@ function TenYearDreamForm() {
 
   const handleSave = async () => {
     try {
-      dreamText ? await sendToClaude(dreamText) : console.log("No dream to save");// Probably need a better way to handle this
       console.log("Saving dream:", dreamText);
       navigate('/and-next');
     } catch (error) {
@@ -33,11 +31,10 @@ function TenYearDreamForm() {
   };
 
   return (
-    <div className="flex h-screen flex-col pb-32">
+    <div className="flex flex-col h-full pb-32">
       <div className="relative flex flex-grow">
         <textarea
-          className="block w-full flex-grow resize-none appearance-none rounded-md border border-gray-300 px-3 py-2
-            placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 focus:placeholder:opacity-0 sm:text-sm"
+          className="block w-full resize-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
           value={dreamText}
           onChange={handleChange}
           placeholder="Type or speak your dream into the box below"
@@ -46,7 +43,14 @@ function TenYearDreamForm() {
           <MicrophoneButton onTranscript={handleTranscript} />
         </div>
       </div>
-      <Button onClick={handleSave}>save & continue</Button>
+      <Button
+        className="mt-4 w-full"
+        user={user}
+        isEnabled={dreamText.length > 10}
+        onClick={handleSave}
+      >
+        save & continue
+      </Button>
     </div>
   );
 }

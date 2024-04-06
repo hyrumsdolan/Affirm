@@ -10,18 +10,15 @@ import AuthService from "./utils/auth";
 import "./css/tailwind.css";
 import { addDarkMode } from "./utils/toggleDarkMode";
 import SettingsDropdown from "./components/settingsDropdown";
-
+import Logo from "./components/Logo";
 import { Outlet } from "react-router-dom";
 
-// Construct request middleware that will attach the JWT token to every request as an `authorization` header
 const httpLink = createHttpLink({
   uri: "/graphql"
 });
 
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
   const token = AuthService.getToken();
-  // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
@@ -32,17 +29,23 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  // uri: '/graphql',
   cache: new InMemoryCache()
 });
 
-addDarkMode();
+// addDarkMode();
 
 function App() {
   return (
     <ApolloProvider client={client}>
-      <SettingsDropdown />
-      <Outlet />
+      <div className="flex flex-col max-h-screen h-screen">
+        <div className="flex-none px-8 py-4">
+          <Logo />
+          <SettingsDropdown />
+        </div>
+        <div className="flex-1 ">
+          <Outlet />
+        </div>
+      </div>
     </ApolloProvider>
   );
 }
