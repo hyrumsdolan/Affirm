@@ -7,21 +7,18 @@ import InputBox from "../components/InputBox";
 import Button from "../components/Button";
 import Auth from "../utils/auth";
 
-
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: "", password: "" });
   const [showAlert, setShowAlert] = useState(false);
   const [loginUser] = useMutation(LOGIN_USER);
   const navigate = useNavigate();
 
-
-
-  const handleInputChange = (event) => {
+  const handleInputChange = event => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
   };
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async event => {
     event.preventDefault();
 
     // check if form has everything (as per react-bootstrap docs)
@@ -32,12 +29,11 @@ const LoginForm = () => {
       try {
         console.log("User Form Data: ", userFormData);
         const { data } = await loginUser({
-          variables: { ...userFormData },
+          variables: { ...userFormData }
         });
         console.log("look here FOR DATA");
 
         console.log("Login Page Data:", data);
-
         Auth.login(data.loginUser.token);
 
         setUserFormData({ email: "", password: "" });
@@ -113,6 +109,6 @@ const LoginForm = () => {
         </div>
       </div>
   );
-}
+};
 
 export default LoginForm;
