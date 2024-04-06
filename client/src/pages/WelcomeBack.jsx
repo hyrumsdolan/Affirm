@@ -60,7 +60,7 @@ const WelcomeBack = () => {
       </main>
 
       <footer className="welcome-footer mt-8 text-center">
-        <Button className="m-auto" navigateTo="/next-page">
+        <Button className="m-auto" navigateTo="/come-back-tomorrow">
           save & continue
         </Button>
       </footer>
