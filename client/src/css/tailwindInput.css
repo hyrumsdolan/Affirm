@@ -5,7 +5,7 @@
 /* Custom CSS */
 
 h1 {
-  @apply text-8xl font-light;
+  @apply text-6xl font-light;
 }
 
 h2 {
