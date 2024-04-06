@@ -1,25 +1,24 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const GET_ME = gql`
-query Query {
-  me {
-    _id
-    firstName
-    email
-    password
-    pageProgress
-    dream {
+  query Query {
+    me {
       _id
-      bigDream
-      littleDreams {
+      firstName
+      email
+      password
+      pageProgress
+      dream {
         _id
-        littleDream
-        selected
+        bigDream
+        littleDreams {
+          _id
+          littleDream
+          selected
+        }
+        ultimateGoal
       }
-      ultimateGoal
+      theme
     }
-    theme
   }
-}
-
 `;

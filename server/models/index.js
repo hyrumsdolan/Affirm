@@ -1,6 +1,6 @@
-const User = require('./User');
-const Entry = require('./Entry');
-const LittleDreams = require('./LittleDreams');
-const Dream = require('./Dream');
+const User = require("./User");
+const Entry = require("./Entry");
+const LittleDreams = require("./LittleDreams");
+const Dream = require("./Dream");
 
-module.exports = { User, Entry, Dream, LittleDreams};
+module.exports = { User, Entry, Dream, LittleDreams };

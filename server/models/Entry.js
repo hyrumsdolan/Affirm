@@ -1,26 +1,28 @@
-const { Schema, model } = require('mongoose');
-
+const { Schema, model } = require("mongoose");
 
 const entrySchema = new Schema({
-  gratefulFor: [{
-    type: String,
-    required: true,
-  }],
-  dailyAffirmations: [{
-    type: String,
-    required: true,
-  }],
+  gratefulFor: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
+  dailyAffirmations: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   ultimateAffirmation: {
     type: String,
     required: true,
   },
   createdAt: {
-    type: String,
-    required: true,
+    type: Date,
     default: Date.now,
   },
 });
 
-const Entry = model('Entry', entrySchema);
+const Entry = model("Entry", entrySchema);
 
 module.exports = Entry;

@@ -53,6 +53,7 @@ const typeDefs = `
     addBigDream(bigDream: String!): Dream
     addLittleDreams(littleDreams: [String!]!): [LittleDreams]
     addUltimateGoal(ultimateGoal: String!): Dream
+    createEntry(gratefulFor: [String!]!, dailyAffirmations: [String!]!, ultimateAffirmation: String!): Entry
   }
 `;
 

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { getClaudeResponse } from '../utils/callClaude';
-import SelectableButton from '../components/SelectableButton';
-import Button from '../components/Button';
+import React, { useEffect, useState } from "react";
+import { getClaudeResponse } from "../utils/callClaude";
+import SelectableButton from "../components/SelectableButton";
+import Button from "../components/Button";
 
 const sampleDreams = [
   "Travel the world",
@@ -27,11 +27,9 @@ const SummaryDreams = () => {
     }
     return grouped;
   };
-  
+
   // Using your dreams array
   const groupedDreams = groupItems(dreams, 3);
-  
-  
 
   useEffect(() => {
     const fetchedDreams = getClaudeResponse();
@@ -40,51 +38,40 @@ const SummaryDreams = () => {
     console.log(fetchedDreamGeneral);
     const fetchedCoreDream = [fetchedDreams.slice(-1)[0]];
     console.log(fetchedCoreDream);
-    setDreams(fetchedDreamGeneral); // for testing setDreams(sampleDreams); 
+    setDreams(fetchedDreamGeneral); // for testing setDreams(sampleDreams);
     setCoreDream(fetchedCoreDream);
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full">
-      <header className="text-center mb-8">
-        <h1 className="text-2xl mb-4">you're breathtaking...</h1>
+    <div className="flex h-full flex-col items-center justify-center">
+      <header className="mb-8 text-center">
+        <h1 className="mb-4 text-2xl">you're breathtaking...</h1>
         <p className="text-lg">Here is a summary of your dreams</p>
       </header>
 
       <div className="flex flex-col items-center">
-    {groupedDreams.map((group, index) => (
-      <div key={index} className="flex justify-center gap-4 mb-4">
-        {group.map((dream, index) => (
-          <div className="" key={index}>
-            <SelectableButton
-              initialText={dream}
-              disabled={false}
-            />
+        {groupedDreams.map((group, index) => (
+          <div key={index} className="mb-4 flex justify-center gap-4">
+            {group.map((dream, index) => (
+              <div className="" key={index}>
+                <SelectableButton initialText={dream} disabled={false} />
+              </div>
+            ))}
           </div>
         ))}
       </div>
-    ))}
-  </div>
 
-
-
-      <div className="text-center mt-8 ">
+      <div className="mt-8 text-center ">
         <span className="text-lg font-bold">And the core dream</span>
         {coreDream.length > 0 && (
-          <div className="flex justify-center mt-4">
-            <SelectableButton
-              initialText={coreDream[0]}
-              disabled={false}
-            />
+          <div className="mt-4 flex justify-center">
+            <SelectableButton initialText={coreDream[0]} disabled={false} />
           </div>
         )}
       </div>
 
-      <footer className="summary-footer text-center mt-8">
-        <Button
-          className="m-auto"
-          navigateTo="/welcome-back"
-        >
+      <footer className="summary-footer mt-8 text-center">
+        <Button className="m-auto" navigateTo="/welcome-back">
           save & continue
         </Button>
       </footer>

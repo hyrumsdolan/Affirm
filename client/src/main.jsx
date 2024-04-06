@@ -1,19 +1,19 @@
-import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import 'regenerator-runtime/runtime';
-import { ApolloProvider } from '@apollo/client';
-import client from './utils/apolloClient';
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "regenerator-runtime/runtime";
+import { ApolloProvider } from "@apollo/client";
+import client from "./utils/apolloClient";
 import App from "./App.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import TestingPage from "./pages/TestingPage.jsx";
-import TenYearDreamPage from './pages/TenYearDreamPage.jsx';
-import OneGoalPage from './pages/OneGoal.jsx';
-import AndNextPage from './pages/AndNext.jsx';
-import SummaryDreamsPage from './pages/SummaryDreams.jsx';
-import WelcomeBackPage from './pages/WelcomeBack.jsx';
-import PrivateRoute from './components/PrivateRouter.jsx';
+import TenYearDreamPage from "./pages/TenYearDreamPage.jsx";
+import OneGoalPage from "./pages/OneGoal.jsx";
+import AndNextPage from "./pages/AndNext.jsx";
+import SummaryDreamsPage from "./pages/SummaryDreams.jsx";
+import WelcomeBackPage from "./pages/WelcomeBack.jsx";
+import PrivateRoute from "./components/PrivateRouter.jsx";
 
 const router = createBrowserRouter([
   {
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
         element: <SignupPage />
       },
       {
-        path: '/ten-year-dream',
+        path: "/ten-year-dream",
         element: <PrivateRoute element={TenYearDreamPage} />
       },
       {

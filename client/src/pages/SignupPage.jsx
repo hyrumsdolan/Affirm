@@ -82,7 +82,7 @@ const SignupForm = () => {
               variables: { ...userFormData }
             });
             console.log("look here FOR DATA");
- 
+
             Auth.login(data.addUser.token);
 
             console.log("User successfully signed up!");

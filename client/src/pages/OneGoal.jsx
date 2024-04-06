@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const App = () => {
-  const [goal, setGoal] = useState('');
+  const [goal, setGoal] = useState("");
 
-  const handleInputChange = (event) => {
+  const handleInputChange = event => {
     setGoal(event.target.value);
   };
 
   const handleSubmit = () => {
-   
-    console.log('Submitted goal:', goal);
-   
+    console.log("Submitted goal:", goal);
   };
 
   return (
@@ -20,7 +18,9 @@ const App = () => {
       </header>
       <main className="main-content">
         <h2>one goal to rule them all</h2>
-        <p>If you could only have one goal. One guiding light, what would it be?</p>
+        <p>
+          If you could only have one goal. One guiding light, what would it be?
+        </p>
         <input
           type="text"
           value={goal}

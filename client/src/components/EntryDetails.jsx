@@ -1,5 +1,5 @@
-import React from 'react';
-import SelectableButton from './SelectableButton';
+import React from "react";
+import SelectableButton from "./SelectableButton";
 
 const EntryDetails = ({ entry }) => {
   return (

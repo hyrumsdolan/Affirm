@@ -32,22 +32,20 @@ Get ready to embark on a journey of self-discovery and growth. Your ideal future
   }
 
   return (
-    
-      <div className="flex justify-between items-center h-full m-5">
-        <div className="flex-1 justify-between">
-          <h1 className="text-center ">Ten Year Dream.</h1>
-          <p>
-            <span className="inline-flex items-center">
-              <SpeakerButton text={dreamText} />
-            </span>{" "}
-            {dreamText}
-          </p>
-        </div>
-        <div className="flex-1 justify-between h-full border-l border-gray-300 pl-8">
-          <TenYearDreamForm user={data?.me} />
-        </div>
+    <div className="m-5 flex h-full items-center justify-between">
+      <div className="flex-1 justify-between">
+        <h1 className="text-center ">Ten Year Dream.</h1>
+        <p>
+          <span className="inline-flex items-center">
+            <SpeakerButton text={dreamText} />
+          </span>{" "}
+          {dreamText}
+        </p>
       </div>
-  
+      <div className="h-full flex-1 justify-between border-l border-gray-300 pl-8">
+        <TenYearDreamForm user={data?.me} />
+      </div>
+    </div>
   );
 }
 
