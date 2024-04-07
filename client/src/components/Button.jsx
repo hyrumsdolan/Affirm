@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
-import { ADD_BIG_DREAM, ADD_LITTLE_DREAMS, ADD_ULTIMATE_GOAL } from "../utils/mutations";
+import {
+  ADD_BIG_DREAM,
+  ADD_LITTLE_DREAMS,
+  ADD_ULTIMATE_GOAL,
+  CREATE_ENTRY,
+} from "../utils/mutations";
 
 const Button = ({
   type = "button",
@@ -22,30 +27,42 @@ const Button = ({
   const [addBigDream] = useMutation(ADD_BIG_DREAM);
   const [addLittleDreams] = useMutation(ADD_LITTLE_DREAMS);
   const [addUltimateGoal] = useMutation(ADD_ULTIMATE_GOAL);
+  const [createEntry] = useMutation(CREATE_ENTRY);
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = async () => {
-    console.log(inputForDBSave)
     if (!isEnabled) {
       return;
     }
+
     if (saveToUser) {
+      console.log("inoutForDBSave", inputForDBSave)
       if (saveToUser === "bigdream") {
-      console.log(user);
-      await addBigDream({ variables: { bigDream: inputForDBSave } });
+        await addBigDream({ variables: { bigDream: inputForDBSave } });
       } else if (saveToUser === "littledreams") {
-      await addLittleDreams({ variables: { littleDreams: inputForDBSave } });
+        await addLittleDreams({ variables: { littleDreams: inputForDBSave } });
       } else if (saveToUser === "ultimategoal") {
-      await addUltimateGoal({ variables: { ultimateGoal: inputForDBSave } });
+        await addUltimateGoal({ variables: { ultimateGoal: inputForDBSave } });
+      } else if (saveToUser === "gratitudes") {
+        await createEntry({
+          variables: {
+            gratefulFor: inputForDBSave.filter((gratitude) => gratitude !== ""),
+            dailyAffirmations: [],
+            ultimateAffirmation: "",
+          },
+        });
       }
+
       if (onMutationCompleted) {
         onMutationCompleted();
       }
     } else {
-      console.log('Incorrect save route for button');
+      console.log("Incorrect save route for button");
     }
 
-    
+    if (onMutationCompleted && !saveToUser) {
+      onMutationCompleted();
+    }
 
     if (onClick) {
       onClick();
