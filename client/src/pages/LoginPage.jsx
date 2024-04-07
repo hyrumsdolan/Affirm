@@ -56,8 +56,6 @@ const LoginForm = () => {
         setErrorMessage("");
         setLoginAttempts(0); // Reset login attempts on successful login
         Auth.login(data.loginUser.token);
-        console.log("sugar");
-        navigate("/ten-year-dream");
       } else {
         setShowAlert(true);
         setErrorMessage("Invalid credentials. Please try again.");

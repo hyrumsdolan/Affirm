@@ -56,6 +56,7 @@ const SignupForm = () => {
 
   // Handle form submit function
   const handleFormSubmit = async event => {
+    console.log("Sign up button clicked");
     setError("");
     event.preventDefault();
     console.log("Sign up button clicked");
@@ -83,11 +84,10 @@ const SignupForm = () => {
               variables: { ...userFormData }
             });
             console.log("look here FOR DATA");
-
+            console.log("signup data", data);
             Auth.login(data.addUser.token);
 
             console.log("User successfully signed up!");
-            // window.location.href = "/home";
           } catch (err) {
             if (err.message.includes("dup key:")) {
               const errorKey = err.message
@@ -139,7 +139,7 @@ const SignupForm = () => {
                   type="text"
                   id="firstName"
                   name="firstName"
-                  value={userFormData.firstName}
+                  value={userFormData.firstName || ""}
                   onChange={handleInputChange}
                   required
                   className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -237,12 +237,7 @@ const SignupForm = () => {
                   )}
                 </div>
               </div>
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={loading}
-                navigateTo="/ten-year-dream"
-              >
+              <Button type="submit" className="w-full" disabled={loading}>
                 Sign up!
               </Button>
             </form>

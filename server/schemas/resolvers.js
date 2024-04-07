@@ -19,7 +19,8 @@ const resolvers = {
 
         return user;
       }
-      throw new AuthenticationError("Not logged in");
+
+      console.log("No Authenticated User Found, unable to get user data.");
     },
     entries: async (parent, args, context) => {
       if (context.user) {
@@ -215,20 +216,32 @@ const resolvers = {
         "User not logged in, unable to update ultimate goal",
       );
     },
-    createEntry: async (parent, { gratefulFor, dailyAffirmations, ultimateAffirmation }, context) => {
+    createEntry: async (
+      parent,
+      { gratefulFor, dailyAffirmations, ultimateAffirmation },
+      context,
+    ) => {
       if (context.user) {
         try {
           // Validate input
-          if (!gratefulFor || !Array.isArray(gratefulFor) || gratefulFor.length === 0) {
-            throw new Error('Gratitudes must be a non-empty array');
+          if (
+            !gratefulFor ||
+            !Array.isArray(gratefulFor) ||
+            gratefulFor.length === 0
+          ) {
+            throw new Error("Gratitudes must be a non-empty array");
           }
-          if (!dailyAffirmations || !Array.isArray(dailyAffirmations) || dailyAffirmations.length === 0) {
-            throw new Error('Daily affirmations must be a non-empty array');
+          if (
+            !dailyAffirmations ||
+            !Array.isArray(dailyAffirmations) ||
+            dailyAffirmations.length === 0
+          ) {
+            throw new Error("Daily affirmations must be a non-empty array");
           }
-          if (!ultimateAffirmation || typeof ultimateAffirmation !== 'string') {
-            throw new Error('Ultimate affirmation must be a non-empty string');
+          if (!ultimateAffirmation || typeof ultimateAffirmation !== "string") {
+            throw new Error("Ultimate affirmation must be a non-empty string");
           }
-    
+
           // Create the entry
           const entry = await Entry.create({
             gratefulFor,
@@ -236,21 +249,23 @@ const resolvers = {
             ultimateAffirmation,
             createdAt: new Date(),
           });
-    
+
           // Associate the entry with the user
           await User.findOneAndUpdate(
             { _id: context.user._id },
             { $push: { entries: entry._id } },
-            { new: true }
+            { new: true },
           );
-    
+
           return entry;
         } catch (error) {
-          console.error('Error creating entry:', error);
-          throw new Error('Failed to create entry');
+          console.error("Error creating entry:", error);
+          throw new Error("Failed to create entry");
         }
       }
-      throw new AuthenticationError('User not logged in, unable to create entry');
+      throw new AuthenticationError(
+        "User not logged in, unable to create entry",
+      );
     },
   },
 };
