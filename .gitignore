@@ -1,0 +1,7 @@
+.DS_Store
+**/node_modules/
+**/.env
+dist/
+build/
+.vscode/settings.json
+client/src/css/tailwind.css
