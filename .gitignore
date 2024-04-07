@@ -4,3 +4,4 @@
 dist/
 build/
 .vscode/settings.json
+client/src/css/tailwind.css
