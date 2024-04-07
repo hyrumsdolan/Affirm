@@ -20,10 +20,12 @@ const WelcomeBack = () => {
   const renderGratitudeInputs = gratitudes.map((gratitude, index) => (
     <div key={index}>
       <SelectableButton
-        placeholderText = "What are you grateful for today?"
-        onTextChange={(value) => handleGratitudeChange(index, value)}
-        disabled={false}
-      />
+  placeholderText="What are you grateful for today?"
+  onTextChange={(value) => handleGratitudeChange(index, value)}
+  editOnClick={true}
+  showEditButton={false}
+  selectIfInput={true}
+/>
     </div>
   ));
 

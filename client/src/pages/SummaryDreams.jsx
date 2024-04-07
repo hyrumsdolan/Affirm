@@ -54,7 +54,12 @@ const SummaryDreams = () => {
           <div key={index} className="mb-4 flex justify-center gap-4">
             {group.map((dream, index) => (
               <div className="" key={index}>
-                <SelectableButton initialText={dream} disabled={false} />
+                <SelectableButton 
+                initialText={dream} 
+                canSelect={false}
+                startSelected={true}
+          
+            />
               </div>
             ))}
           </div>
@@ -65,7 +70,12 @@ const SummaryDreams = () => {
         <span className="text-lg font-bold">And the core dream</span>
         {coreDream.length > 0 && (
           <div className="mt-4 flex justify-center">
-            <SelectableButton initialText={coreDream[0]} disabled={false} />
+            <SelectableButton 
+            initialText={coreDream[0]} 
+            canSelect={false}
+                startSelected={true}
+           
+            />
           </div>
         )}
       </div>

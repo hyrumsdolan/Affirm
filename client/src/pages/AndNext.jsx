@@ -6,15 +6,31 @@ import Button from "../components/Button";
 import { useMutation } from "@apollo/client";
 import { ADD_LITTLE_DREAMS } from "../utils/mutations";
 
+const sampleDreams = [
+  "Travel the world",
+  "Learn to play the guitar",
+  "Write a novel",
+  "Start my own business",
+  "Run a marathon",
+  "Learn a new language",
+  "Build my dream house",
+  "Have a family",
+  "Achieve financial independence",
+  "Make a significant contribution to my community"
+];
+
+
 const AndNext = () => {
   const [selectedDreams, setSelectedDreams] = useState({});
   const [dreams, setDreams] = useState([]);
   const navigate = useNavigate();
   const [addLittleDreams] = useMutation(ADD_LITTLE_DREAMS);
 
+
   useEffect(() => {
-    const fetchedDreams = getClaudeResponse(0, -1); // Core dream is last element
-    setDreams(fetchedDreams);
+    // const fetchedDreams = getClaudeResponse(0, -1); // Core dream is last element
+    // setDreams(fetchedDreams);
+    setDreams(sampleDreams);
   }, []);
 
   const toggleDreamSelection = (dream, isSelected) => {
@@ -45,8 +61,8 @@ const AndNext = () => {
           <div className="m-10" key={index}>
             <SelectableButton
               initialText={dream}
-              disabled={selectedDreams[dream]}
-              onSelect={isSelected => toggleDreamSelection(dream, isSelected)}
+              
+              // onSelect={isSelected => toggleDreamSelection(dream, isSelected)}
             />
           </div>
         ))}
