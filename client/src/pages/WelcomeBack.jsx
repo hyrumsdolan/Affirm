@@ -39,13 +39,8 @@ const WelcomeBack = () => {
         </div>
       </main>
       <footer className="welcome-footer mt-8 text-center">
-<<<<<<< HEAD
-        <Button className="m-auto" navigateTo="/come-back-tomorrow">
-          save & continue
-=======
         <Button className="m-auto" navigateTo="/little-dreams">
           Save & Continue
->>>>>>> d300ade (changes in progress)
         </Button>
       </footer>
     </>
