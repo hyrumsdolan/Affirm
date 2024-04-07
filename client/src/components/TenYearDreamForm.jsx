@@ -1,13 +1,15 @@
 import { useState } from "react";
 import MicrophoneButton from "./MicrophoneButton";
 import Button from "./Button";
-import { useNavigate } from "react-router-dom";
+import { sendToClaude } from "../utils/callClaude";
+import ProgressSpinner from "./ProgressSpinner";
+import useUserNavigation from "../utils/userNavigation";
 
 function TenYearDreamForm({ user }) {
   const [dreamText, setDreamText] = useState("");
   const [lastAppendedTranscript, setLastAppendedTranscript] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const handleMutationCompleted = useUserNavigation();
 
   const handleChange = event => {
     setDreamText(event.target.value);
@@ -26,8 +28,8 @@ function TenYearDreamForm({ user }) {
       console.log("Saving dream:", dreamText);
       setIsLoading(true);
       await sendToClaude(dreamText);
+      await handleMutationCompleted();
       setIsLoading(false);
-      navigate("/and-next");
 
       //Commented out code for testing loading!
       // setTimeout(() => {

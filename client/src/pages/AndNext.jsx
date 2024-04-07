@@ -5,32 +5,19 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
 import { useMutation } from "@apollo/client";
 import { ADD_LITTLE_DREAMS } from "../utils/mutations";
+import useUserNavigation from "../utils/userNavigation";
 
-const sampleDreams = [
-  "Travel the world",
-  "Learn to play the guitar",
-  "Write a novel",
-  "Start my own business",
-  "Run a marathon",
-  "Learn a new language",
-  "Build my dream house",
-  "Have a family",
-  "Achieve financial independence",
-  "Make a significant contribution to my community"
-];
-
-
-const AndNext = () => {
+const AndNext = ({ user }) => {
   const [selectedDreams, setSelectedDreams] = useState({});
   const [dreams, setDreams] = useState([]);
   const navigate = useNavigate();
   const [addLittleDreams] = useMutation(ADD_LITTLE_DREAMS);
-
+  const [isLoading, setIsLoading] = useState(false);
+  const handleMutationCompleted = useUserNavigation();
 
   useEffect(() => {
-    // const fetchedDreams = getClaudeResponse(0, -1); // Core dream is last element
-    // setDreams(fetchedDreams);
-    setDreams(sampleDreams);
+    const fetchedDreams = getClaudeResponse(); // Core dream is last element
+    setDreams(fetchedDreams);
   }, []);
 
   const toggleDreamSelection = (dream, isSelected) => {
@@ -42,15 +29,17 @@ const AndNext = () => {
 
   const handleSave = async () => {
     try {
-      const selectedDreamsArray = Object.keys(selectedDreams).filter(
-        dream => selectedDreams[dream]
-      );
-      await addLittleDreams({
-        variables: { littleDreams: selectedDreamsArray }
-      });
-      navigate("/one-goal");
+      setIsLoading(true);
+      // const selectedDreamsArray = Object.keys(selectedDreams).filter(
+      //   dream => selectedDreams[dream]
+      // );
+      // await addLittleDreams({
+      //   variables: { littleDreams: selectedDreamsArray }
+      // });
+      setIsLoading(false);
     } catch (error) {
       console.error("Error:", error);
+      setIsLoading(false);
     }
   };
 
@@ -61,8 +50,7 @@ const AndNext = () => {
           <div className="m-10" key={index}>
             <SelectableButton
               initialText={dream}
-              
-              // onSelect={isSelected => toggleDreamSelection(dream, isSelected)}
+              onSelect={isSelected => toggleDreamSelection(dream, isSelected)}
             />
           </div>
         ))}
@@ -70,7 +58,11 @@ const AndNext = () => {
       <Button
         onClick={handleSave}
         className="r-0 absolute right-0 m-10"
-        navigateTo="/one-goal"
+        user={user}
+        saveToUser="littledreams"
+        isEnabled={Object.values(selectedDreams).some(isSelected => isSelected)}
+        inputForDBSave={Object.keys(selectedDreams).filter(dream => selectedDreams[dream])}
+        onMutationCompleted={handleMutationCompleted}
       >
         save & continue
       </Button>

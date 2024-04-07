@@ -1,53 +1,64 @@
 import React, { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate, useNavigate, useLocation } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import AuthService from "../utils/auth";
 import { GET_ME } from "../utils/queries";
 
 const PrivateRoute = ({ element: Component, ...rest }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const isAuthenticated = AuthService.loggedIn();
-  console.log("isAuthenticated:", isAuthenticated);
+  console.log("isAuthenticated", isAuthenticated);
 
   const { loading, error, data } = useQuery(GET_ME, {
+    skip: !isAuthenticated,
     context: {
       headers: {
-        authorization: isAuthenticated ? `Bearer ${AuthService.getToken()}` : ""
+        authorization: isAuthenticated ? `Bearer ${AuthService.getToken()}` : "",
+      },
+    },
+    onCompleted: (data) => {
+      const userData = data.me;
+      const bigDream = userData.dream?.bigDream;
+      const littleDreams = userData.dream?.littleDreams;
+      const ultimateGoal = userData.dream?.ultimateGoal;
+
+      if (!bigDream) {
+        navigate("/ten-year-dream");
+      } else if (!littleDreams || littleDreams.length < 1) {
+        navigate("/and-next");
+      } else if (!ultimateGoal) {
+        navigate("/one-goal");
+      } else {
+        navigate("/welcome-back");
       }
-    }
+    },
   });
 
-  // useEffect(() => { // Database needs to be fixed before this can work. Resolvers need to be able to actually add user data.
-  //   if (!loading && !error && data && data.me) {
-  //     console.log(data.me);
-  //     if (!data.me.dream) {
-  //       navigate('/ten-year-dream');
-  //     } else if (!data.me.dream.littleDreams.length) {
-  //       navigate('/and-next');
-  //     } else if (!data.me.dream.ultimateGoal) {
-  //       navigate('/one-goal');
-  //     } else {
-  //       navigate('/welcome-back');
-  //     }
-  //   }
-  // }, [loading, error, data, navigate]);
+  useEffect(() => {
+    if (loading || error || !data?.me) {
+      return;
+    }
+  }, [loading, error, data]);
+
+  if (location.pathname === "/" || location.pathname === "/signup") {
+    return <Component {...rest} />;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
-    console.log("User Data:", data);
     console.error(error);
-    // Handle the error state
     return <div>Error occurred</div>;
   }
 
-  return isAuthenticated ? (
-    <Component {...rest} user={data?.me} />
-  ) : (
-    <Navigate to="/" replace />
-  );
+  return <Component {...rest} user={data?.me} />;
 };
 
 export default PrivateRoute;

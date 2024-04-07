@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import InputBox from "../components/InputBox";
 import Button from "../components/Button";
-import { useNavigate } from "react-router-dom";
+import useUserNavigation from "../utils/userNavigation";
 
 const OneGoal = () => {
   const [goal, setGoal] = useState("");
-  const navigate = useNavigate();
+  const handleMutationCompleted = useUserNavigation();
 
   const handleInputChange = event => {
     setGoal(event.target.value);
@@ -17,7 +17,6 @@ const OneGoal = () => {
       console.log("Goal is empty");
       return;
     }
-    navigate("/summary-dreams-page");
     console.log("Submitted goal:", goal);
   };
 
@@ -42,7 +41,8 @@ const OneGoal = () => {
             className="submit-button"
             inputForDBSave={goal}
             isEnabled={goal}
-            saveToUser="ultimateGoal"
+            saveToUser="ultimategoal"
+            onMutationCompleted={handleMutationCompleted}
           >
             save & continue
           </Button>

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { LOGIN_USER } from "../utils/mutations";
 import InputBox from "../components/InputBox";
@@ -15,7 +14,6 @@ const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loginUser] = useMutation(LOGIN_USER);
-  const navigate = useNavigate();
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [isAccountLocked, setIsAccountLocked] = useState(false);
 

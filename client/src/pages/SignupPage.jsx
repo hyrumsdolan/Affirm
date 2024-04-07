@@ -17,7 +17,8 @@ const SignupForm = () => {
   const [error, setError] = useState();
 
   const loading = false;
-  const [addUser] = useMutation(ADD_USER, {
+  const [addUser] = useMutation(ADD_USER
+  /*, {
     onCompleted: data => {
       console.log(data);
 
@@ -26,7 +27,7 @@ const SignupForm = () => {
       console.log("User successfully signed up!");
       window.location.href = "/ten-year-dream";
     }
-  });
+  }*/);
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPWConfirmation, setShowPWConfirmation] = useState(false);
@@ -65,6 +66,7 @@ const SignupForm = () => {
 
   // Handle form submit function
   const handleFormSubmit = async event => {
+    console.log("Sign up button clicked");
     setError("");
     event.preventDefault();
     console.log("Sign up button clicked");
@@ -92,6 +94,13 @@ const SignupForm = () => {
             await addUser({
               variables: { ...userData }
             });
+            console.log("look here FOR DATA");
+            console.log("signup data", data);
+            Auth.login(data.addUser.token);
+
+            console.log("User successfully signed up!");
+            
+            window.location.href = "/ten-year-dream";
           } catch (err) {
             if (err.message.includes("dup key:")) {
               const errorKey = err.message
@@ -143,7 +152,7 @@ const SignupForm = () => {
                   type="text"
                   id="firstName"
                   name="firstName"
-                  value={userFormData.firstName}
+                  value={userFormData.firstName || ""}
                   onChange={handleInputChange}
                   required
                   className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"

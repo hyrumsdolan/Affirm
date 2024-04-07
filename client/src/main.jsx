@@ -28,11 +28,15 @@ const router = createBrowserRouter([
       //Root page is login page
       {
         index: true,
-        element: <LoginPage />
+        element: <PrivateRoute element={LoginPage} />
+      },
+      {
+        path: "/login",
+        element: <PrivateRoute element={LoginPage} />
       },
       {
         path: "/signup",
-        element: <SignupPage />
+        element: <PrivateRoute element={SignupPage} />
       },
       //Setup pages. After signup > ten year dream > and next > one goal > summary dreams > (and the user should be directed to welcome back after signup complete) welcome back
       {

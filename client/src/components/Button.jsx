@@ -15,6 +15,7 @@ const Button = ({
   saveToUser = "",
   navigateTo = "",
   isEnabled = true,
+  onMutationCompleted,
   ...rest
 }) => {
   const navigate = useNavigate();
@@ -24,18 +25,27 @@ const Button = ({
   const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = async () => {
+    console.log(inputForDBSave)
     if (!isEnabled) {
       return;
     }
-
-    if (saveToUser === "bigdream") {
+    if (saveToUser) {
+      if (saveToUser === "bigdream") {
       console.log(user);
       await addBigDream({ variables: { bigDream: inputForDBSave } });
-    } else if (saveToUser === "littledream") {
-      await addLittleDreams({ variables: { littleDream: inputForDBSave } });
-    } else if (saveToUser === "ultimategoal") {
+      } else if (saveToUser === "littledreams") {
+      await addLittleDreams({ variables: { littleDreams: inputForDBSave } });
+      } else if (saveToUser === "ultimategoal") {
       await addUltimateGoal({ variables: { ultimateGoal: inputForDBSave } });
+      }
+      if (onMutationCompleted) {
+        onMutationCompleted();
+      }
+    } else {
+      console.log('Incorrect save route for button');
     }
+
+    
 
     if (onClick) {
       onClick();
