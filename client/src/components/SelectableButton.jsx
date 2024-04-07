@@ -1,109 +1,116 @@
-import React, { useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
+import React, { useState, useRef } from "react";
+import { FaCheck, FaEdit } from "react-icons/fa";
 
-// use this button component like this:
-// <SelectableButton initialText="Button 1" onSelect={handleSelect} onTextChange={handleTextChange} disabled={false} />
-// <SelectableButton initialText="Button 2" onSelect={handleSelect} onTextChange={handleTextChange} disabled={true} />
+const SelectableButton = ({
+  canSelect = true,
+  startSelected = false,
+  showEditButton = true,
+  editOnClick = false,
+  selectIfInput = false,
+  initialText = "",
+  placeholderText = "Type here...",
+  
+  onTextChange = () => {},
+}) => {
+  const [selected, setSelected] = useState(startSelected);
+  const [editing, setEditing] = useState(false);
+  const [inputText, setInputText] = useState(initialText);
+  const inputRef = useRef(null);
 
-const SelectableButton = ({ initialText, onSelect, onTextChange, disabled = false }) => {
-  const [isSelected, setIsSelected] = useState(false);
-  const [isEditing, setIsEditing] = useState(false);
-  const [buttonText, setButtonText] = useState(initialText);
-
-  const handleSelect = () => {
-    if (!disabled) {
-      const newIsSelected = !isSelected;
-      setIsSelected(newIsSelected);
-      onSelect(newIsSelected);
-    }
+  const handleClick = () => {
+    if (!canSelect || editing) return;
+    if (selectIfInput && !inputText) return;
+    setSelected(!selected);
   };
 
   const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleTextChange = (e) => {
-    setButtonText(e.target.value);
+    setEditing(true);
   };
 
   const handleSave = () => {
-    setIsEditing(false);
-    onTextChange(buttonText);
+    setEditing(false);
+    if (inputText) {
+      setSelected(true);
+    }
   };
 
-  const buttonStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: '485px',
-    height: '72px',
-    padding: '10px',
-    borderRadius: '5px',
-    border: 'none',
-    backgroundColor: isSelected && !disabled ? '#8B9CB6' : '#CCCCCC',
-    color: '#ffffff',
-    cursor: disabled ? 'default' : 'pointer',
-    outline: 'none',
+  const handleInputChange = (e) => {
+    const newText = e.target.value;
+    setInputText(newText);
+    onTextChange(newText);
   };
 
-  const circleStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '24px',
-    height: '24px',
-    borderRadius: '50%',
-    border: '2px solid #ffffff',
-    marginRight: '10px',
-    backgroundColor: isSelected && !disabled ? '#ECFFCC' : 'transparent',
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSave();
+    }
   };
 
-  const checkmarkStyle = {
-    color: '#A39191',
+  const handleBlur = () => {
+    handleSave();
   };
 
-  const inputStyle = {
-    width: '100%',
-    padding: '5px',
-    border: 'none',
-    borderBottom: '1px solid #2E7DFF',
-    backgroundColor: 'transparent',
-    color: '#2E7DFF',
-    outline: 'none',
+  React.useEffect(() => {
+    if (editing) {
+      inputRef.current.focus();
+    }
+  }, [editing]);
+
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setMousePosition({ x, y });
   };
 
-  const iconStyle = {
-    marginLeft: 'auto',
-    color: '#2E7DFF',
-    cursor: 'pointer',
+  const getGradientStyle = () => {
+    const { x, y } = mousePosition;
+    const gradientX = (x / 485) * 100;
+    const gradientY = (y / 72) * 100;
+    return {
+      background: `radial-gradient(at ${gradientX}% ${gradientY}%, ${
+        selected ? "#6F8AA3" : "#C7DAFF"
+      }, ${selected ? "#8B9CB6" : "#E6F0FF"})`,
+    };
   };
+
+  const containerClasses = `relative w-[485px] h-[72px] flex items-center justify-center rounded-full ${
+    selected ? "bg-gradient-to-r from-[#8B9CB6] to-[#6F8AA3] text-[#ECFFCC] hover:from-[#6F8AA3] hover:to-[#8B9CB6]" : "bg-gradient-to-r from-[#E6F0FF] to-[#C7DAFF] text-[#003366] hover:from-[#C7DAFF] hover:to-[#E6F0FF]"
+  } ${editing ? "cursor-text" : "cursor-pointer"} transition duration-300 ease-in-out hover:scale-105 shadow-md hover:shadow-lg`;
+  
+  const inputClasses = `w-full h-full px-6 outline-none rounded-full bg-transparent text-inherit`;
+  
+  const editButtonClasses = `absolute top-1/2 right-6 transform -translate-y-1/2 ${
+    selected ? "text-[#ECFFCC]" : "text-[#003366]"
+  } transition duration-300 ease-in-out`;
 
   return (
-    <div style={buttonStyle} onClick={handleSelect}>
-      {!disabled && (
-        <div style={circleStyle}>
-          {isSelected && <FaCheck style={checkmarkStyle} />}
-        </div>
-      )}
-      {isEditing ? (
+    <div
+      className={containerClasses}
+      onClick={editOnClick ? handleEdit : handleClick}
+      onMouseMove={handleMouseMove}
+      style={getGradientStyle()}
+    >
+      {editing ? (
         <input
+          ref={inputRef}
           type="text"
-          value={buttonText}
-          onChange={handleTextChange}
-          onBlur={handleSave}
-          autoFocus
-          style={inputStyle}
+          value={inputText}
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
+          onBlur={handleBlur}
+          placeholder={placeholderText}
+          className={inputClasses}
         />
       ) : (
-        <>
-          <span>{buttonText}</span>
-          <span style={iconStyle} onClick={(e) => {
-            e.stopPropagation();
-            handleEdit();
-          }}>
-            ✎
-          </span>
-        </>
+        <span>{inputText || placeholderText}</span>
+      )}
+      {showEditButton && !editing && (
+        <button className={editButtonClasses} onClick={handleEdit}>
+          <FaEdit />
+        </button>
       )}
     </div>
   );

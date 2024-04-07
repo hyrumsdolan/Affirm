@@ -1,55 +1,79 @@
-import React, { useState } from 'react';
-// import './AndNext.css'; 
+import React, { useState, useEffect } from "react";
+import { getClaudeResponse } from "../utils/callClaude";
+import SelectableButton from "../components/SelectableButton";
+import { useNavigate } from "react-router-dom";
+import Button from "../components/Button";
+import { useMutation } from "@apollo/client";
+import { ADD_LITTLE_DREAMS } from "../utils/mutations";
+
+const sampleDreams = [
+  "Travel the world",
+  "Learn to play the guitar",
+  "Write a novel",
+  "Start my own business",
+  "Run a marathon",
+  "Learn a new language",
+  "Build my dream house",
+  "Have a family",
+  "Achieve financial independence",
+  "Make a significant contribution to my community"
+];
+
 
 const AndNext = () => {
   const [selectedDreams, setSelectedDreams] = useState({});
+  const [dreams, setDreams] = useState([]);
+  const navigate = useNavigate();
+  const [addLittleDreams] = useMutation(ADD_LITTLE_DREAMS);
 
-  const dreams = [
-    
-    'Become an astronaut', 
-    'Become an astronaut', 
-    'Become an astronaut', 
-    'Become an astronaut', 
-    'Become an astronaut', 
-    'Become an astronaut', 
-    'Become an astronaut', 
-    'Become an astronaut', 
-    
-  ];
 
-  const toggleDreamSelection = (dream) => {
-    setSelectedDreams((prevSelected) => ({
+  useEffect(() => {
+    // const fetchedDreams = getClaudeResponse(0, -1); // Core dream is last element
+    // setDreams(fetchedDreams);
+    setDreams(sampleDreams);
+  }, []);
+
+  const toggleDreamSelection = (dream, isSelected) => {
+    setSelectedDreams(prevSelected => ({
       ...prevSelected,
-      [dream]: !prevSelected[dream]
+      [dream]: isSelected
     }));
   };
 
+  const handleSave = async () => {
+    try {
+      const selectedDreamsArray = Object.keys(selectedDreams).filter(
+        dream => selectedDreams[dream]
+      );
+      await addLittleDreams({
+        variables: { littleDreams: selectedDreamsArray }
+      });
+      navigate("/one-goal");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
   return (
-    <div className="and-next-page">
-      <header className="and-next-header">
-        <h1>affirm.</h1>
-        <h2>...and next</h2>
-        <p>
-          Now, that you’ve painted your 10 year future, it’s important to narrow your vision down to the 10 most
-          important factors of your dream. I’ve consolidated your dream down to several bullet points. Please
-          select the TEN that matter the most to you.
-        </p>
-      </header>
-      <main className="dreams-selection">
+    <div className="">
+      <main className="grid grid-cols-1 justify-around gap-1 md:grid-cols-2 lg:grid-cols-3">
         {dreams.map((dream, index) => (
-          <div 
-            key={index} 
-            className={`dream-item ${selectedDreams[dream] ? 'selected' : ''}`} 
-            onClick={() => toggleDreamSelection(dream)}
-          >
-            {dream}
-            <span className="edit-icon">✏️</span>
+          <div className="m-10" key={index}>
+            <SelectableButton
+              initialText={dream}
+              
+              // onSelect={isSelected => toggleDreamSelection(dream, isSelected)}
+            />
           </div>
         ))}
       </main>
-      <footer className="and-next-footer">
-        <button className="continue-button">save & continue</button>
-      </footer>
+      <Button
+        onClick={handleSave}
+        className="r-0 absolute right-0 m-10"
+        navigateTo="/one-goal"
+      >
+        save & continue
+      </Button>
     </div>
   );
 };

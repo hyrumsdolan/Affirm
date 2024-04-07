@@ -4,3 +4,10 @@
 
 /* Custom CSS */
 
+h1 {
+  @apply text-6xl font-light;
+}
+
+h2 {
+  @apply text-xl font-light;
+}

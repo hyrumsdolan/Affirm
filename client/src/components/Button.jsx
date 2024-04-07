@@ -1,33 +1,82 @@
-// Buttons like the login, Save and Continue button, meant for navigation
-import React from 'react';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { useNavigate } from "react-router-dom";
+import { ADD_BIG_DREAM, ADD_LITTLE_DREAMS, ADD_ULTIMATE_GOAL } from "../utils/mutations";
 
 const Button = ({
-  type = 'button',
+  type = "button",
+  user,
   onClick,
-  className = '',
+  className = "",
   disabled = false,
   style = {},
   children,
+  inputForDBSave = "",
+  saveToUser = "",
+  navigateTo = "",
+  isEnabled = true,
   ...rest
 }) => {
-    // TODO: Update with global variables.
+  const navigate = useNavigate();
+  const [addBigDream] = useMutation(ADD_BIG_DREAM);
+  const [addLittleDreams] = useMutation(ADD_LITTLE_DREAMS);
+  const [addUltimateGoal] = useMutation(ADD_ULTIMATE_GOAL);
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleClick = async () => {
+    if (!isEnabled) {
+      return;
+    }
+
+    if (saveToUser === "bigdream") {
+      console.log(user);
+      await addBigDream({ variables: { bigDream: inputForDBSave } });
+    } else if (saveToUser === "littledream") {
+      await addLittleDreams({ variables: { littleDream: inputForDBSave } });
+    } else if (saveToUser === "ultimategoal") {
+      await addUltimateGoal({ variables: { ultimateGoal: inputForDBSave } });
+    }
+
+    if (onClick) {
+      onClick();
+    }
+
+    if (navigateTo) {
+      navigate(navigateTo);
+    }
+  };
+
   const buttonStyle = {
-    borderRadius: '20px',
-    backgroundColor: '#819EC9',
-    color: '#FFFFFF',
-    padding: '10px 20px',
-    border: 'none',
-    cursor: 'pointer',
+    borderRadius: "30px",
+    padding: "12px 24px",
+    border: "none",
+    cursor: isEnabled ? "pointer" : "not-allowed",
+    transition: "background-color 0.3s ease-in-out, transform 0.3s ease-in-out",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    fontWeight: "bold",
+    fontSize: "16px",
+    ...(isHovered
+      ? {
+          backgroundColor: "#6F8AA3",
+          color: "#ECFFCC",
+          transform: "scale(1.05)",
+        }
+      : {
+          backgroundColor: "#8B9CB6",
+          color: "#FFFFFF",
+        }),
     ...style,
   };
 
   return (
     <button
       type={type}
-      onClick={onClick}
+      onClick={handleClick}
       className={`button ${className}`}
-      disabled={disabled}
+      disabled={disabled || !isEnabled}
       style={buttonStyle}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       {...rest}
     >
       {children}

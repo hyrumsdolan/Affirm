@@ -4,20 +4,19 @@ import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 
 const HomePage = () => {
-
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
   if (!token) {
     return false;
   }
-  console.log(token);
-  
-  const { data } = useQuery(GET_ME, {  
+
+  const { data } = useQuery(GET_ME, {
     context: {
       headers: {
-        authorization: token ? `Bearer ${token}` : "",
-      },
-  }});
+        authorization: token ? `Bearer ${token}` : ""
+      }
+    }
+  });
 
   return (
     <>

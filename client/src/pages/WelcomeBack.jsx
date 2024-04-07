@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
-// import './WelcomeBack.css'; 
+import React, { useState } from "react";
+import SelectableButton from "../components/SelectableButton";
+import Button from "../components/Button";
 
 const WelcomeBack = () => {
-  const [gratitudes, setGratitudes] = useState(['The weather was so god damn beautiful today', '', '', '', '']);
-  const [mainDream] = useState('Become Elon Bezos');
+  const [gratitudes, setGratitudes] = useState([
+    "The weather was so beautiful today",
+    "",
+    "",
+    "",
+    ""
+  ]);
 
   const handleGratitudeChange = (index, value) => {
     const updatedGratitudes = [...gratitudes];
@@ -11,38 +17,35 @@ const WelcomeBack = () => {
     setGratitudes(updatedGratitudes);
   };
 
-  return (
-    <div className="welcome-back-page">
-      <header className="welcome-header">
-        <h1>affirm.</h1>
-        <h2>welcome back :)</h2>
-        <p>Let’s get affirming.</p>
-      </header>
-      <main className="content">
-        <section className="gratitudes-section">
-          {gratitudes.map((gratitude, index) => (
-            <div key={index} className="gratitude-item">
-              <input
-                type="text"
-                value={gratitude}
-                onChange={(e) => handleGratitudeChange(index, e.target.value)}
-                placeholder="input gratitude here..."
-              />
-              <span className="edit-icon">✏️</span>
-            </div>
-          ))}
-        </section>
-        <section className="main-dream-section">
-          <div className="main-dream">
-            <span>The main dream</span>
-            <button className="dream-button">{mainDream}</button>
-          </div>
-        </section>
-      </main>
-      <footer className="welcome-footer">
-        <button className="continue-button">save & continue</button>
-      </footer>
+  const renderGratitudeInputs = gratitudes.map((gratitude, index) => (
+    <div key={index}>
+      <SelectableButton
+  placeholderText="What are you grateful for today?"
+  onTextChange={(value) => handleGratitudeChange(index, value)}
+  editOnClick={true}
+  showEditButton={false}
+  selectIfInput={true}
+/>
     </div>
+  ));
+
+  return (
+    <>
+      <header className="mb-8 text-center">
+        <h1 className="mb-4 text-2xl">Welcome back :)</h1>
+        <p className="text-lg">Let's express some gratitude.</p>
+      </header>
+      <main className="">
+        <div className="flex flex-col items-center gap-4">
+          {renderGratitudeInputs}
+        </div>
+      </main>
+      <footer className="welcome-footer mt-8 text-center">
+        <Button className="m-auto" navigateTo="/little-dreams">
+          Save & Continue
+        </Button>
+      </footer>
+    </>
   );
 };
 
