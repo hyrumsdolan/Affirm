@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cd server && npm start",
     "dev": "concurrently --raw \"cd server && npm run watch\" \"cd client && npm run dev\"",
-    "install-all": "npm run install-server && npm run install-client",
+    "install-all": "npm i && npm run install-server && npm run install-client",
     "install-server": "cd server && npm install",
     "install-client": "cd client && npm install",
     "build": "cd client && npm run build",
@@ -13,7 +13,7 @@
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,html}\""
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
+    "concurrently": "^5.1.0",
     "prettier": "^3.2.5"
   }
 }

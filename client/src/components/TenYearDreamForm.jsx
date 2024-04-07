@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import MicrophoneButton from "./MicrophoneButton";
+// import MicrophoneButton from "./MicrophoneButton";
 import Button from "./Button";
 import { sendToClaude } from "../utils/callClaude";
 import ProgressSpinner from "./ProgressSpinner";
@@ -62,7 +62,7 @@ function TenYearDreamForm({ user }) {
               placeholder="The best version of me is..."
             />
             <div className="absolute bottom-2 right-2">
-              <MicrophoneButton onTranscript={handleTranscript} />
+              {/* <MicrophoneButton onTranscript={handleTranscript} /> */}
             </div>
           </div>
 
