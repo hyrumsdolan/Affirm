@@ -32,10 +32,10 @@ function TenYearDreamForm({ user }) {
       navigate("/and-next");
 
       //Commented out code for testing loading!
-      /* setTimeout(() => {
-        setIsLoading(false);
-        navigate("/and-next");
-      }, 6000); */
+      // setTimeout(() => {
+      //   setIsLoading(false);
+      //   navigate("/and-next");
+      // }, 6000);
     } catch (error) {
       console.error("Error:", error);
       setIsLoading(false);

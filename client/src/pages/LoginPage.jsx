@@ -51,11 +51,12 @@ const LoginForm = () => {
       console.log("look here FOR DATA");
 
       if (data.loginUser.token) {
-        Auth.login(data.loginUser.token);
         setUserFormData({ email: "", password: "" });
         setShowAlert(false);
         setErrorMessage("");
         setLoginAttempts(0); // Reset login attempts on successful login
+        Auth.login(data.loginUser.token);
+        console.log("sugar");
         navigate("/ten-year-dream");
       } else {
         setShowAlert(true);
@@ -163,11 +164,7 @@ const LoginForm = () => {
                 </button>
               </div>
             </div>
-            <Button
-              type="submit"
-              className="w-full"
-              navigateTo="/ten-year-dream"
-            >
+            <Button type="submit" className="w-full">
               Login
             </Button>
           </form>
