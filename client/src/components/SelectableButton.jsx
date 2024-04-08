@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FaCheck, FaEdit } from "react-icons/fa";
 
 const SelectableButton = ({
@@ -10,7 +10,9 @@ const SelectableButton = ({
   initialText = "",
   placeholderText = "Type here...",
   className = "",
-
+  focused = false,
+  onFocus = () => {},
+  onSubmit = () => {},
   onTextChange = () => {},
   onSelect = () => {}
 }) => {
@@ -25,10 +27,13 @@ const SelectableButton = ({
     const newSelected = !selected;
     setSelected(newSelected);
     onSelect(newSelected); // Call the onSelect prop with the new selection state
+
   };
 
   const handleEdit = () => {
     setEditing(true);
+    console.log("Selected:");
+    onFocus();
   };
 
   const handleSave = () => {
@@ -36,6 +41,7 @@ const SelectableButton = ({
     if (inputText) {
       setSelected(true);
     }
+    onSubmit()
   };
 
   const handleInputChange = e => {
@@ -54,11 +60,19 @@ const SelectableButton = ({
     handleSave();
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (editing) {
       inputRef.current.focus();
     }
+    
   }, [editing]);
+
+
+  useEffect( () => {
+    if (focused) {
+       setEditing(true);
+    }
+  }, [focused]);
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 

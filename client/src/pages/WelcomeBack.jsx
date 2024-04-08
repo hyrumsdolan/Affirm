@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SelectableButton from "../components/SelectableButton";
 import Button from "../components/Button";
 
@@ -11,6 +11,7 @@ const WelcomeBack = ({ user }) => {
     ""
   ]);
   const [showLittleDreams, setShowLittleDreams] = useState(false);
+  const [focusedIndex, setFocusedIndex] = useState(0);
   const littleDreams = user.dream?.littleDreams || [];
   const ultimateGoal = user.dream?.ultimateGoal || "";
   const littleDreamStrings = littleDreams.map(dream => dream.littleDream);
@@ -31,6 +32,16 @@ const WelcomeBack = ({ user }) => {
     setGratitudes(updatedGratitudes);
   };
 
+  
+
+  const handleFocus = (index) => {
+    console.log("selected index:", index)
+     setFocusedIndex(index);
+  };
+  useEffect(() => {
+    console.log("focused index:", focusedIndex);
+  }, [focusedIndex]);
+
   const handleSave = () => {
     localStorage.setItem("gratitudes", JSON.stringify(gratitudes));
     console.log(JSON.parse(localStorage.getItem("gratitudes")));
@@ -41,10 +52,13 @@ const WelcomeBack = ({ user }) => {
     <div key={index}>
       <SelectableButton
         placeholderText="What are you grateful for today?"
-        onTextChange={value => handleGratitudeChange(index, value)}
+        onTextChange={(value) => handleGratitudeChange(index, value)}
         editOnClick={true}
         showEditButton={false}
         selectIfInput={true}
+        focused={focusedIndex === index}
+        onFocus={() => handleFocus(index)}
+        onSubmit={() => handleFocus(index + 1)}
       />
     </div>
   ));
