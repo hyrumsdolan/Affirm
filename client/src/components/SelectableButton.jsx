@@ -9,6 +9,7 @@ const SelectableButton = ({
   selectIfInput = false,
   initialText = "",
   placeholderText = "Type here...",
+  className = "",
 
   onTextChange = () => {},
   onSelect = () => {}
@@ -79,7 +80,7 @@ const SelectableButton = ({
     };
   };
 
-  const containerClasses = `relative w-[485px] h-[72px] flex items-center justify-center rounded-full ${
+  const containerClasses = `${className} relative w-[485px] h-[72px] flex items-center justify-center rounded-full ${
     selected
       ? "bg-gradient-to-r from-[#8B9CB6] to-[#6F8AA3] text-[#ECFFCC] hover:from-[#6F8AA3] hover:to-[#8B9CB6]"
       : "bg-gradient-to-r from-[#E6F0FF] to-[#C7DAFF] text-[#003366] hover:from-[#C7DAFF] hover:to-[#E6F0FF]"

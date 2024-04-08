@@ -5,7 +5,7 @@ import { GET_ME } from "./queries";
 const useUserNavigation = () => {
   const navigate = useNavigate();
   const { refetch } = useQuery(GET_ME, {
-    skip: true,
+    skip: true
   });
 
   const handleMutationCompleted = async () => {

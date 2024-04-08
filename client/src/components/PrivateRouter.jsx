@@ -14,10 +14,10 @@ const PrivateRoute = ({ element: Component, ...rest }) => {
     skip: !isAuthenticated,
     context: {
       headers: {
-        authorization: isAuthenticated ? `Bearer ${AuthService.getToken()}` : "",
-      },
+        authorization: isAuthenticated ? `Bearer ${AuthService.getToken()}` : ""
+      }
     },
-    onCompleted: (data) => {
+    onCompleted: data => {
       const userData = data.me;
       const bigDream = userData.dream?.bigDream;
       const littleDreams = userData.dream?.littleDreams;
@@ -32,7 +32,7 @@ const PrivateRoute = ({ element: Component, ...rest }) => {
       } else {
         navigate("/welcome-back");
       }
-    },
+    }
   });
 
   useEffect(() => {

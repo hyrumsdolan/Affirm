@@ -8,7 +8,7 @@ const WelcomeBack = ({ user }) => {
     "",
     "",
     "",
-    "",
+    ""
   ]);
   const [showLittleDreams, setShowLittleDreams] = useState(false);
   const littleDreams = user.dream?.littleDreams || [];
@@ -23,7 +23,7 @@ const WelcomeBack = ({ user }) => {
     return grouped;
   };
 
-  const groupedDreams = groupItems(littleDreamStrings, 3);
+  const groupedDreams = groupItems(littleDreamStrings, 2);
 
   const handleGratitudeChange = (index, value) => {
     const updatedGratitudes = [...gratitudes];
@@ -41,7 +41,7 @@ const WelcomeBack = ({ user }) => {
     <div key={index}>
       <SelectableButton
         placeholderText="What are you grateful for today?"
-        onTextChange={(value) => handleGratitudeChange(index, value)}
+        onTextChange={value => handleGratitudeChange(index, value)}
         editOnClick={true}
         showEditButton={false}
         selectIfInput={true}
@@ -90,13 +90,18 @@ const WelcomeBack = ({ user }) => {
               ))}
             </div>
           </main>
-          <p className="text-lg text-center">Your Ultimate Goal:</p>
-          <footer className="mt-8 mb-4 flex justify-center gap-4 ">
+          <p className="text-center text-lg">Your Ultimate Goal:</p>
+          <footer className="mb-4 mt-8 flex justify-center gap-4 flex-col">
             <SelectableButton
+              className="m-auto"
               initialText={ultimateGoal}
               canSelect={false}
               startSelected={true}
             />
+
+            <Button className="m-auto" onClick={handleSave}>
+              Save & Continue
+            </Button>
           </footer>
         </>
       )}

@@ -61,7 +61,9 @@ const AndNext = ({ user }) => {
         user={user}
         saveToUser="littledreams"
         isEnabled={Object.values(selectedDreams).some(isSelected => isSelected)}
-        inputForDBSave={Object.keys(selectedDreams).filter(dream => selectedDreams[dream])}
+        inputForDBSave={Object.keys(selectedDreams).filter(
+          dream => selectedDreams[dream]
+        )}
         onMutationCompleted={handleMutationCompleted}
       >
         save & continue
