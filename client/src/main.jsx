@@ -62,7 +62,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/confirmation",
-        element: <PrivateRoute element={ConfirmationPage} />
+        element: <ConfirmationPage />
       },
 
       //misc routes

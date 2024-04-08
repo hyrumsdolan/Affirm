@@ -3,18 +3,12 @@ import SelectableButton from "../components/SelectableButton";
 import Button from "../components/Button";
 
 const WelcomeBack = ({ user }) => {
-  const [gratitudes, setGratitudes] = useState([
-    "The weather was so beautiful today",
-    "",
-    "",
-    "",
-    ""
-  ]);
+  const littleDreams = user.dream?.littleDreams || [];
+  const [dailyAffirmations, setDailyAffirmations] = useState(littleDreams.map(dream => dream.littleDream));
+  const [ultimateGoal, setUltimateGoal] = useState(user.dream?.ultimateGoal || "");
   const [showLittleDreams, setShowLittleDreams] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(0);
-  const littleDreams = user.dream?.littleDreams || [];
-  const ultimateGoal = user.dream?.ultimateGoal || "";
-  const littleDreamStrings = littleDreams.map(dream => dream.littleDream);
+  const [gratitudes, setGratitudes] = useState(['', '', '', '', '']);
 
   const groupItems = (items, groupSize) => {
     let grouped = [];
@@ -24,7 +18,7 @@ const WelcomeBack = ({ user }) => {
     return grouped;
   };
 
-  const groupedDreams = groupItems(littleDreamStrings, 2);
+  const groupedDreams = groupItems(dailyAffirmations, 2);
 
   const handleGratitudeChange = (index, value) => {
     const updatedGratitudes = [...gratitudes];
@@ -32,20 +26,32 @@ const WelcomeBack = ({ user }) => {
     setGratitudes(updatedGratitudes);
   };
 
-  
+  const handleAffirmationChange = (index, value) => {
+    const updatedAffirmations = [...dailyAffirmations];
+    updatedAffirmations[index] = value;
+    setDailyAffirmations(updatedAffirmations);
+  };
+
+  const handleUltimateChange = (value) => {
+    setUltimateGoal(value);
+  };
 
   const handleFocus = (index) => {
-    console.log("selected index:", index)
-     setFocusedIndex(index);
+    setFocusedIndex(index);
   };
-  useEffect(() => {
-    console.log("focused index:", focusedIndex);
-  }, [focusedIndex]);
 
   const handleSave = () => {
-    localStorage.setItem("gratitudes", JSON.stringify(gratitudes));
-    console.log(JSON.parse(localStorage.getItem("gratitudes")));
-    setShowLittleDreams(true);
+    if (!showLittleDreams) {
+      setShowLittleDreams(true);
+    } else {
+      const entryData = {
+        gratefulFor: gratitudes,
+        dailyAffirmations: dailyAffirmations,
+        ultimateAffirmation: ultimateGoal,
+      };
+      // console.log("Entry Data:", entryData);
+      // Call the mutation to create the entry
+    }
   };
 
   const renderGratitudeInputs = gratitudes.map((gratitude, index) => (
@@ -97,6 +103,7 @@ const WelcomeBack = ({ user }) => {
                         initialText={dream}
                         canSelect={false}
                         startSelected={true}
+                        onTextChange={(value) => handleAffirmationChange(index, value)}
                       />
                     </div>
                   ))}
@@ -111,9 +118,20 @@ const WelcomeBack = ({ user }) => {
               initialText={ultimateGoal}
               canSelect={false}
               startSelected={true}
+              onTextChange={handleUltimateChange}
             />
 
-            <Button className="m-auto" onClick={handleSave}>
+            <Button 
+              className="m-auto" 
+              onClick={handleSave}
+              saveToUser="entry"
+              inputForDBSave={{
+                gratefulFor: gratitudes,
+                dailyAffirmations: dailyAffirmations,
+                ultimateAffirmation: ultimateGoal,
+              }}
+              navigateTo= '/confirmation'
+            >
               Save & Continue
             </Button>
           </footer>

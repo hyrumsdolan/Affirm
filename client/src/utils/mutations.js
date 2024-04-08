@@ -26,15 +26,15 @@ export const ADD_USER = gql`
 `;
 
 export const CREATE_ENTRY = gql`
-  mutation createEntry($title: String!, $content: String!) {
-    createEntry(title: $title, content: $content) {
-      _id
-      title
-      content
-      createdAt
-      updatedAt
-    }
+mutation createEntry($gratefulFor: [String!]!, $dailyAffirmations: [String!]!, $ultimateAffirmation: String!) {
+  createEntry(gratefulFor: $gratefulFor, dailyAffirmations: $dailyAffirmations, ultimateAffirmation: $ultimateAffirmation) {
+    _id
+    gratefulFor
+    dailyAffirmations
+    ultimateAffirmation
+    createdAt
   }
+}
 `;
 
 export const UPDATE_ENTRY = gql`

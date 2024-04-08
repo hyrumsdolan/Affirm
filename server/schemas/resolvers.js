@@ -216,32 +216,22 @@ const resolvers = {
         "User not logged in, unable to update ultimate goal",
       );
     },
-    createEntry: async (
-      parent,
-      { gratefulFor, dailyAffirmations, ultimateAffirmation },
-      context,
-    ) => {
+    createEntry: async (parent, { gratefulFor, dailyAffirmations, ultimateAffirmation }, context) => {
+  console.log("triggered")      
       if (context.user) {
         try {
+          console.log("gratefulFor", gratefulFor);
           // Validate input
-          if (
-            !gratefulFor ||
-            !Array.isArray(gratefulFor) ||
-            gratefulFor.length === 0
-          ) {
+          if (!gratefulFor || !Array.isArray(gratefulFor) || gratefulFor.length === 0) {
             throw new Error("Gratitudes must be a non-empty array");
           }
-          if (
-            !dailyAffirmations ||
-            !Array.isArray(dailyAffirmations) ||
-            dailyAffirmations.length === 0
-          ) {
+          if (!dailyAffirmations || !Array.isArray(dailyAffirmations) || dailyAffirmations.length === 0) {
             throw new Error("Daily affirmations must be a non-empty array");
           }
           if (!ultimateAffirmation || typeof ultimateAffirmation !== "string") {
             throw new Error("Ultimate affirmation must be a non-empty string");
           }
-
+    
           // Create the entry
           const entry = await Entry.create({
             gratefulFor,
@@ -249,23 +239,21 @@ const resolvers = {
             ultimateAffirmation,
             createdAt: new Date(),
           });
-
+    
           // Associate the entry with the user
           await User.findOneAndUpdate(
             { _id: context.user._id },
             { $push: { entries: entry._id } },
-            { new: true },
+            { new: true }
           );
-
+    
           return entry;
         } catch (error) {
           console.error("Error creating entry:", error);
           throw new Error("Failed to create entry");
         }
       }
-      throw new AuthenticationError(
-        "User not logged in, unable to create entry",
-      );
+      throw new AuthenticationError("User not logged in, unable to create entry");
     },
   },
 };

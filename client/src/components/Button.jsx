@@ -36,29 +36,30 @@ const Button = ({
     }
 
     if (saveToUser) {
-      console.log("inoutForDBSave", inputForDBSave)
       if (saveToUser === "bigdream") {
         await addBigDream({ variables: { bigDream: inputForDBSave } });
       } else if (saveToUser === "littledreams") {
         await addLittleDreams({ variables: { littleDreams: inputForDBSave } });
       } else if (saveToUser === "ultimategoal") {
         await addUltimateGoal({ variables: { ultimateGoal: inputForDBSave } });
-      } else if (saveToUser === "gratitudes") {
+      } else if (saveToUser === "entry") {
+        console.log("inputForDBSave", inputForDBSave.gratefulFor)
         await createEntry({
           variables: {
-            gratefulFor: inputForDBSave.filter((gratitude) => gratitude !== ""),
-            dailyAffirmations: [],
-            ultimateAffirmation: "",
+            gratefulFor: inputForDBSave.gratefulFor,
+            dailyAffirmations: inputForDBSave.dailyAffirmations,
+            ultimateAffirmation: inputForDBSave.ultimateAffirmation,
           },
         });
+      }else {
+        console.log("Incorrect save route for button");
+        return
       }
 
       if (onMutationCompleted) {
         onMutationCompleted();
       }
-    } else {
-      console.log("Incorrect save route for button");
-    }
+    } 
 
     if (onMutationCompleted && !saveToUser) {
       onMutationCompleted();
@@ -84,14 +85,14 @@ const Button = ({
     fontSize: "16px",
     ...(isHovered
       ? {
-          backgroundColor: "#6F8AA3",
-          color: "#ECFFCC",
-          transform: "scale(1.05)",
-        }
+        backgroundColor: "#6F8AA3",
+        color: "#ECFFCC",
+        transform: "scale(1.05)",
+      }
       : {
-          backgroundColor: "#8B9CB6",
-          color: "#FFFFFF",
-        }),
+        backgroundColor: "#8B9CB6",
+        color: "#FFFFFF",
+      }),
     ...style,
   };
 
