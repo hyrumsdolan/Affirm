@@ -3,5 +3,5 @@
 **/.env
 dist/
 build/
-.vscode/settings.json
+.vscode/
 client/src/css/tailwind.css
