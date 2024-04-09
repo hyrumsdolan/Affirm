@@ -4,11 +4,16 @@ import Button from "../components/Button";
 
 const WelcomeBack = ({ user }) => {
   const littleDreams = user.dream?.littleDreams || [];
-  const [dailyAffirmations, setDailyAffirmations] = useState(littleDreams.map(dream => dream.littleDream));
-  const [ultimateGoal, setUltimateGoal] = useState(user.dream?.ultimateGoal || "");
+  const [dailyAffirmations, setDailyAffirmations] = useState(
+    littleDreams.map(dream => dream.littleDream)
+  );
+  const [ultimateGoal, setUltimateGoal] = useState(
+    user.dream?.ultimateGoal || ""
+  );
   const [showLittleDreams, setShowLittleDreams] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(0);
-  const [gratitudes, setGratitudes] = useState(['', '', '', '', '']);
+  const [gratitudes, setGratitudes] = useState(["", "", "", "", ""]);
+  const userName = user.firstName;
 
   const groupItems = (items, groupSize) => {
     let grouped = [];
@@ -32,11 +37,11 @@ const WelcomeBack = ({ user }) => {
     setDailyAffirmations(updatedAffirmations);
   };
 
-  const handleUltimateChange = (value) => {
+  const handleUltimateChange = value => {
     setUltimateGoal(value);
   };
 
-  const handleFocus = (index) => {
+  const handleFocus = index => {
     setFocusedIndex(index);
   };
 
@@ -47,7 +52,7 @@ const WelcomeBack = ({ user }) => {
       const entryData = {
         gratefulFor: gratitudes,
         dailyAffirmations: dailyAffirmations,
-        ultimateAffirmation: ultimateGoal,
+        ultimateAffirmation: ultimateGoal
       };
       // console.log("Entry Data:", entryData);
       // Call the mutation to create the entry
@@ -58,7 +63,7 @@ const WelcomeBack = ({ user }) => {
     <div key={index}>
       <SelectableButton
         placeholderText="What are you grateful for today?"
-        onTextChange={(value) => handleGratitudeChange(index, value)}
+        onTextChange={value => handleGratitudeChange(index, value)}
         editOnClick={true}
         showEditButton={false}
         selectIfInput={true}
@@ -74,8 +79,14 @@ const WelcomeBack = ({ user }) => {
       {!showLittleDreams ? (
         <>
           <header className="mb-8 text-center">
-            <h1 className="mb-4 text-2xl">Welcome back :)</h1>
-            <p className="text-lg">Let's express some gratitude.</p>
+            <h1 className="mb-4 text-center text-4xl">
+              welcome back, {userName} :)
+            </h1>
+            <p className="text-lg">Frist, let's express some gratitude.</p>
+            <p className="text-lg">
+              Expand your gratitude. Mention 5 unique things that you didn't
+              list yesterday.
+            </p>
           </header>
           <main className="">
             <div className="flex flex-col items-center gap-4">
@@ -91,19 +102,32 @@ const WelcomeBack = ({ user }) => {
       ) : (
         <>
           <header className="mb-8 text-center">
-            <h1 className="mb-4 text-2xl">Your Little Dreams</h1>
+            <h1 className="mb-4 text-center text-4xl">
+              Now it's time to affirm your vision.
+            </h1>
+            <p className="text-lg">
+              Writing WHO YOU ARE and your CORE GOAL every day reminds you to
+              keep on track. You've got this!
+            </p>
+            <p className="text-lg">
+              Read them out loud as you select them and feel yourself move
+              toward your vision.
+            </p>
           </header>
           <main className="">
             <div className="flex flex-col items-center">
+              <p className="mb-4 text-center text-lg">Who You Are:</p>
               {groupedDreams.map((group, index) => (
                 <div key={index} className="mb-4 flex justify-center gap-4">
                   {group.map((dream, index) => (
                     <div className="" key={index}>
                       <SelectableButton
                         initialText={dream}
-                        canSelect={false}
-                        startSelected={true}
-                        onTextChange={(value) => handleAffirmationChange(index, value)}
+                        canSelect={true}
+                        startSelected={false}
+                        onTextChange={value =>
+                          handleAffirmationChange(index, value)
+                        }
                       />
                     </div>
                   ))}
@@ -111,26 +135,27 @@ const WelcomeBack = ({ user }) => {
               ))}
             </div>
           </main>
-          <p className="text-center text-lg">Your Ultimate Goal:</p>
-          <footer className="mb-4 mt-8 flex justify-center gap-4 flex-col">
+          <p className="text-center text-lg">Your Core Goal:</p>
+          <footer className="mb-4 mt-8 flex flex-col justify-center gap-4">
             <SelectableButton
               className="m-auto"
               initialText={ultimateGoal}
-              canSelect={false}
-              startSelected={true}
+              canSelect={true}
+              startSelected={false}
               onTextChange={handleUltimateChange}
             />
 
-            <Button 
-              className="m-auto" 
+            <Button
+              className="m-auto"
               onClick={handleSave}
               saveToUser="entry"
               inputForDBSave={{
                 gratefulFor: gratitudes,
                 dailyAffirmations: dailyAffirmations,
-                ultimateAffirmation: ultimateGoal,
+                ultimateAffirmation: ultimateGoal
               }}
-              navigateTo= '/confirmation'
+              navigateTo="/confirmation"
+              user={user}
             >
               Save & Continue
             </Button>
