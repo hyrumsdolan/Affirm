@@ -1,4 +1,6 @@
 import TenYearDreamForm from "../components/TenYearDreamForm";
+import SpeakerButton from "../components/SpeakerButton";
+
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 
@@ -27,16 +29,23 @@ function TenYearDreamPage() {
   }
 
   return (
+// Merge had significantly different div setups and needs to be toyed with a bit
+          
+
     <div className="p-10 flex flex-col md:flex-row h-full items-center justify-between">
       <div className="flex-1 mb-10 md:mb-0 justify-between">
-        <h1 className="text-center m-5 text-2xl md:text-3xl lg:text-4xl">Ten Year Dream.</h1>
+        <h1 className="text-center m-5 text-2xl md:text-3xl lg:text-4xl">Ten Year Dream</h1>
         <div className="text-center mx-5 md:mx-10 text-xs sm:text-sm md:text-base">
+        <span className="inline-flex items-center">
+           <SpeakerButton audioSrc="https://res.cloudinary.com/dkonhzar9/video/upload/v1712647969/ten-year-dream-prompt_gua9vc.mp3" />
+          </span>{" "}
           {dreamParagraphs.map((paragraph, index) => (
             <p key={index} className="mt-1 mb-2  font-light">
               {paragraph}
             </p>
           ))}
         </div>
+
       </div>
       <div className="h-full flex-1 justify-between md:border-l border-gray-100 md:pl-8 flex flex-col mb-5 mt-5">
         <div className="flex-1"></div>
