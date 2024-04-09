@@ -46,7 +46,6 @@ const AndNext = ({ user }) => {
     });
   };
 
-
   const handleSave = async () => {
     try {
       setIsLoading(true);
@@ -113,14 +112,10 @@ const AndNext = ({ user }) => {
         {dreams.map((dream, index) => (
           <div className="m-10" key={index}>
             <SelectableButton
-            
-              initialText={dream}
-              onSelect={isSelected => toggleDreamSelection(dream, isSelected)}
-              canSelect={
-                selectedDreams[dream] ||
-                Object.values(selectedDreams).filter(Boolean).length <
-                  MAX_SELECTIONS
-              }
+              initialText={dream.littleDream}
+              onSelect={() => toggleDreamSelection(index)}
+              canSelect={dream.canSelect !== false}
+              selected={dream.selected}
             />
           </div>
         ))}
