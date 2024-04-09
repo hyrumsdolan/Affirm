@@ -46,14 +46,14 @@ function TenYearDreamForm({ user }) {
   return (
     <>
       {isLoading ? (
-        <div className="mt-4 flex h-full w-full flex-col items-center justify-center">
+        <div className="mt-10 flex h-full w-full flex-col items-center justify-center">
           <ProgressSpinner className="pointer-events-none mb-4 h-12 w-12" />
           <h2 className="text-center">
             Hang tight while we generate responses!
           </h2>
         </div>
       ) : (
-        <div className="flex h-full flex-col pb-32">
+        <div className="flex h-full flex-col">
           <div className="relative flex flex-grow">
             <textarea
               className="block w-full resize-none rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"

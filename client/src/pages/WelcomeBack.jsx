@@ -10,6 +10,7 @@ const WelcomeBack = ({ user }) => {
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [gratitudes, setGratitudes] = useState(['', '', '', '', '']);
 
+
   const groupItems = (items, groupSize) => {
     let grouped = [];
     for (let i = 0; i < items.length; i += groupSize) {
@@ -101,8 +102,8 @@ const WelcomeBack = ({ user }) => {
                     <div className="" key={index}>
                       <SelectableButton
                         initialText={dream}
-                        canSelect={false}
-                        startSelected={true}
+                        canSelect={true}
+                        startSelected={false}
                         onTextChange={(value) => handleAffirmationChange(index, value)}
                       />
                     </div>
@@ -116,13 +117,13 @@ const WelcomeBack = ({ user }) => {
             <SelectableButton
               className="m-auto"
               initialText={ultimateGoal}
-              canSelect={false}
-              startSelected={true}
+              canSelect={true}
+              startSelected={false}
               onTextChange={handleUltimateChange}
             />
 
-            <Button 
-              className="m-auto" 
+            <Button
+              className="m-auto"
               onClick={handleSave}
               saveToUser="entry"
               inputForDBSave={{
@@ -130,7 +131,8 @@ const WelcomeBack = ({ user }) => {
                 dailyAffirmations: dailyAffirmations,
                 ultimateAffirmation: ultimateGoal,
               }}
-              navigateTo= '/confirmation'
+              navigateTo='/confirmation'
+              user={user}
             >
               Save & Continue
             </Button>

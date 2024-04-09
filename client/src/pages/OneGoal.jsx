@@ -5,7 +5,7 @@ import useUserNavigation from "../utils/userNavigation";
 
 const OneGoal = () => {
   const [goal, setGoal] = useState("");
-  const handleMutationCompleted = useUserNavigation();
+
 
   const handleInputChange = event => {
     setGoal(event.target.value);
@@ -42,7 +42,7 @@ const OneGoal = () => {
             inputForDBSave={goal}
             isEnabled={goal}
             saveToUser="ultimategoal"
-            onMutationCompleted={handleMutationCompleted}
+            navigateTo="/summary-dreams-page"
           >
             save & continue
           </Button>
