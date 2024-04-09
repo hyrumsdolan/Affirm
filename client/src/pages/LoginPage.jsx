@@ -102,44 +102,46 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="flex h-full flex-col md:flex-row">
-        <div className="relative flex w-full flex-col items-center justify-center md:w-3/5">
-          <h2 className="mb-4 text-center text-3xl md:text-5xl">
+      <div className="flex h-auto w-full grow flex-col justify-center align-middle md:flex-row">
+        <div className="relative bottom-4 flex w-full flex-col items-center justify-center md:w-3/5">
+          <h2 className="mb-4 mt-4 text-center text-3xl md:mt-2 md:text-5xl">
             let's improve together
           </h2>
-          <p className="text-center ">
+          <p className="mx-4 mb-4 text-center font-thin">
             An application to help you dream big, and stay on course to live
             your best life.
           </p>
         </div>
-        <div className="flex w-full flex-col items-center justify-center border-t border-gray-200 p-8 md:w-2/5 md:border-l md:border-t-0">
-          <h2 className="mb-4 text-center text-3xl md:text-5xl">Login</h2>
+        <div className="flex w-full flex-col items-center justify-center border-t border-gray-200 md:mb-12 md:w-2/5 md:border-l md:border-t-0">
+          <h2 className="mb-4 mt-4 text-center text-3xl md:text-5xl">Login</h2>
           <form onSubmit={handleFormSubmit} className="w-full md:w-9/12">
-            <div className="mb-4">
+            <div className="relative mb-4">
               <label
                 htmlFor="email"
-                className="mb-2 block font-bold text-gray-700"
+                className="mb-2 block text-center text-xl font-thin text-gray-700 md:text-left"
               >
                 Email:
               </label>
-              <InputBox
-                type="email"
-                id="email"
-                name="email"
-                value={userFormData.email}
-                onChange={handleInputChange}
-                required
-                className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <div className="relative flex justify-center align-middle">
+                <InputBox
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={userFormData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-[calc(100%-2.5rem)] rounded-md border border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-full"
+                />
+              </div>
             </div>
             <div className="mb-6">
               <label
                 htmlFor="password"
-                className="mb-2 block font-bold text-gray-700"
+                className="mb-2 block text-center text-xl font-thin text-gray-700 md:text-left"
               >
                 Password:
               </label>
-              <div className="relative">
+              <div className="relative flex justify-center align-middle">
                 <InputBox
                   type={showPassword ? "text" : "password"}
                   id="password"
@@ -147,11 +149,11 @@ const LoginForm = () => {
                   value={userFormData.password}
                   onChange={handleInputChange}
                   required
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-[calc(100%-2.5rem)] rounded-md border border-gray-300 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-full"
                 />
                 <button
                   type="button"
-                  className="absolute right-2 top-1/2 -translate-y-1/2 transform focus:outline-none"
+                  className="absolute right-8 top-1/2 -translate-y-1/2 transform focus:outline-none md:right-1"
                   onClick={toggleShowPassword}
                 >
                   {showPassword ? (
@@ -162,7 +164,10 @@ const LoginForm = () => {
                 </button>
               </div>
             </div>
-            <Button type="submit" className="w-full">
+            <Button
+              type="submit"
+              className="mx-5 w-[calc(100%-2.5rem)] md:mx-0 md:w-full"
+            >
               Login
             </Button>
           </form>
