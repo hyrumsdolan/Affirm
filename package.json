@@ -7,8 +7,8 @@
     "dev": "concurrently --raw \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "installAll": "npm i && cd server && npm i && cd ../client && npm i",
     "install-all": "npm i && npm run install-server && npm run install-client",
-    "install-server": "cd server && npm install",
-    "install-client": "cd client && npm install",
+    "install-server": "cd server && npm install -f",
+    "install-client": "cd client && npm install -f",
     "build": "cd client && npm run build",
     "render-build": "npm run install-all && npm run build",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,html}\""
