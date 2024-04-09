@@ -16,9 +16,10 @@ const sampleDreams = [
   "Make a significant contribution to my community"
 ];
 
-const SummaryDreams = () => {
+const SummaryDreams = ({user}) => {
   const [dreams, setDreams] = useState([]);
   const [coreDream, setCoreDream] = useState([]);
+
 
   const groupItems = (items, groupSize) => {
     let grouped = [];
@@ -32,15 +33,18 @@ const SummaryDreams = () => {
   const groupedDreams = groupItems(dreams, 3);
 
   useEffect(() => {
-    const fetchedDreams = getClaudeResponse();
-    console.log(fetchedDreams);
-    const fetchedDreamGeneral = fetchedDreams.slice(0, -1);
-    console.log(fetchedDreamGeneral);
-    const fetchedCoreDream = [fetchedDreams.slice(-1)[0]];
-    console.log(fetchedCoreDream);
-    setDreams(fetchedDreamGeneral); // for testing setDreams(sampleDreams);
-    setCoreDream(fetchedCoreDream);
-  }, []);
+    console.log("summary user:", user);
+  
+    if (user) {
+      console.log("user.me.dream:", user.dream);
+      const littleDreams = user.dream.littleDreams;
+      console.log("littleDreams:", littleDreams);
+      const ultimateGoal = user.dream.ultimateGoal;
+      console.log("ultimateGoal:", ultimateGoal);
+      setDreams(littleDreams || sampleDreams);
+      setCoreDream(ultimateGoal || []);
+    }
+  }, [user]);
 
   return (
     <div className="flex h-full flex-col items-center justify-center">
@@ -61,28 +65,28 @@ const SummaryDreams = () => {
       </header>
 
       <div className="flex flex-col items-center">
-        <span className="text-lg font-bold">Who you are...</span>
-        {groupedDreams.map((group, index) => (
-          <div key={index} className="mb-4 flex justify-center gap-4">
-            {group.map((dream, index) => (
-              <div className="" key={index}>
-                <SelectableButton
-                  initialText={dream}
-                  canSelect={false}
-                  startSelected={true}
-                />
-              </div>
-            ))}
-          </div>
-        ))}
-      </div>
+  <span className="text-lg font-bold">Who you are...</span>
+  {groupedDreams.map((group, index) => (
+    <div key={index} className="mb-4 flex justify-center gap-4">
+      {group.map((dreamObj, index) => (
+        <div className="" key={index}>
+          <SelectableButton
+            initialText={dreamObj.littleDream}
+            canSelect={false}
+            startSelected={true}
+          />
+        </div>
+      ))}
+    </div>
+  ))}
+</div>
 
       <div className="mt-8 text-center ">
         <span className="text-lg font-bold">And the core goal...</span>
         {coreDream.length > 0 && (
           <div className="mt-4 flex justify-center">
             <SelectableButton
-              initialText={coreDream[0]}
+              initialText={"test"}
               canSelect={false}
               startSelected={true}
             />

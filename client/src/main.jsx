@@ -53,7 +53,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/summary-dreams-page",
-        element: <SummaryDreamsPage />
+        element: <PrivateRoute element={SummaryDreamsPage} />
       },
       //Welcome back page and once its done > confirm page
       {
