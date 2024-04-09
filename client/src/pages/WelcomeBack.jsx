@@ -3,8 +3,7 @@ import SelectableButton from "../components/SelectableButton";
 import Button from "../components/Button";
 
 const WelcomeBack = ({ user }) => {
-  console.log("User Data:", user);
-
+  console.log(`User data: ${JSON.stringify(user)}`);
   const isLastEntryToday = () => {
     if (user.entries.length === 0) {
       return false;
@@ -26,7 +25,6 @@ const WelcomeBack = ({ user }) => {
 
   console.log("Last Entry:", lastEntry);
   console.log("Is Last Entry Today:", isLastEntryToday());
-
   const littleDreams = user.dream?.littleDreams || [];
   const [dailyAffirmations, setDailyAffirmations] = useState(
     littleDreams.map(dream => dream.littleDream)
@@ -36,7 +34,6 @@ const WelcomeBack = ({ user }) => {
   );
   const [showLittleDreams, setShowLittleDreams] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(0);
-
   const [gratitudes, setGratitudes] = useState(() => {
     if (lastEntry && isLastEntryToday()) {
       return lastEntry.gratefulFor;
@@ -77,15 +74,6 @@ const WelcomeBack = ({ user }) => {
 
   const handleSave = () => {
     if (!showLittleDreams) {
-      if (isLastEntryToday()) {
-        const updatedGratitudes = gratitudes.map((gratitude, index) => {
-          return (
-            document.querySelector(`[data-gratitude-index="${index}"]`)
-              ?.value || gratitude
-          );
-        });
-        setGratitudes(updatedGratitudes);
-      }
       setShowLittleDreams(true);
     } else {
       const entryData = {
@@ -109,6 +97,7 @@ const WelcomeBack = ({ user }) => {
   const renderGratitudeInputs = gratitudes.map((gratitude, index) => (
     <div key={index}>
       <SelectableButton
+        initialValue={gratitude}
         placeholderText={
           renderGratitudeTexts()[index] || "What are you grateful for today?"
         }
@@ -208,10 +197,12 @@ const WelcomeBack = ({ user }) => {
             />
 
             <Button
+              user={user}
               className="m-auto"
               onClick={handleSave}
               saveToUser="entry"
               inputForDBSave={{
+                id: lastEntry ? lastEntry._id : null,
                 gratefulFor: gratitudes,
                 dailyAffirmations: dailyAffirmations,
                 ultimateAffirmation: ultimateGoal

@@ -6,6 +6,7 @@ import {
   ADD_LITTLE_DREAMS,
   ADD_ULTIMATE_GOAL,
   CREATE_ENTRY,
+  UPDATE_ENTRY
 } from "../utils/mutations";
 
 const Button = ({
@@ -17,6 +18,7 @@ const Button = ({
   style = {},
   children,
   inputForDBSave = "",
+  inputForDBUpdate = "",
   saveToUser = "",
   navigateTo = "",
   isEnabled = true,
@@ -28,8 +30,9 @@ const Button = ({
   const [addLittleDreams] = useMutation(ADD_LITTLE_DREAMS);
   const [addUltimateGoal] = useMutation(ADD_ULTIMATE_GOAL);
   const [createEntry] = useMutation(CREATE_ENTRY);
+  const [updateEntry] = useMutation(UPDATE_ENTRY);
   const [isHovered, setIsHovered] = useState(false);
-
+  console.log("From BUTTON", user);
   const handleClick = async () => {
     if (!isEnabled) {
       return;
@@ -43,23 +46,57 @@ const Button = ({
       } else if (saveToUser === "ultimategoal") {
         await addUltimateGoal({ variables: { ultimateGoal: inputForDBSave } });
       } else if (saveToUser === "entry") {
-        console.log("inputForDBSave", inputForDBSave.gratefulFor)
-        await createEntry({
-          variables: {
-            gratefulFor: inputForDBSave.gratefulFor,
-            dailyAffirmations: inputForDBSave.dailyAffirmations,
-            ultimateAffirmation: inputForDBSave.ultimateAffirmation,
-          },
-        });
-      }else {
+        const lastEntry = user.entries[user.entries.length - 1];
+
+        if (lastEntry) {
+          const currentDate = new Date();
+          const lastEntryDate = new Date(Number(lastEntry.createdAt));
+
+          if (
+            lastEntryDate.getFullYear() === currentDate.getFullYear() &&
+            lastEntryDate.getMonth() === currentDate.getMonth() &&
+            lastEntryDate.getDate() === currentDate.getDate()
+          ) {
+            // Update the existing entry
+            await updateEntry({
+              variables: {
+                id: lastEntry._id,
+                gratefulFor: inputForDBSave.gratefulFor,
+                dailyAffirmations: inputForDBSave.dailyAffirmations,
+                ultimateAffirmation: inputForDBSave.ultimateAffirmation
+              }
+            });
+          } else {
+            // Create a new entry
+            console.log("inputForDBSave", inputForDBSave.gratefulFor);
+            await createEntry({
+              variables: {
+                gratefulFor: inputForDBSave.gratefulFor,
+                dailyAffirmations: inputForDBSave.dailyAffirmations,
+                ultimateAffirmation: inputForDBSave.ultimateAffirmation
+              }
+            });
+          }
+        } else {
+          // Create a new entry
+          console.log("inputForDBSave", inputForDBSave.gratefulFor);
+          await createEntry({
+            variables: {
+              gratefulFor: inputForDBSave.gratefulFor,
+              dailyAffirmations: inputForDBSave.dailyAffirmations,
+              ultimateAffirmation: inputForDBSave.ultimateAffirmation
+            }
+          });
+        }
+      } else {
         console.log("Incorrect save route for button");
-        return
+        return;
       }
 
       if (onMutationCompleted) {
         onMutationCompleted();
       }
-    } 
+    }
 
     if (onMutationCompleted && !saveToUser) {
       onMutationCompleted();
@@ -85,15 +122,15 @@ const Button = ({
     fontSize: "16px",
     ...(isHovered
       ? {
-        backgroundColor: "#6F8AA3",
-        color: "#ECFFCC",
-        transform: "scale(1.05)",
-      }
+          backgroundColor: "#6F8AA3",
+          color: "#ECFFCC",
+          transform: "scale(1.05)"
+        }
       : {
-        backgroundColor: "#8B9CB6",
-        color: "#FFFFFF",
-      }),
-    ...style,
+          backgroundColor: "#8B9CB6",
+          color: "#FFFFFF"
+        }),
+    ...style
   };
 
   return (

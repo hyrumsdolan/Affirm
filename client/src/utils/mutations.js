@@ -38,14 +38,14 @@ mutation createEntry($gratefulFor: [String!]!, $dailyAffirmations: [String!]!, $
 `;
 
 export const UPDATE_ENTRY = gql`
-  mutation updateEntry($_id: ID!, $title: String, $content: String) {
-    updateEntry(_id: $_id, title: $title, content: $content) {
-      _id
-      title
-      content
-      updatedAt
-    }
+mutation updateEntry($id: ID!, $gratefulFor: [String], $dailyAffrimations: [String], $ultimateAffirmation: String) {
+  updateEntry(_id: $id, gratefulFor: $gratefulFor, dailyAffrimations: $dailyAffrimations, ultimateAffirmation: $ultimateAffirmation) {
+    _id
+    gratefulFor
+    dailyAffirmations
+    ultimateAffirmation
   }
+}
 `;
 
 export const DELETE_ENTRY = gql`
