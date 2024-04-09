@@ -10,6 +10,8 @@ import useUserNavigation from "../utils/userNavigation";
 
 const REQUIRED_SELECTION_COUNT = 10;
 
+let lastButtonHeight = "";
+let buttonHeight = 0;
 const AndNext = ({ user }) => {
   const [dreams, setDreams] = useState([]);
   const navigate = useNavigate();
@@ -53,6 +55,8 @@ const AndNext = ({ user }) => {
       }
       return updatedDreams;
     });
+
+    setButtonSize();
   };
 
   const handleSave = async () => {
@@ -73,8 +77,6 @@ const AndNext = ({ user }) => {
     }
   };
 
-  let lastButtonHeight = "";
-
   const setButtonSize = () => {
     const allSelectableButtons = document.querySelectorAll(".selectableButton");
 
@@ -84,7 +86,6 @@ const AndNext = ({ user }) => {
       }
     });
 
-    let buttonHeight = 0;
     allSelectableButtons.forEach(button => {
       if (button.children[0].textContent === longestDream) {
         buttonHeight = button.clientHeight;
@@ -95,6 +96,7 @@ const AndNext = ({ user }) => {
     lastButtonHeight = heightClass;
 
     allSelectableButtons.forEach(button => {
+      console.log(heightClass);
       button.classList.replace(
         lastButtonHeight !== "" ? "h-auto" : lastButtonHeight,
         heightClass
@@ -117,7 +119,6 @@ const AndNext = ({ user }) => {
 
     return () => {
       clearTimeout(timer);
-      window.removeEventListener("resize", setButtonSize, false);
     };
   }, [dreams]);
 
