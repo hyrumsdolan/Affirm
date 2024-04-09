@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { IoMdSettings, IoMdLogOut } from "react-icons/io";
+import { IoMdSettings, IoMdLogOut, IoMdSunny, IoMdMoon } from "react-icons/io";
 import Auth from "../utils/auth";
+import { toggleDarkMode } from "../utils/toggleDarkMode";
 
 const SettingsDropdown = () => {
   const [settingsMenuOpen, setSettingsMenuOpen] = useState(false);
@@ -77,13 +78,31 @@ const SettingsDropdown = () => {
       />
       <div
         id="settingsMenu"
-        className="absolute right-0 z-50 mt-1 flex h-[150px] w-0 flex-col items-center justify-center overflow-hidden text-nowrap rounded-md bg-zinc-900 text-center uppercase text-white duration-200 ease-in-out dark:bg-white dark:text-black"
+        className="absolute right-0 z-50 mt-1 h-auto w-0 flex-col items-center justify-center overflow-hidden text-nowrap rounded-md bg-zinc-900 text-center uppercase text-white duration-200 ease-in-out dark:bg-white dark:text-black"
       >
-        <p className="text-2xl">Settings</p>
-        <p className="text-sm">Coming Soon!</p>
+        <p className="w-32 text-2xl">Settings</p>
 
-        <div className="flex h-full w-32 flex-col items-center justify-center pt-2 text-2xl">
-          <div className="mt-4 flex items-center justify-center">
+        <div className="w-32">
+          <h1 className="mt-2 text-sm underline">Theme</h1>
+        </div>
+
+        <div className="flex w-32 flex-grow-0 flex-row justify-center gap-6 pt-1">
+          <div
+            className="hover:cursor-pointer"
+            onClick={() => toggleDarkMode("light")}
+          >
+            <IoMdSunny className="pointer-events-none" />
+          </div>
+          <div
+            className="hover:cursor-pointer"
+            onClick={() => toggleDarkMode("dark")}
+          >
+            <IoMdMoon className="cursor-pointer" />
+          </div>
+        </div>
+
+        <div className="flex h-auto w-32 flex-col items-center justify-center text-2xl">
+          <div className="mt-2 flex items-center justify-center">
             <button
               className="flex items-center justify-center text-lg hover:text-red-500"
               onClick={Auth.logout}
@@ -99,23 +118,3 @@ const SettingsDropdown = () => {
 };
 
 export default SettingsDropdown;
-
-// Code for light/dark mode toggle
-/* <div>
-              <h1 className="text-sm underline">Theme</h1>
-            </div>
-
-            <div className="flex flex-grow-0 flex-row justify-center gap-6 pt-1">
-              <div
-                className="hover:cursor-pointer"
-                onClick={() => toggleDarkMode("light")}
-              >
-                <IoMdSunny className="pointer-events-none" />
-              </div>
-              <div
-                className="hover:cursor-pointer"
-                onClick={() => toggleDarkMode("dark")}
-              >
-                <IoMdMoon className="cursor-pointer" />
-              </div>
-            </div> */
