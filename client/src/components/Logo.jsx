@@ -4,7 +4,7 @@ const Logo = () => {
   return (
     <div className="pl-5 pt-2">
       <h1
-        className="text-9xl font-bold text-[#819EC9] md:text-7xl"
+        className="text-3xl font-bold text-[#819EC9] sm:text-5xl md:text-7xl lg:text-9xl"
         style={{ fontFamily: "liSongPro", fontWeight: "100" }}
       >
         affirm
