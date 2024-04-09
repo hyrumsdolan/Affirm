@@ -16,13 +16,22 @@ const AndNext = ({ user }) => {
   const [addLittleDreams] = useMutation(ADD_LITTLE_DREAMS);
   const [isLoading, setIsLoading] = useState(false);
   const handleMutationCompleted = useUserNavigation();
+  const [buttonHeightUpdated, setButtonHeightUpdated] = useState(false);
   const [animationTrigger, setAnimationTrigger] = useState(false);
 
+  let longestDream = "";
   useEffect(() => {
-    const fetchedDreams = getClaudeResponse();
-    setDreams(
-      fetchedDreams.map(dream => ({ littleDream: dream, selected: false }))
-    );
+const fetchedDreams = getClaudeResponse();
+setDreams(
+fetchedDreams.map(dream => ({
+littleDream: dream,
+selected: false
+}))
+);
+fetchedDreams.forEach(dream => {
+if (dream.length > longestDream.length) longestDream = dream;
+});
+    
   }, []);
 
   const toggleDreamSelection = index => {
@@ -65,15 +74,54 @@ const AndNext = ({ user }) => {
     }
   };
 
-  const selectedCount = dreams.filter(dream => dream.selected).length;
+let lastButtonHeight = "";
 
-  useEffect(() => {
-    setAnimationTrigger(true);
-    const timer = setTimeout(() => {
-      setAnimationTrigger(false);
-    }, 500);
-    return () => clearTimeout(timer);
-  }, [selectedCount]);
+const setButtonSize = () => {
+  const allSelectableButtons = document.querySelectorAll(".selectableButton");
+
+  allSelectableButtons.forEach(button => {
+    if (lastButtonHeight !== "") {
+      button.classList.replace(lastButtonHeight, "h-auto");
+    }
+  });
+
+  let buttonHeight = 0;
+  allSelectableButtons.forEach(button => {
+    if (button.children[0].textContent === longestDream) {
+      buttonHeight = button.clientHeight;
+    }
+  });
+
+  const heightClass = `h-[${buttonHeight}px]`;
+  lastButtonHeight = heightClass;
+
+  allSelectableButtons.forEach(button => {
+    button.classList.replace(
+      lastButtonHeight !== "" ? "h-auto" : lastButtonHeight,
+      heightClass
+    );
+  });
+};
+
+useEffect(() => {
+  setTimeout(() => {
+    //Set the buttons to be the same size on load
+    setButtonSize();
+    //On window resize, call the function to reset button size
+    window.addEventListener("resize", setButtonSize, false);
+  }, 0);
+
+  const selectedCount = dreams.filter(dream => dream.selected).length;
+  setAnimationTrigger(true);
+  const timer = setTimeout(() => {
+    setAnimationTrigger(false);
+  }, 500);
+
+  return () => {
+    clearTimeout(timer);
+    window.removeEventListener("resize", setButtonSize, false);
+  };
+}, [dreams]);
 
   return (
     <div className="">
@@ -120,6 +168,8 @@ const AndNext = ({ user }) => {
         {dreams.map((dream, index) => (
           <div className="m-10" key={index}>
             <SelectableButton
+              className="selectableButton"
+              id={index}
               initialText={dream.littleDream}
               onSelect={() => toggleDreamSelection(index)}
               canSelect={dream.canSelect !== false}
@@ -128,9 +178,10 @@ const AndNext = ({ user }) => {
           </div>
         ))}
       </main>
+            <div className="flex w-screen justify-end">
       <Button
         onClick={handleSave}
-        className="r-0 absolute right-0 m-10"
+        className="bottom-10 left-0 m-10"
         user={user}
         saveToUser="littledreams"
         isEnabled={selectedCount === REQUIRED_SELECTION_COUNT}
@@ -141,6 +192,7 @@ const AndNext = ({ user }) => {
       >
         save & continue
       </Button>
+            </div>
     </div>
   );
 };
