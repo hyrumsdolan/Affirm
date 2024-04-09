@@ -1,14 +1,24 @@
 {
-  "name": "start-today-server",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "name": "journalapp",
+  "version": "2.0.0",
+  "description": "",
   "scripts": {
-    "dev": "cd client && npm run dev",
-    "install": "npm i && cd client && npm i && cd ../server && npm i"
+    "start": "cd server && npm start",
+    "dev": "concurrently --raw \"cd server && npm run watch\" \"cd client && npm run dev\"",
+    "install-all": "npm i && npm run install-server && npm run install-client",
+    "install-server": "cd server && npm install -f",
+    "install-client": "cd client && npm install -f",
+    "build": "cd client && npm run build",
+    "render-build": "npm run install-all && npm run build",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css,html}\""
   },
   "devDependencies": {
+    "concurrently": "^5.1.0",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.13"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.7.5",
+    "speechmatics": "^3.1.7"
   }
 }

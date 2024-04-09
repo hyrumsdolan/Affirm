@@ -1,4 +1,7 @@
 .DS_Store
-node_modules
-**/node_modules
-server/.env
+**/node_modules/
+**/.env
+dist/
+build/
+.vscode/
+client/src/css/tailwind.css
