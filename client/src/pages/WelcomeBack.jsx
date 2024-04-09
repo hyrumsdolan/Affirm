@@ -109,6 +109,10 @@ const WelcomeBack = ({ user }) => {
               Writing WHO YOU ARE and your CORE GOAL every day reminds you to
               keep on track. You've got this!
             </p>
+            <p className="text-lg">
+              Read them out loud as you select them and feel yourself move
+              toward your vision.
+            </p>
           </header>
           <main className="">
             <div className="flex flex-col items-center">
