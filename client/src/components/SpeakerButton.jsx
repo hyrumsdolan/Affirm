@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
-import { HiOutlineSpeakerWave, HiOutlinePauseCircle } from "react-icons/hi2";
+import { HiOutlineSpeakerWave, HiOutlinePause } from "react-icons/hi2";
 
-function SpeakerButton() {
+function SpeakerButton({ audioSrc }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef(null);
 
@@ -33,22 +33,10 @@ function SpeakerButton() {
         onClick={handleClick}
         aria-label={isPlaying ? "Pause audio" : "Play audio"}
       >
-        {isPlaying ? <HiOutlinePauseCircle /> : <HiOutlineSpeakerWave />}
+        {isPlaying ? <HiOutlinePause /> : <HiOutlineSpeakerWave />}
       </button>
       <audio ref={audioRef}>
-        <source
-          src="../assets/audio/ten-year-dream-prompt.mp3"
-          type="audio/mpeg"
-        />
-        <source
-          src="../assets/audio/ten-year-dream-prompt.ogg"
-          type="audio/ogg"
-        />
-        <source
-          src="../assets/audio/ten-year-dream-prompt.wav"
-          type="audio/wav"
-        />
-        Your browser does not support the audio element.
+        <source src={audioSrc} type="audio/mpeg" />
       </audio>
     </>
   );

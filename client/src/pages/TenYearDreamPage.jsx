@@ -37,7 +37,7 @@ Get ready to embark on a journey of self-discovery and growth. Your ideal future
         <h1 className="text-center ">Ten Year Dream.</h1>
         <p>
           <span className="inline-flex items-center">
-            <SpeakerButton />
+            <SpeakerButton audioSrc="https://res.cloudinary.com/dkonhzar9/video/upload/v1712647969/ten-year-dream-prompt_gua9vc.mp3" />
           </span>{" "}
           {dreamText}
         </p>
