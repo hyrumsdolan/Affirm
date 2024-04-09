@@ -21,17 +21,16 @@ const AndNext = ({ user }) => {
 
   let longestDream = "";
   useEffect(() => {
-const fetchedDreams = getClaudeResponse();
-setDreams(
-fetchedDreams.map(dream => ({
-littleDream: dream,
-selected: false
-}))
-);
-fetchedDreams.forEach(dream => {
-if (dream.length > longestDream.length) longestDream = dream;
-});
-    
+    const fetchedDreams = getClaudeResponse();
+    setDreams(
+      fetchedDreams.map(dream => ({
+        littleDream: dream,
+        selected: false
+      }))
+    );
+    fetchedDreams.forEach(dream => {
+      if (dream.length > longestDream.length) longestDream = dream;
+    });
   }, []);
 
   const toggleDreamSelection = index => {
@@ -74,54 +73,55 @@ if (dream.length > longestDream.length) longestDream = dream;
     }
   };
 
-let lastButtonHeight = "";
+  let lastButtonHeight = "";
 
-const setButtonSize = () => {
-  const allSelectableButtons = document.querySelectorAll(".selectableButton");
+  const setButtonSize = () => {
+    const allSelectableButtons = document.querySelectorAll(".selectableButton");
 
-  allSelectableButtons.forEach(button => {
-    if (lastButtonHeight !== "") {
-      button.classList.replace(lastButtonHeight, "h-auto");
-    }
-  });
+    allSelectableButtons.forEach(button => {
+      if (lastButtonHeight !== "") {
+        button.classList.replace(lastButtonHeight, "h-auto");
+      }
+    });
 
-  let buttonHeight = 0;
-  allSelectableButtons.forEach(button => {
-    if (button.children[0].textContent === longestDream) {
-      buttonHeight = button.clientHeight;
-    }
-  });
+    let buttonHeight = 0;
+    allSelectableButtons.forEach(button => {
+      if (button.children[0].textContent === longestDream) {
+        buttonHeight = button.clientHeight;
+      }
+    });
 
-  const heightClass = `h-[${buttonHeight}px]`;
-  lastButtonHeight = heightClass;
+    const heightClass = `h-[${buttonHeight}px]`;
+    lastButtonHeight = heightClass;
 
-  allSelectableButtons.forEach(button => {
-    button.classList.replace(
-      lastButtonHeight !== "" ? "h-auto" : lastButtonHeight,
-      heightClass
-    );
-  });
-};
+    allSelectableButtons.forEach(button => {
+      button.classList.replace(
+        lastButtonHeight !== "" ? "h-auto" : lastButtonHeight,
+        heightClass
+      );
+    });
+  };
 
-useEffect(() => {
-  setTimeout(() => {
-    //Set the buttons to be the same size on load
-    setButtonSize();
-    //On window resize, call the function to reset button size
-    window.addEventListener("resize", setButtonSize, false);
-  }, 0);
+  useEffect(() => {
+    setTimeout(() => {
+      // Set the buttons to be the same size on load
+      setButtonSize();
+      // On window resize, call the function to reset button size
+      window.addEventListener("resize", setButtonSize, false);
+    }, 0);
+
+    setAnimationTrigger(true);
+    const timer = setTimeout(() => {
+      setAnimationTrigger(false);
+    }, 500);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", setButtonSize, false);
+    };
+  }, [dreams]);
 
   const selectedCount = dreams.filter(dream => dream.selected).length;
-  setAnimationTrigger(true);
-  const timer = setTimeout(() => {
-    setAnimationTrigger(false);
-  }, 500);
-
-  return () => {
-    clearTimeout(timer);
-    window.removeEventListener("resize", setButtonSize, false);
-  };
-}, [dreams]);
 
   return (
     <div className="">
@@ -178,21 +178,21 @@ useEffect(() => {
           </div>
         ))}
       </main>
-            <div className="flex w-screen justify-end">
-      <Button
-        onClick={handleSave}
-        className="bottom-10 left-0 m-10"
-        user={user}
-        saveToUser="littledreams"
-        isEnabled={selectedCount === REQUIRED_SELECTION_COUNT}
-        inputForDBSave={dreams
-          .filter(dream => dream.selected)
-          .map(dream => dream.littleDream)}
-        onMutationCompleted={handleMutationCompleted}
-      >
-        save & continue
-      </Button>
-            </div>
+      <div className="flex w-screen justify-end">
+        <Button
+          onClick={handleSave}
+          className="bottom-10 left-0 m-10"
+          user={user}
+          saveToUser="littledreams"
+          isEnabled={selectedCount === REQUIRED_SELECTION_COUNT}
+          inputForDBSave={dreams
+            .filter(dream => dream.selected)
+            .map(dream => dream.littleDream)}
+          onMutationCompleted={handleMutationCompleted}
+        >
+          save & continue
+        </Button>
+      </div>
     </div>
   );
 };
