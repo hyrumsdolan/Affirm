@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently --raw \"vite --host\" \"npx tailwindcss build -i ./src/css/tailwindInput.css -o ./src/css/tailwind.css --minify --watch\"",
     "start": "vite",
-    "build": "npx tailwindcss build -i ./src/css/tailwindInput.css -o ./src/css/tailwind.css --minify --watch && vite build",
+    "build": "npx tailwindcss build -i ./src/css/tailwindInput.css -o ./src/css/tailwind.css && vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
