@@ -49,7 +49,7 @@ function TenYearDreamForm({ user }) {
         <div className="mt-10 flex h-full w-full flex-col items-center justify-center">
           <ProgressSpinner className="pointer-events-none mb-4 h-12 w-12" />
           <h2 className="text-center">
-            Hang tight while we generate responses!
+            Hang tight while we help shape your dream!
           </h2>
         </div>
       ) : (
