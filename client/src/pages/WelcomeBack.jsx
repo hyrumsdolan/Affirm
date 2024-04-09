@@ -79,8 +79,14 @@ const WelcomeBack = ({ user }) => {
       {!showLittleDreams ? (
         <>
           <header className="mb-8 text-center">
-            <h1 className="mb-4 text-2xl">Welcome back, {userName} :)</h1>
-            <p className="text-lg">Let's express some gratitude.</p>
+            <h1 className="mb-4 text-center text-4xl">
+              welcome back, {userName} :)
+            </h1>
+            <p className="text-lg">Frist, let's express some gratitude.</p>
+            <p className="text-lg">
+              Try to expand your gratitude. Mention 5 unique things that you
+              didn't list yesterday.
+            </p>
           </header>
           <main className="">
             <div className="flex flex-col items-center gap-4">
@@ -96,10 +102,17 @@ const WelcomeBack = ({ user }) => {
       ) : (
         <>
           <header className="mb-8 text-center">
-            <h1 className="mb-4 text-2xl">Your Little Dreams</h1>
+            <h1 className="mb-4 text-center text-4xl">
+              Now it's time to affirm your vision.
+            </h1>
+            <p className="text-lg">
+              Writing WHO YOU ARE and your CORE GOAL every day reminds you to
+              keep on track. You've got this!
+            </p>
           </header>
           <main className="">
             <div className="flex flex-col items-center">
+              <p className="mb-4 text-center text-lg">Who You Are:</p>
               {groupedDreams.map((group, index) => (
                 <div key={index} className="mb-4 flex justify-center gap-4">
                   {group.map((dream, index) => (
@@ -118,7 +131,7 @@ const WelcomeBack = ({ user }) => {
               ))}
             </div>
           </main>
-          <p className="text-center text-lg">Your Ultimate Goal:</p>
+          <p className="text-center text-lg">Your Core Goal:</p>
           <footer className="mb-4 mt-8 flex flex-col justify-center gap-4">
             <SelectableButton
               className="m-auto"

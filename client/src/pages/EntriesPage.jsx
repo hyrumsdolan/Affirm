@@ -27,7 +27,7 @@ const EntriesPage = () => {
 
   return (
     <div>
-      <h1>My Entries</h1>
+      <h1 className="mb-4 text-center text-4xl">My Entries</h1>
       {entries.map(entry => (
         <div key={entry._id}>
           <SelectableButton

@@ -45,11 +45,23 @@ const SummaryDreams = () => {
   return (
     <div className="flex h-full flex-col items-center justify-center">
       <header className="mb-8 text-center">
-        <h1 className="mb-4 text-2xl">you're breathtaking...</h1>
-        <p className="text-lg">Here is a summary of your dreams</p>
+        <h1 className="mb-4 text-center text-4xl">you're breathtaking...</h1>
+        <p className="m-10 text-center">
+          Here is a summary of your dreams. Take a moment and soak up what your
+          life will look like in ten years! You engineered this, we're going to
+          help you get there.
+        </p>
+        <p className="m-10 text-center">
+          {" "}
+          If you want to edit any of the entries, now is the time to do so. We
+          will be affirming these dreams and goals every day moving forward!
+          Click save & continue if you're ready to commit to your magnificient
+          vision!
+        </p>
       </header>
 
       <div className="flex flex-col items-center">
+        <span className="text-lg font-bold">Who you are...</span>
         {groupedDreams.map((group, index) => (
           <div key={index} className="mb-4 flex justify-center gap-4">
             {group.map((dream, index) => (
@@ -66,7 +78,7 @@ const SummaryDreams = () => {
       </div>
 
       <div className="mt-8 text-center ">
-        <span className="text-lg font-bold">And the core dream</span>
+        <span className="text-lg font-bold">And the core goal...</span>
         {coreDream.length > 0 && (
           <div className="mt-4 flex justify-center">
             <SelectableButton

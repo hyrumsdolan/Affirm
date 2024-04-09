@@ -25,7 +25,7 @@ const Confirmation = () => {
 
   return (
     <div className="flex h-full flex-col items-center justify-center">
-      <h1 className="mb-4">{randomMessage}</h1>
+      <h1 className="mb-4 text-center text-4xl">{randomMessage}</h1>
       <h2 className="text-2xl">See you again tomorrow!</h2>
     </div>
   );

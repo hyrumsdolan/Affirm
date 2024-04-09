@@ -109,7 +109,7 @@ const SignupForm = () => {
     <>
       {Auth.loggedIn() ? (
         <>
-          <h1>Welcome!</h1>
+          <h1 className="mb-4 text-center text-4xl">Welcome!</h1>
           <p>
             <a href="/home">Go to home page</a>
           </p>
