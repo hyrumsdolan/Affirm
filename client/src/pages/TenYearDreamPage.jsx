@@ -1,5 +1,5 @@
 import TenYearDreamForm from "../components/TenYearDreamForm";
-// import SpeakerButton from "../components/SpeakerButton";
+import SpeakerButton from "../components/SpeakerButton";
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 
@@ -37,7 +37,7 @@ Get ready to embark on a journey of self-discovery and growth. Your ideal future
         <h1 className="text-center ">Ten Year Dream.</h1>
         <p>
           <span className="inline-flex items-center">
-            {/* <SpeakerButton text={dreamText} /> */}
+            <SpeakerButton />
           </span>{" "}
           {dreamText}
         </p>
