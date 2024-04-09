@@ -15,6 +15,8 @@ const AndNext = ({ user }) => {
   const [isLoading, setIsLoading] = useState(false);
   const handleMutationCompleted = useUserNavigation();
 
+const REQUIRED_COUNT = 10
+
   useEffect(() => {
     const fetchedDreams = getClaudeResponse(); // Core dream is last element
     setDreams(fetchedDreams);
@@ -25,7 +27,14 @@ const AndNext = ({ user }) => {
       ...prevSelected,
       [dream]: isSelected
     }));
+    console.log(Object.keys(selectedDreams).filter(
+      dream => selectedDreams[dream]
+    ).length)
+    console.log(Object.keys(selectedDreams).filter(
+      dream => selectedDreams[dream]
+    ).length === REQUIRED_COUNT)
   };
+
 
   const handleSave = async () => {
     try {
@@ -49,6 +58,7 @@ const AndNext = ({ user }) => {
         {dreams.map((dream, index) => (
           <div className="m-10" key={index}>
             <SelectableButton
+            
               initialText={dream}
               onSelect={isSelected => toggleDreamSelection(dream, isSelected)}
             />
@@ -60,7 +70,9 @@ const AndNext = ({ user }) => {
         className="r-0 absolute right-0 m-10"
         user={user}
         saveToUser="littledreams"
-        isEnabled={Object.values(selectedDreams).some(isSelected => isSelected)}
+        isEnabled={Object.keys(selectedDreams).filter(
+          dream => selectedDreams[dream]
+        ).length === REQUIRED_COUNT}
         inputForDBSave={Object.keys(selectedDreams).filter(
           dream => selectedDreams[dream]
         )}
