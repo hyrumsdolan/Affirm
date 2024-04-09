@@ -18,6 +18,9 @@ export const GET_ME = gql`
         }
         ultimateGoal
       }
+      entries {
+        createdAt
+      }
       theme
     }
   }

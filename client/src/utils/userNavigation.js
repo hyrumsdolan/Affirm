@@ -11,6 +11,7 @@ const useUserNavigation = () => {
   const handleMutationCompleted = async () => {
     try {
       const { data } = await refetch();
+
       const userData = data.me;
       const bigDream = userData.dream?.bigDream;
       const littleDreams = userData.dream?.littleDreams;
