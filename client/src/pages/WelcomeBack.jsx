@@ -84,8 +84,8 @@ const WelcomeBack = ({ user }) => {
             </h1>
             <p className="text-lg">Frist, let's express some gratitude.</p>
             <p className="text-lg">
-              Try to expand your gratitude. Mention 5 unique things that you
-              didn't list yesterday.
+              Expand your gratitude. Mention 5 unique things that you didn't
+              list yesterday.
             </p>
           </header>
           <main className="">
