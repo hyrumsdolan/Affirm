@@ -15,14 +15,14 @@ const AndNext = ({ user }) => {
   const [isLoading, setIsLoading] = useState(false);
   const handleMutationCompleted = useUserNavigation();
   const [buttonHeightUpdated, setButtonHeightUpdated] = useState(false);
-  let longest = "";
 
+  let longestDream = "";
   useEffect(() => {
     const fetchedDreams = getClaudeResponse(); // Core dream is last element
     setDreams(fetchedDreams);
 
     fetchedDreams.forEach(dream => {
-      if (dream.length > longest.length) longest = dream;
+      if (dream.length > longestDream.length) longestDream = dream;
     });
   }, []);
 
@@ -49,22 +49,39 @@ const AndNext = ({ user }) => {
     }
   };
 
+  let lastButtonHeight = "";
+  const setButtonSize = () => {
+    const allSelectableButtons = document.querySelectorAll(".selectableButton");
+
+    allSelectableButtons.forEach(button => {
+      if (lastButtonHeight != "") {
+        button.classList.replace(lastButtonHeight, "h-auto");
+      }
+    });
+
+    let buttonHeight = 0;
+    allSelectableButtons.forEach(button => {
+      if (button.children[0].textContent === longestDream) {
+        buttonHeight = button.clientHeight;
+      }
+    });
+
+    const heightClass = `h-[${buttonHeight}px]`;
+    lastButtonHeight = heightClass;
+    allSelectableButtons.forEach(button => {
+      button.classList.replace(
+        lastButtonHeight != "" ? "h-auto" : lastButtonHeight,
+        heightClass
+      );
+    });
+  };
+
   useEffect(() => {
     setTimeout(() => {
-      const allSelectableButtons =
-        document.querySelectorAll(".selectableButton");
-
-      let buttonHeight = 0;
-      allSelectableButtons.forEach(button => {
-        if (button.children[0].textContent === longest) {
-          buttonHeight = button.clientHeight;
-        }
-      });
-
-      const heightClass = `h-[${buttonHeight}px]`;
-      allSelectableButtons.forEach(button => {
-        button.classList.replace("h-auto", heightClass);
-      });
+      //Set the buttons to be the same size on load
+      setButtonSize();
+      //On window resize, call the function to reset button size
+      window.addEventListener("resize", setButtonSize, false);
     }, 0);
   }, []);
 
