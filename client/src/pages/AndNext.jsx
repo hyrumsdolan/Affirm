@@ -14,16 +14,17 @@ const AndNext = ({ user }) => {
   const [addLittleDreams] = useMutation(ADD_LITTLE_DREAMS);
   const [isLoading, setIsLoading] = useState(false);
   const handleMutationCompleted = useUserNavigation();
-
   const [animationTrigger, setAnimationTrigger] = useState(false);
 
   let longestDream = "";
   useEffect(() => {
     const fetchedDreams = getClaudeResponse();
     setDreams(
-      fetchedDreams.map(dream => ({ littleDream: dream, selected: false }))
+      fetchedDreams.map(dream => ({
+        littleDream: dream,
+        selected: false
+      }))
     );
-
     fetchedDreams.forEach(dream => {
       if (dream.length > longestDream.length) longestDream = dream;
     });
@@ -74,7 +75,7 @@ const AndNext = ({ user }) => {
     const allSelectableButtons = document.querySelectorAll(".selectableButton");
 
     allSelectableButtons.forEach(button => {
-      if (lastButtonHeight != "") {
+      if (lastButtonHeight !== "") {
         button.classList.replace(lastButtonHeight, "h-auto");
       }
     });
@@ -90,12 +91,11 @@ const AndNext = ({ user }) => {
     lastButtonHeight = heightClass;
     allSelectableButtons.forEach(button => {
       button.classList.replace(
-        lastButtonHeight != "" ? "h-auto" : lastButtonHeight,
+        lastButtonHeight !== "" ? "h-auto" : lastButtonHeight,
         heightClass
       );
     });
   };
-
   useEffect(() => {
     //Idk why this set timeout is necessary, works with doesn't work without
     setTimeout(() => {
@@ -109,12 +109,25 @@ const AndNext = ({ user }) => {
   const selectedCount = dreams.filter(dream => dream.selected).length;
 
   useEffect(() => {
+    setTimeout(() => {
+      // Set the buttons to be the same size on load
+      setButtonSize();
+      // On window resize, call the function to reset button size
+      window.addEventListener("resize", setButtonSize, false);
+    }, 0);
+
     setAnimationTrigger(true);
     const timer = setTimeout(() => {
       setAnimationTrigger(false);
     }, 500);
-    return () => clearTimeout(timer);
-  }, [selectedCount]);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", setButtonSize, false);
+    };
+  }, [dreams]);
+
+  const selectedCount = dreams.filter(dream => dream.selected).length;
 
   return (
     <div className="">

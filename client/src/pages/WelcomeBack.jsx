@@ -84,8 +84,8 @@ const WelcomeBack = ({ user }) => {
             </h1>
             <p className="text-lg">Frist, let's express some gratitude.</p>
             <p className="text-lg">
-              Try to expand your gratitude. Mention 5 unique things that you
-              didn't list yesterday.
+              Expand your gratitude. Mention 5 unique things that you didn't
+              list yesterday.
             </p>
           </header>
           <main className="">
@@ -108,6 +108,10 @@ const WelcomeBack = ({ user }) => {
             <p className="text-lg">
               Writing WHO YOU ARE and your CORE GOAL every day reminds you to
               keep on track. You've got this!
+            </p>
+            <p className="text-lg">
+              Read them out loud as you select them and feel yourself move
+              toward your vision.
             </p>
           </header>
           <main className="">
