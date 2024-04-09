@@ -35,6 +35,8 @@ const PrivateRoute = ({ element: Component, ...rest }) => {
     }
   });
 
+  console.log(`PrivateRoute data: ${JSON.stringify(data)}`); // Add this line
+
   useEffect(() => {
     if (loading || error || !data?.me) {
       return;

@@ -18,6 +18,13 @@ export const GET_ME = gql`
         }
         ultimateGoal
       }
+      entries {
+        _id
+        gratefulFor
+        dailyAffirmations
+        ultimateAffirmation
+        createdAt
+      }
       theme
     }
   }

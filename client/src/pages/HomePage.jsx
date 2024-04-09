@@ -3,7 +3,8 @@ import Auth from "../utils/auth";
 import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 
-const HomePage = () => {
+const HomePage = ({ user }) => {
+  console.log(`User data: ${user}`);
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
   if (!token) {
