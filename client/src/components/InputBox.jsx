@@ -23,8 +23,8 @@ const InputBox = ({
     borderColor: "#819EC9",
     borderStyle: "solid",
     borderWidth: "1px",
-    padding: "5px",
-    marginLeft: "5px",
+    // padding: "5px",
+    // marginLeft: "5px",
     ...style
   };
 

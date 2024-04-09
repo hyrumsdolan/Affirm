@@ -69,11 +69,11 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    updateEntry: async (parent, { _id, title, content }, context) => {
+    updateEntry: async (parent, { _id, gratefulFor, dailyAffirmations, ultimateAffirmation }, context) => {
       if (context.user) {
         const entry = await Entry.findOneAndUpdate(
           { _id },
-          { title, content, updatedAt: new Date().toISOString() },
+          { gratefulFor, dailyAffirmations, ultimateAffirmation },
           { new: true },
         );
         return entry;
@@ -217,7 +217,7 @@ const resolvers = {
       );
     },
     createEntry: async (parent, { gratefulFor, dailyAffirmations, ultimateAffirmation }, context) => {
-  console.log("triggered")      
+      console.log("triggered")
       if (context.user) {
         try {
           console.log("gratefulFor", gratefulFor);
@@ -231,7 +231,7 @@ const resolvers = {
           if (!ultimateAffirmation || typeof ultimateAffirmation !== "string") {
             throw new Error("Ultimate affirmation must be a non-empty string");
           }
-    
+
           // Create the entry
           const entry = await Entry.create({
             gratefulFor,
@@ -239,14 +239,14 @@ const resolvers = {
             ultimateAffirmation,
             createdAt: new Date(),
           });
-    
+
           // Associate the entry with the user
           await User.findOneAndUpdate(
             { _id: context.user._id },
             { $push: { entries: entry._id } },
             { new: true }
           );
-    
+
           return entry;
         } catch (error) {
           console.error("Error creating entry:", error);

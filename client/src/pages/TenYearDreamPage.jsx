@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 
 function TenYearDreamPage() {
+
   const dreamParagraphs = [
     "Imagine yourself a decade from now, living your best possible life. Let go of all limitations and envision the most magnificent future version of yourself. Dream big and be specific!",
     "What does your ideal self look like? How do you spend your days? What kind of relationships do you have with loved ones? Paint a vivid picture of your life, from the clothes you wear to the food you eat, the places you visit, and the hobbies you enjoy.",
@@ -12,6 +13,7 @@ function TenYearDreamPage() {
     "Embrace this opportunity to dream without limits. Let your imagination soar and create a future that excites and motivates you. Start with the phrase, 'The best version of me is...' and let your thoughts flow freely. Remember, this is not the time for realistic thinking; it's the time to explore the boundless potential within you.",
     "Get ready to embark on a journey of self-discovery and growth. Your ideal future awaits – all you have to do is take the first step and start writing!"
   ];
+
 
   const { loading, error, data } = useQuery(GET_ME);
 
