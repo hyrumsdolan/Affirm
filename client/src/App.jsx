@@ -32,7 +32,7 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-// addDarkMode();
+addDarkMode();
 
 function App() {
   return (
