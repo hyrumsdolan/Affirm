@@ -46,46 +46,57 @@ const SummaryDreams = ({ user }) => {
   }, [user]);
 
   return (
-    <div className="flex h-auto min-h-screen flex-col items-center justify-center transition-all duration-300 dark:bg-zinc-900 dark:text-white">
-      <header className="mb-8 text-center">
-        <h1 className="mb-4 text-center text-4xl">you're breathtaking...</h1>
-        <p className="m-10 text-center">
+    <div className="flex h-full flex-col items-center justify-center">
+      <header className="text-center">
+        <h1 className="text-center text-4xl mb-5">you're breathtaking...</h1>
+        <p className="text-center">
           Here is a summary of your dreams. Take a moment and soak up what your
           life will look like in ten years! You engineered this, we're going to
           help you get there.
         </p>
-        <p className="m-10 text-center">
-          {" "}
+        <p className="mb-5 text-center">
           If you want to edit any of the entries, now is the time to do so. We
           will be affirming these dreams and goals every day moving forward!
-          Click save & continue if you're ready to commit to your magnificient
+          Click save & continue if you're ready to commit to your magnificent
           vision!
         </p>
       </header>
 
-      <div className="flex flex-col items-center">
-        <span className="text-lg font-bold">Who you are...</span>
-        {groupedDreams.map((group, index) => (
-          <div key={index} className="mb-4 flex justify-center gap-4">
-            {group.map((dreamObj, index) => (
-              <div className="" key={index}>
-                <SelectableButton
-                  initialText={dreamObj.littleDream}
-                  canSelect={false}
-                  startSelected={true}
-                />
-              </div>
-            ))}
+      <div className="flex flex-col items-center w-full px-4">
+        <span className="text-lg font-bold mb-4">Who you are...</span>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+          {dreams.slice(0, 9).map((dreamObj, index) => (
+            <div key={index}>
+              <SelectableButton
+                width="w-full"
+                initialText={dreamObj.littleDream}
+                canSelect={false}
+                startSelected={true}
+              />
+            </div>
+          ))}
+        </div>
+        {dreams.length > 9 && (
+          <div className="grid grid-cols-3 gap-4 w-full mt-4 ">
+            <div className="col-start-2">
+              <SelectableButton
+                width="w-full"
+                initialText={dreams[9].littleDream}
+                canSelect={false}
+                startSelected={true}
+              />
+            </div>
           </div>
-        ))}
+        )}
       </div>
 
-      <div className="mt-8 text-center ">
+      <div className="mt-8 text-center w-full px-4">
         <span className="text-lg font-bold">And the core goal...</span>
         {coreDream.length > 0 && (
           <div className="mt-4 flex justify-center">
             <SelectableButton
-              initialText={"test"}
+              width="w-full sm:w-96"
+              initialText={coreDream}
               canSelect={false}
               startSelected={true}
             />
