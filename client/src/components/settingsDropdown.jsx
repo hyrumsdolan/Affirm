@@ -40,7 +40,7 @@ const SettingsDropdown = () => {
   const isLoggedIn = Auth.loggedIn();
 
   // Render the component only if user is logged in
-  if (!isLoggedIn) {
+  if (false) {
     return null;
   }
 
@@ -83,10 +83,10 @@ const SettingsDropdown = () => {
         <p className="w-32 text-2xl">Settings</p>
 
         <div className="w-32">
-          <h1 className="mt-2 text-sm underline">Theme</h1>
+          <h1 className="text-sm underline">Theme</h1>
         </div>
 
-        <div className="flex w-32 flex-grow-0 flex-row justify-center gap-6 pt-1">
+        <div className="mb-2 flex w-32 flex-grow-0 flex-row justify-center gap-6 pt-1">
           <div
             className="hover:cursor-pointer"
             onClick={() => toggleDarkMode("light")}
@@ -101,17 +101,19 @@ const SettingsDropdown = () => {
           </div>
         </div>
 
-        <div className="flex h-auto w-32 flex-col items-center justify-center text-2xl">
-          <div className="mt-2 flex items-center justify-center">
-            <button
-              className="flex items-center justify-center text-lg hover:text-red-500"
-              onClick={Auth.logout}
-            >
-              <IoMdLogOut className="mr-1 text-2xl" />
-              Logout
-            </button>
+        {isLoggedIn && (
+          <div className="flex h-auto w-32 flex-col items-center justify-center text-2xl">
+            <div className="mb-2 mt-2 flex items-center justify-center">
+              <button
+                className="flex items-center justify-center text-lg hover:text-red-500"
+                onClick={Auth.logout}
+              >
+                <IoMdLogOut className="mr-1 text-2xl" />
+                Logout
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

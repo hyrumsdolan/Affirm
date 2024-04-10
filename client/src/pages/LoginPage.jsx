@@ -102,7 +102,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="flex h-auto w-full grow flex-col justify-center align-middle md:flex-row">
+      <div className="flex h-auto w-full grow flex-col justify-center align-middle transition-all duration-300 dark:bg-zinc-900 dark:text-white md:flex-row">
         <div className="relative bottom-4 flex w-full flex-col items-center justify-center md:w-3/5">
           <h2 className="mb-4 mt-4 text-center text-3xl md:mt-2 md:text-5xl">
             let's improve together
@@ -112,13 +112,15 @@ const LoginForm = () => {
             your best life.
           </p>
         </div>
-        <div className="flex w-full flex-col items-center justify-center border-t border-gray-200 md:mb-12 md:w-2/5 md:border-l md:border-t-0">
-          <h2 className="mb-4 mt-4 text-center text-3xl md:text-5xl">Login</h2>
+        <div className="flex w-full flex-col items-center justify-center border-t border-gray-200 transition-all duration-300 dark:border-zinc-700 md:mb-12 md:w-2/5 md:border-l md:border-t-0">
+          <h2 className="mb-4 mt-4 text-center text-3xl text-black transition-all duration-300 dark:text-white md:text-5xl">
+            Login
+          </h2>
           <form onSubmit={handleFormSubmit} className="w-full md:w-9/12">
             <div className="relative mb-4">
               <label
                 htmlFor="email"
-                className="mb-2 block text-center text-xl font-thin text-gray-700 md:text-left"
+                className="mb-2 block text-center text-xl font-thin text-gray-700 transition-all duration-300 dark:text-zinc-200 md:text-left"
               >
                 Email:
               </label>
@@ -137,7 +139,7 @@ const LoginForm = () => {
             <div className="mb-6">
               <label
                 htmlFor="password"
-                className="mb-2 block text-center text-xl font-thin text-gray-700 md:text-left"
+                className="mb-2 block text-center text-xl font-thin text-gray-700 transition-all duration-300 dark:text-zinc-200 md:text-left"
               >
                 Password:
               </label>
@@ -166,12 +168,12 @@ const LoginForm = () => {
             </div>
             <Button
               type="submit"
-              className="mx-5 w-[calc(100%-2.5rem)] md:mx-0 md:w-full"
+              className="mx-5 w-[calc(100%-2.5rem)] transition-all duration-300 dark:text-white md:mx-0 md:w-full"
             >
               Login
             </Button>
           </form>
-          <p className="mt-4 text-center">
+          <p className="mt-4 text-center text-black transition-all duration-300 dark:text-white">
             Don't have an account?{" "}
             <a href="/signup" className="text-blue-500 hover:text-blue-700">
               Sign up
