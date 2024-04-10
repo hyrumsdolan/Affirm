@@ -60,7 +60,7 @@ const WelcomeBack = ({ user }) => {
   };
 
   const renderGratitudeInputs = gratitudes.map((gratitude, index) => (
-    <div className="flex justify-center items-center w-full" key={index}>
+    <div className="flex w-full items-center justify-center" key={index}>
       <SelectableButton
         placeholderText="What are you grateful for today?"
         onTextChange={value => handleGratitudeChange(index, value)}
@@ -88,8 +88,8 @@ const WelcomeBack = ({ user }) => {
               list yesterday.
             </p>
           </header>
-          <main className="flex justify-center items-center">
-            <div className="flex flex-col justify-center items-center gap-4 w-3/4 md:w-1/2">
+          <main className="flex items-center justify-center">
+            <div className="flex w-3/4 flex-col items-center justify-center gap-4 md:w-1/2">
               {renderGratitudeInputs}
             </div>
           </main>
@@ -103,7 +103,11 @@ const WelcomeBack = ({ user }) => {
         <>
           <header className="mb-8 text-center">
             <h1 className="mb-4 text-center text-4xl">
-              Now it's time to affirm your vision.
+              Now it's time to{" "}
+              <span style={{ fontFamily: "liSongPro", color: "#819EC9" }}>
+                affirm
+              </span>{" "}
+              your vision.
             </h1>
             <p className="text-lg">
               Writing WHO YOU ARE and your CORE GOAL every day reminds you to
@@ -115,9 +119,9 @@ const WelcomeBack = ({ user }) => {
             </p>
           </header>
           <main className="">
-            <div className="flex flex-col items-center w-full px-4">
+            <div className="flex w-full flex-col items-center px-4">
               <p className="mb-4 text-center text-lg">Who You Are:</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+              <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {dailyAffirmations.slice(0, 9).map((dream, index) => (
                   <div key={index}>
                     <SelectableButton
@@ -125,13 +129,15 @@ const WelcomeBack = ({ user }) => {
                       initialText={dream}
                       canSelect={true}
                       startSelected={false}
-                      onTextChange={value => handleAffirmationChange(index, value)}
+                      onTextChange={value =>
+                        handleAffirmationChange(index, value)
+                      }
                     />
                   </div>
                 ))}
               </div>
               {dailyAffirmations.length > 9 && (
-                <div className="grid grid-cols-3 gap-4 w-full mt-4">
+                <div className="mt-4 grid w-full grid-cols-3 gap-4">
                   <div className="col-start-2">
                     <SelectableButton
                       width="w-full"
@@ -145,8 +151,8 @@ const WelcomeBack = ({ user }) => {
               )}
             </div>
           </main>
-   
-          <footer className="mb-4 mt-8 flex flex-col justify-center items-center w-full gap-4 px-4">
+
+          <footer className="mb-4 mt-8 flex w-full flex-col items-center justify-center gap-4 px-4">
             <p className="text-center text-lg">Your Core Goal:</p>
             <SelectableButton
               className=""
@@ -160,7 +166,6 @@ const WelcomeBack = ({ user }) => {
             <Button
               className="m-auto"
               onClick={handleSave}
-              
               saveToUser="entry"
               inputForDBSave={{
                 gratefulFor: gratitudes,
