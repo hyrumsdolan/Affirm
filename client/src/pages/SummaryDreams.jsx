@@ -16,10 +16,9 @@ const sampleDreams = [
   "Make a significant contribution to my community"
 ];
 
-const SummaryDreams = ({user}) => {
+const SummaryDreams = ({ user }) => {
   const [dreams, setDreams] = useState([]);
   const [coreDream, setCoreDream] = useState([]);
-
 
   const groupItems = (items, groupSize) => {
     let grouped = [];
@@ -34,7 +33,7 @@ const SummaryDreams = ({user}) => {
 
   useEffect(() => {
     console.log("summary user:", user);
-  
+
     if (user) {
       console.log("user.me.dream:", user.dream);
       const littleDreams = user.dream.littleDreams;
@@ -106,7 +105,7 @@ const SummaryDreams = ({user}) => {
       </div>
 
       <footer className="summary-footer mt-8 text-center">
-        <Button className="m-auto" navigateTo="/welcome-back">
+        <Button className="m-auto mb-10" navigateTo="/welcome-back">
           save & continue
         </Button>
       </footer>

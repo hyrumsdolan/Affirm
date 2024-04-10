@@ -20,7 +20,7 @@ const OneGoal = () => {
   };
 
   return (
-    <div className="flex h-full flex-col items-center justify-center">
+    <div className="flex h-full flex-col items-center justify-center transition-all duration-300 dark:bg-zinc-900 dark:text-white">
       <header className="app-header"></header>
       <main className="main-content">
         <h1 className="mb-4 text-center text-4xl">
@@ -48,7 +48,7 @@ const OneGoal = () => {
             value={goal}
             onChange={handleInputChange}
             placeholder="Enter your core goal"
-            className="goal-input mb-4 h-12 w-3/4 px-4 py-2"
+            className="goal-input mb-4 h-12 w-3/4 px-4 py-2 transition-all duration-300 dark:text-black"
           />
           <Button
             onClick={handleSubmit}

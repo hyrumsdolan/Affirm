@@ -125,7 +125,7 @@ const AndNext = ({ user }) => {
   const selectedCount = dreams.filter(dream => dream.selected).length;
 
   return (
-    <div className="">
+    <div className="transition-all duration-300 dark:bg-zinc-900 dark:text-white">
       <h1 className="mb-4 text-center text-4xl">...and next</h1>
       <div className="mx-5 text-center text-xs sm:text-sm md:mx-10 md:text-base">
         <span className="inline-flex items-center">

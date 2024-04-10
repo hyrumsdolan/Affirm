@@ -32,17 +32,17 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-// addDarkMode();
+addDarkMode();
 
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className="flex h-screen w-screen flex-col">
+      <div className="flex h-auto w-screen flex-col">
         <div className="flex-none">
           <Logo />
           <SettingsDropdown />
         </div>
-        <div className="flex h-full w-screen flex-col">
+        <div className="flex h-auto min-h-full w-screen flex-col">
           <Outlet />
         </div>
       </div>

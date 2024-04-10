@@ -163,21 +163,22 @@ const WelcomeBack = ({ user }) => {
               onTextChange={handleUltimateChange}
             />
 
-            <Button
-              className="m-auto"
-              onClick={handleSave}
-              saveToUser="entry"
-              inputForDBSave={{
-                gratefulFor: gratitudes,
-                dailyAffirmations: dailyAffirmations,
-                ultimateAffirmation: ultimateGoal
-              }}
-              navigateTo="/confirmation"
-              user={user}
-            >
-              Save & Continue
-            </Button>
-          </footer>
+              <Button
+                className="m-auto mb-10"
+                onClick={handleSave}
+                saveToUser="entry"
+                inputForDBSave={{
+                  gratefulFor: gratitudes,
+                  dailyAffirmations: dailyAffirmations,
+                  ultimateAffirmation: ultimateGoal
+                }}
+                navigateTo="/confirmation"
+                user={user}
+              >
+                Save & Continue
+              </Button>
+            </footer>
+          </div>
         </>
       )}
     </>
