@@ -29,7 +29,7 @@ function TenYearDreamPage() {
   return (
     // Merge had significantly different div setups and needs to be toyed with a bit
 
-    <div className="flex h-full flex-col items-center justify-between p-10 md:flex-row">
+    <div className="flex h-full flex-col items-center justify-between p-10 transition-all duration-300 dark:bg-zinc-900 dark:text-white md:flex-row">
       <div className="mb-10 flex-1 justify-between md:mb-0">
         <h1 className="m-5 text-center text-2xl md:text-3xl lg:text-4xl">
           Ten Year Dream
@@ -45,7 +45,7 @@ function TenYearDreamPage() {
           ))}
         </div>
       </div>
-      <div className="mb-5 mt-5 flex h-full flex-1 flex-col justify-between border-gray-100 md:border-l md:pl-8">
+      <div className="mb-5 mt-5 flex h-full flex-1 flex-col justify-between border-gray-100 transition-all duration-300 dark:border-zinc-700 md:border-l md:pl-8">
         <div className="flex-1"></div>
         <div className="h-1/2">
           <TenYearDreamForm user={data?.me} />

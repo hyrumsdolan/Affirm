@@ -16,10 +16,9 @@ const sampleDreams = [
   "Make a significant contribution to my community"
 ];
 
-const SummaryDreams = ({user}) => {
+const SummaryDreams = ({ user }) => {
   const [dreams, setDreams] = useState([]);
   const [coreDream, setCoreDream] = useState([]);
-
 
   const groupItems = (items, groupSize) => {
     let grouped = [];
@@ -34,7 +33,7 @@ const SummaryDreams = ({user}) => {
 
   useEffect(() => {
     console.log("summary user:", user);
-  
+
     if (user) {
       console.log("user.me.dream:", user.dream);
       const littleDreams = user.dream.littleDreams;
@@ -47,7 +46,7 @@ const SummaryDreams = ({user}) => {
   }, [user]);
 
   return (
-    <div className="flex h-full flex-col items-center justify-center">
+    <div className="flex h-auto min-h-screen flex-col items-center justify-center transition-all duration-300 dark:bg-zinc-900 dark:text-white">
       <header className="mb-8 text-center">
         <h1 className="mb-4 text-center text-4xl">you're breathtaking...</h1>
         <p className="m-10 text-center">
@@ -65,21 +64,21 @@ const SummaryDreams = ({user}) => {
       </header>
 
       <div className="flex flex-col items-center">
-  <span className="text-lg font-bold">Who you are...</span>
-  {groupedDreams.map((group, index) => (
-    <div key={index} className="mb-4 flex justify-center gap-4">
-      {group.map((dreamObj, index) => (
-        <div className="" key={index}>
-          <SelectableButton
-            initialText={dreamObj.littleDream}
-            canSelect={false}
-            startSelected={true}
-          />
-        </div>
-      ))}
-    </div>
-  ))}
-</div>
+        <span className="text-lg font-bold">Who you are...</span>
+        {groupedDreams.map((group, index) => (
+          <div key={index} className="mb-4 flex justify-center gap-4">
+            {group.map((dreamObj, index) => (
+              <div className="" key={index}>
+                <SelectableButton
+                  initialText={dreamObj.littleDream}
+                  canSelect={false}
+                  startSelected={true}
+                />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
 
       <div className="mt-8 text-center ">
         <span className="text-lg font-bold">And the core goal...</span>
@@ -95,7 +94,7 @@ const SummaryDreams = ({user}) => {
       </div>
 
       <footer className="summary-footer mt-8 text-center">
-        <Button className="m-auto" navigateTo="/welcome-back">
+        <Button className="m-auto mb-10" navigateTo="/welcome-back">
           save & continue
         </Button>
       </footer>

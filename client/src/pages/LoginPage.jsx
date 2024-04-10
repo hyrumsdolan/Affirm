@@ -132,7 +132,7 @@ const LoginForm = () => {
                   value={userFormData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-[calc(100%-2.5rem)] rounded-md border border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-full"
+                  className="w-[calc(100%-2.5rem)] rounded-md border border-gray-300 py-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-900 md:w-full"
                 />
               </div>
             </div>
@@ -151,7 +151,7 @@ const LoginForm = () => {
                   value={userFormData.password}
                   onChange={handleInputChange}
                   required
-                  className="w-[calc(100%-2.5rem)] rounded-md border border-gray-300 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 md:w-full"
+                  className="w-[calc(100%-2.5rem)] rounded-md border border-gray-300 py-2 pr-8 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-900 md:w-full"
                 />
                 <button
                   type="button"
