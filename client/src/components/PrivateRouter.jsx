@@ -22,6 +22,9 @@ const PrivateRoute = ({ element: Component, ...rest }) => {
       const bigDream = userData.dream?.bigDream;
       const littleDreams = userData.dream?.littleDreams;
       const ultimateGoal = userData.dream?.ultimateGoal;
+      if (location.pathname === "/summary-dreams-page") {
+        return <Component {...rest} user={data?.me} />;
+      }
 
       if (!bigDream) {
         navigate("/ten-year-dream");
@@ -41,8 +44,8 @@ const PrivateRoute = ({ element: Component, ...rest }) => {
     }
   }, [loading, error, data]);
 
-  if (location.pathname === "/" || location.pathname === "/signup") {
-    return <Component {...rest} />;
+  if (location.pathname === "/" || location.pathname === "/signup" || location.pathname === "/summary-dreams-page") {
+    return <Component {...rest} user={data?.me} />;
   }
 
   if (!isAuthenticated) {

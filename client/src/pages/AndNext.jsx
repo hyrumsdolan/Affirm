@@ -3,25 +3,36 @@ import { getClaudeResponse } from "../utils/callClaude";
 import SelectableButton from "../components/SelectableButton";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Button";
+import SpeakerButton from "../components/SpeakerButton";
 import { useMutation } from "@apollo/client";
 import { ADD_LITTLE_DREAMS } from "../utils/mutations";
 import useUserNavigation from "../utils/userNavigation";
 
 const REQUIRED_SELECTION_COUNT = 10;
 
+let lastButtonHeight = "";
+let buttonHeight = 0;
 const AndNext = ({ user }) => {
   const [dreams, setDreams] = useState([]);
   const navigate = useNavigate();
   const [addLittleDreams] = useMutation(ADD_LITTLE_DREAMS);
   const [isLoading, setIsLoading] = useState(false);
   const handleMutationCompleted = useUserNavigation();
+  const [buttonHeightUpdated, setButtonHeightUpdated] = useState(false);
   const [animationTrigger, setAnimationTrigger] = useState(false);
 
+  let longestDream = "";
   useEffect(() => {
     const fetchedDreams = getClaudeResponse();
     setDreams(
-      fetchedDreams.map(dream => ({ littleDream: dream, selected: false }))
+      fetchedDreams.map(dream => ({
+        littleDream: dream,
+        selected: false
+      }))
     );
+    fetchedDreams.forEach(dream => {
+      if (dream.length > longestDream.length) longestDream = dream;
+    });
   }, []);
 
   const toggleDreamSelection = index => {
@@ -44,6 +55,8 @@ const AndNext = ({ user }) => {
       }
       return updatedDreams;
     });
+
+    setButtonSize();
   };
 
   const handleSave = async () => {
@@ -64,26 +77,70 @@ const AndNext = ({ user }) => {
     }
   };
 
-  const selectedCount = dreams.filter(dream => dream.selected).length;
+  const setButtonSize = () => {
+    const allSelectableButtons = document.querySelectorAll(".selectableButton");
+
+    allSelectableButtons.forEach(button => {
+      if (lastButtonHeight !== "") {
+        button.classList.replace(lastButtonHeight, "h-auto");
+      }
+    });
+
+    allSelectableButtons.forEach(button => {
+      if (button.children[0].textContent === longestDream) {
+        buttonHeight = button.clientHeight;
+      }
+    });
+
+    const heightClass = `h-[${buttonHeight}px]`;
+    lastButtonHeight = heightClass;
+
+    allSelectableButtons.forEach(button => {
+      console.log(heightClass);
+      button.classList.replace(
+        lastButtonHeight !== "" ? "h-auto" : lastButtonHeight,
+        heightClass
+      );
+    });
+  };
 
   useEffect(() => {
+    setTimeout(() => {
+      // Set the buttons to be the same size on load
+      setButtonSize();
+      // On window resize, call the function to reset button size
+      window.addEventListener("resize", setButtonSize, false);
+    }, 0);
+
     setAnimationTrigger(true);
     const timer = setTimeout(() => {
       setAnimationTrigger(false);
     }, 500);
-    return () => clearTimeout(timer);
-  }, [selectedCount]);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [dreams]);
+
+  const selectedCount = dreams.filter(dream => dream.selected).length;
 
   return (
     <div className="">
-      <h1 className="mb-4 text-center">...and next</h1>
-      <h2 className="mx-10 text-center">
-        Now, that you've painted your 10 year future, it's important to narrow
-        your vision down to the 10 most important factors of your dream. It's
-        important that you start thinking about your dream as if it has already
-        happened! I've consolidated your dream down to several bullet points.
-        Please select the TEN that matter the most to you.
-      </h2>
+      <h1 className="mb-4 text-center text-4xl">...and next</h1>
+      <div className="mx-5 text-center text-xs sm:text-sm md:mx-10 md:text-base">
+        <span className="inline-flex items-center">
+          <SpeakerButton audioSrc="https://res.cloudinary.com/dkonhzar9/video/upload/v1712649056/and-next-page-instructions_qurivq.mp3" />
+        </span>
+        <h2 className="mx-10 text-center">
+          You've now envisioned your ideal future ten years from now. To make
+          your dream more focused and actionable, it's crucial to identify the
+          ten most significant elements that define your vision. I've summarized
+          your dream into several bullet points using the past tense. Expressing
+          your dreams and goals as if they have already been achieved can be
+          incredibly empowering! Please choose the ten points that resonate with
+          you the most.
+        </h2>
+      </div>
       <h2
         className={`mt-4 text-center text-2xl ${animationTrigger ? "animate-jump" : ""}`}
       >
@@ -106,12 +163,14 @@ const AndNext = ({ user }) => {
             : "visible mt-1 text-center text-2xl"
         }
       >
-        Your future is BRIGHT!
+        Your future is BRIGHT! Scroll down to save & continue.
       </h2>
       <main className="grid grid-cols-1 justify-around gap-1 md:grid-cols-2 lg:grid-cols-3">
         {dreams.map((dream, index) => (
           <div className="m-10" key={index}>
             <SelectableButton
+              className="selectableButton"
+              id={index}
               initialText={dream.littleDream}
               onSelect={() => toggleDreamSelection(index)}
               canSelect={dream.canSelect !== false}
@@ -120,19 +179,21 @@ const AndNext = ({ user }) => {
           </div>
         ))}
       </main>
-      <Button
-        onClick={handleSave}
-        className="r-0 absolute right-0 m-10"
-        user={user}
-        saveToUser="littledreams"
-        isEnabled={selectedCount === REQUIRED_SELECTION_COUNT}
-        inputForDBSave={dreams
-          .filter(dream => dream.selected)
-          .map(dream => dream.littleDream)}
-        onMutationCompleted={handleMutationCompleted}
-      >
-        save & continue
-      </Button>
+      <div className="flex w-screen justify-end">
+        <Button
+          onClick={handleSave}
+          className="bottom-10 left-0 m-10"
+          user={user}
+          saveToUser="littledreams"
+          isEnabled={selectedCount === REQUIRED_SELECTION_COUNT}
+          inputForDBSave={dreams
+            .filter(dream => dream.selected)
+            .map(dream => dream.littleDream)}
+          onMutationCompleted={handleMutationCompleted}
+        >
+          save & continue
+        </Button>
+      </div>
     </div>
   );
 };
