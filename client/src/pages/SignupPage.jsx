@@ -115,8 +115,8 @@ const SignupForm = () => {
           </p>
         </>
       ) : (
-        <div className="absolute top-0 -z-10 flex h-screen w-screen flex-col justify-center align-middle transition-all duration-300 dark:bg-zinc-900 dark:text-white md:mt-0 md:flex-row">
-          <div className="relative flex w-full flex-col items-center justify-center md:w-3/5">
+        <div className="absolute top-0 -z-10 flex h-auto min-h-screen w-full grow flex-col justify-center align-middle transition-all duration-300 dark:bg-zinc-900 dark:text-white md:flex-row">
+          <div className="relative flex w-full flex-col items-center justify-center pt-24 md:w-3/5 md:pt-0">
             <h2 className="mb-4 text-center text-3xl md:text-5xl">
               let's improve together
             </h2>
@@ -125,8 +125,8 @@ const SignupForm = () => {
               your best life.
             </p>
           </div>
-          <div className="mb-12 mt-24 flex w-full flex-col items-center justify-center border-t border-gray-200 p-8 transition-all duration-300 dark:border-zinc-700 md:w-2/5 md:border-l md:border-t-0">
-            <h2 className="mb-4 text-center text-3xl text-black transition-all duration-300 dark:text-white md:text-5xl">
+          <div className="mt-24 flex w-full flex-col items-center justify-center border-t border-gray-200 p-8 transition-all duration-300 dark:border-zinc-700 md:mb-12 md:w-2/5 md:border-l md:border-t-0">
+            <h2 className="mb-4 mt-4 text-center text-3xl text-black transition-all duration-300 dark:text-white md:text-5xl">
               Signup
             </h2>
             <form onSubmit={handleFormSubmit} className="w-full md:w-9/12">

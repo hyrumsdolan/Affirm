@@ -102,7 +102,7 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="absolute top-0 -z-10 flex h-screen w-full grow flex-col justify-center align-middle transition-all duration-300 dark:bg-zinc-900 dark:text-white md:flex-row ">
+      <div className="absolute top-0 -z-10 flex h-screen w-full grow flex-col justify-center align-middle transition-all duration-300 dark:bg-zinc-900 dark:text-white md:flex-row">
         <div className="relative flex w-full flex-col items-center justify-center md:w-3/5">
           <h2 className="mb-4 text-center text-3xl md:text-5xl">
             let's improve together
