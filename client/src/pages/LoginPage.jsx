@@ -102,17 +102,17 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="flex h-auto w-full grow flex-col justify-center align-middle transition-all duration-300 dark:bg-zinc-900 dark:text-white md:flex-row">
-        <div className="relative bottom-4 flex w-full flex-col items-center justify-center md:w-3/5">
-          <h2 className="mb-4 mt-4 text-center text-3xl md:mt-2 md:text-5xl">
+      <div className="absolute top-0 -z-10 flex h-screen w-full grow flex-col justify-center align-middle transition-all duration-300 dark:bg-zinc-900 dark:text-white md:flex-row ">
+        <div className="relative flex w-full flex-col items-center justify-center md:w-3/5">
+          <h2 className="mb-4 text-center text-3xl md:text-5xl">
             let's improve together
           </h2>
-          <p className="mx-4 mb-4 text-center font-thin">
+          <p className="mx-5 text-center font-light">
             An application to help you dream big, and stay on course to live
             your best life.
           </p>
         </div>
-        <div className="flex w-full flex-col items-center justify-center border-t border-gray-200 transition-all duration-300 dark:border-zinc-700 md:mb-12 md:w-2/5 md:border-l md:border-t-0">
+        <div className="mt-24 flex w-full flex-col items-center justify-center border-t border-gray-200 transition-all duration-300 dark:border-zinc-700 md:mb-12 md:w-2/5 md:border-l md:border-t-0">
           <h2 className="mb-4 mt-4 text-center text-3xl text-black transition-all duration-300 dark:text-white md:text-5xl">
             Login
           </h2>
