@@ -60,7 +60,7 @@ const WelcomeBack = ({ user }) => {
   };
 
   const renderGratitudeInputs = gratitudes.map((gratitude, index) => (
-    <div key={index}>
+    <div className="flex w-full items-center justify-center" key={index}>
       <SelectableButton
         placeholderText="What are you grateful for today?"
         onTextChange={value => handleGratitudeChange(index, value)}
@@ -78,75 +78,90 @@ const WelcomeBack = ({ user }) => {
     <>
       {!showLittleDreams ? (
         <>
-          <div className="absolute top-0 -z-10 h-screen w-screen transition-all duration-300 dark:bg-zinc-900 dark:text-white">
-            <header className="mt-40 pb-8 text-center transition-all duration-300 dark:bg-zinc-900 dark:text-white">
-              <h1 className="mb-4 text-center text-4xl">
-                welcome back, {userName} :)
-              </h1>
-              <p className="text-lg">Frist, let's express some gratitude.</p>
-              <p className="text-lg">
-                Expand your gratitude. Mention 5 unique things that you didn't
-                list yesterday.
-              </p>
-            </header>
-            <main className="transition-all duration-300 dark:bg-zinc-900 dark:text-white">
-              <div className="flex flex-col items-center gap-4">
-                {renderGratitudeInputs}
-              </div>
-            </main>
-            <footer className="welcome-footer pt-8 text-center transition-all duration-300 dark:bg-zinc-900 dark:text-white">
-              <Button className="m-auto" onClick={handleSave}>
-                Save & Continue
-              </Button>
-            </footer>
-          </div>
+          <header className="mb-8 text-center">
+            <h1 className="mb-4 text-center text-4xl">
+              welcome back, {userName} :)
+            </h1>
+            <p className="text-lg">Frist, let's express some gratitude.</p>
+            <p className="text-lg">
+              Expand your gratitude. Mention 5 unique things that you didn't
+              list yesterday.
+            </p>
+          </header>
+          <main className="flex items-center justify-center">
+            <div className="flex w-3/4 flex-col items-center justify-center gap-4 md:w-1/2">
+              {renderGratitudeInputs}
+            </div>
+          </main>
+          <footer className="welcome-footer mt-8 text-center">
+            <Button className="m-auto" onClick={handleSave}>
+              Save & Continue
+            </Button>
+          </footer>
         </>
       ) : (
         <>
-          <div className="absolute top-0 -z-10 h-screen w-screen transition-all duration-300 dark:bg-zinc-900 dark:text-white">
-            <header className="mb-8 mt-32 pt-8 text-center text-black transition-colors duration-300 dark:text-white">
-              <h1 className="mb-4 text-center text-4xl text-black transition-all duration-300 dark:text-white">
-                Now it's time to affirm your vision.
-              </h1>
-              <p className="text-lg text-black transition-all duration-300 dark:text-white">
-                Writing WHO YOU ARE and your CORE GOAL every day reminds you to
-                keep on track. You've got this!
-              </p>
-              <p className="text-lg">
-                Read them out loud as you select them and feel yourself move
-                toward your vision.
-              </p>
-            </header>
-            <main className="">
-              <div className="flex flex-col items-center">
-                <p className="mb-4 text-center text-lg">Who You Are:</p>
-                {groupedDreams.map((group, index) => (
-                  <div key={index} className="mb-4 flex justify-center gap-4">
-                    {group.map((dream, index) => (
-                      <div className="" key={index}>
-                        <SelectableButton
-                          initialText={dream}
-                          canSelect={true}
-                          startSelected={false}
-                          onTextChange={value =>
-                            handleAffirmationChange(index, value)
-                          }
-                        />
-                      </div>
-                    ))}
+          <header className="mb-8 text-center">
+            <h1 className="mb-4 text-center text-4xl">
+              Now it's time to{" "}
+              <span style={{ fontFamily: "liSongPro", color: "#819EC9" }}>
+                affirm
+              </span>{" "}
+              your vision.
+            </h1>
+            <p className="text-lg">
+              Writing WHO YOU ARE and your CORE GOAL every day reminds you to
+              keep on track. You've got this!
+            </p>
+            <p className="text-lg">
+              Read them out loud as you select them and feel yourself move
+              toward your vision.
+            </p>
+          </header>
+          <main className="">
+            <div className="flex w-full flex-col items-center px-4">
+              <p className="mb-4 text-center text-lg">Who You Are:</p>
+              <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {dailyAffirmations.slice(0, 9).map((dream, index) => (
+                  <div key={index}>
+                    <SelectableButton
+                      width="w-full"
+                      initialText={dream}
+                      canSelect={true}
+                      startSelected={false}
+                      onTextChange={value =>
+                        handleAffirmationChange(index, value)
+                      }
+                    />
                   </div>
                 ))}
               </div>
-            </main>
+              {dailyAffirmations.length > 9 && (
+                <div className="mt-4 grid w-full grid-cols-3 gap-4">
+                  <div className="col-start-2">
+                    <SelectableButton
+                      width="w-full"
+                      initialText={dailyAffirmations[9]}
+                      canSelect={true}
+                      startSelected={false}
+                      onTextChange={value => handleAffirmationChange(9, value)}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          </main>
+
+          <footer className="mb-4 mt-8 flex w-full flex-col items-center justify-center gap-4 px-4">
             <p className="text-center text-lg">Your Core Goal:</p>
-            <footer className="mb-4 mt-8 flex flex-col justify-center gap-4 transition-all duration-300 dark:bg-zinc-900">
-              <SelectableButton
-                className="m-auto"
-                initialText={ultimateGoal}
-                canSelect={true}
-                startSelected={false}
-                onTextChange={handleUltimateChange}
-              />
+            <SelectableButton
+              className=""
+              width="w-3/4 md:w-1/2"
+              initialText={ultimateGoal}
+              canSelect={true}
+              startSelected={false}
+              onTextChange={handleUltimateChange}
+            />
 
               <Button
                 className="m-auto mb-10"
