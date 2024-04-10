@@ -60,7 +60,7 @@ const WelcomeBack = ({ user }) => {
   };
 
   const renderGratitudeInputs = gratitudes.map((gratitude, index) => (
-    <div key={index}>
+    <div className="flex justify-center items-center w-full" key={index}>
       <SelectableButton
         placeholderText="What are you grateful for today?"
         onTextChange={value => handleGratitudeChange(index, value)}
@@ -88,8 +88,8 @@ const WelcomeBack = ({ user }) => {
               list yesterday.
             </p>
           </header>
-          <main className="">
-            <div className="flex flex-col items-center gap-4">
+          <main className="flex justify-center items-center">
+            <div className="flex flex-col justify-center items-center gap-4 w-3/4 md:w-1/2">
               {renderGratitudeInputs}
             </div>
           </main>
@@ -115,30 +115,42 @@ const WelcomeBack = ({ user }) => {
             </p>
           </header>
           <main className="">
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col items-center w-full px-4">
               <p className="mb-4 text-center text-lg">Who You Are:</p>
-              {groupedDreams.map((group, index) => (
-                <div key={index} className="mb-4 flex justify-center gap-4">
-                  {group.map((dream, index) => (
-                    <div className="" key={index}>
-                      <SelectableButton
-                        initialText={dream}
-                        canSelect={true}
-                        startSelected={false}
-                        onTextChange={value =>
-                          handleAffirmationChange(index, value)
-                        }
-                      />
-                    </div>
-                  ))}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full">
+                {dailyAffirmations.slice(0, 9).map((dream, index) => (
+                  <div key={index}>
+                    <SelectableButton
+                      width="w-full"
+                      initialText={dream}
+                      canSelect={true}
+                      startSelected={false}
+                      onTextChange={value => handleAffirmationChange(index, value)}
+                    />
+                  </div>
+                ))}
+              </div>
+              {dailyAffirmations.length > 9 && (
+                <div className="grid grid-cols-3 gap-4 w-full mt-4">
+                  <div className="col-start-2">
+                    <SelectableButton
+                      width="w-full"
+                      initialText={dailyAffirmations[9]}
+                      canSelect={true}
+                      startSelected={false}
+                      onTextChange={value => handleAffirmationChange(9, value)}
+                    />
+                  </div>
                 </div>
-              ))}
+              )}
             </div>
           </main>
-          <p className="text-center text-lg">Your Core Goal:</p>
-          <footer className="mb-4 mt-8 flex flex-col justify-center gap-4">
+   
+          <footer className="mb-4 mt-8 flex flex-col justify-center items-center w-full gap-4 px-4">
+            <p className="text-center text-lg">Your Core Goal:</p>
             <SelectableButton
-              className="m-auto"
+              className=""
+              width="w-3/4 md:w-1/2"
               initialText={ultimateGoal}
               canSelect={true}
               startSelected={false}
@@ -148,6 +160,7 @@ const WelcomeBack = ({ user }) => {
             <Button
               className="m-auto"
               onClick={handleSave}
+              
               saveToUser="entry"
               inputForDBSave={{
                 gratefulFor: gratitudes,
