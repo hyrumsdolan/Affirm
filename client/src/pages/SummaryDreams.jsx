@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getClaudeResponse } from "../utils/callClaude";
 import SelectableButton from "../components/SelectableButton";
 import Button from "../components/Button";
+import VoiceToTextInput from '../components/VoiceToTextInput';
 
 const sampleDreams = [
   "Travel the world",

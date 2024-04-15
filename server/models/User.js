@@ -1,4 +1,4 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model, Types } = require("mongoose");
 const bcrypt = require("bcrypt");
 
 const userSchema = new Schema(
@@ -36,6 +36,17 @@ const userSchema = new Schema(
       type: String,
       // required: true, // Made not required, because I don't know what it is
     },
+    clauderesponses: [
+      {
+        claudeId: {
+          type: Schema.Types.ObjectId, 
+          default: ()=> new Types.ObjectId()
+        },
+        body: {
+          type: Schema.Types.String,
+        }
+      }
+    ]
   },
   {
     toJSON: {

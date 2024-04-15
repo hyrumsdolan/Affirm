@@ -19,14 +19,19 @@ const startApolloServer = async () => {
   await server.start();
 
   app.use(express.json());
-  app.use(express.urlencoded());
+  app.use(express.urlencoded({extended: true}));
 
-  app.use(
-    "/graphql",
-    expressMiddleware(server, {
-      context: authMiddleware,
-    }),
-  );
+  // app.use(
+  //   "/graphql",
+  //   expressMiddleware(server, {
+  //     context: authMiddleware,
+  //   }),
+  // );
+
+  app.use('/graphql', expressMiddleware(server, {context: authMiddleware}));
+  // app.get('*', (req, res) => {
+  //   res.sendFile(path.join(__dirname, '../dist/index.html'));
+  // });
 
   if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.join(__dirname, "../client/dist")));
@@ -40,7 +45,7 @@ const startApolloServer = async () => {
     app.listen(PORT, () => {
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
-      checkENV();
+      // checkENV();
     });
   });
 };
@@ -50,22 +55,22 @@ startApolloServer();
 function checkENV() {
   if (
     !process.env.AUTH_SECRET ||
-    !process.env.MONGODB_URI ||
     !process.env.ANTHROPIC_API_KEY ||
     process.env.AUTH_SECRET.length < 5 ||
-    process.env.MONGODB_URI.length < 5 ||
     process.env.ANTHROPIC_API_KEY.length < 5
   ) {
-    const missingVariable = !process.env.AUTH_SECRET
-      ? "AUTH_SECRET"
-      : !process.env.MONGODB_URI
-        ? "MONGODB_URI"
-        : !process.env.ANTHROPIC_API_KEY
-          ? "ANTHROPIC_API_KEY"
-          : "SPEECHMATICS_API_KEY";
-    console.error(
-      "\x1b[31m%s\x1b[0m",
-      "❌ ERROR: Missing or invalid environment variable - " + missingVariable,
-    );
+    // const missingVariable = !process.env.AUTH_SECRET
+    //   ? "AUTH_SECRET"
+    //   : !process.env.MONGODB_URI
+    //     ? "MONGODB_URI"
+    //     : !process.env.ANTHROPIC_API_KEY
+    //       ? "ANTHROPIC_API_KEY"
+    //       : "SPEECHMATICS_API_KEY";
+    // console.error(
+    //   "\x1b[31m%s\x1b[0m",
+    //   "❌ ERROR: Missing or invalid environment variable - " + missingVariable,
+    // );
+    console.log ('key failure')
   }
+  console.log (process.env.ANTHROPIC_API_KEY)
 }

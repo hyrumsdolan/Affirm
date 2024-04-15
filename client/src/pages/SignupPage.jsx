@@ -55,54 +55,72 @@ const SignupForm = () => {
   };
 
   // Handle form submit function
-  const handleFormSubmit = async event => {
-    console.log("Sign up button clicked");
+  const handleFormSubmit = async (event) => {
     setError("");
     event.preventDefault();
     console.log("Sign up button clicked");
+    try {
+      // Exclude confirmPassword from form data
+      const { data } = await addUser({
+        variables: { ...userFormData }
+      });
+      console.log("look here FOR DATA");
+      console.log("signup data", data);
+      Auth.login(data.addUser.token);
 
-    if (!isEmailValid(userFormData.email)) {
-      console.log("Email not valid");
-      setError(`Please enter a valid email address.`);
-    } else {
-      console.log(`showPassword ${showPWConfirmation}`);
-      if (
-        showPWConfirmation &&
-        userFormData.password &&
-        userFormData.confirmPassword
-      ) {
-        delete userFormData.confirmPassword;
-        console.log(userFormData);
-
-        const form = event.currentTarget;
-        if (!form.checkValidity()) {
-          event.stopPropagation();
-        } else {
-          try {
-            // Exclude confirmPassword from form data
-            const { data, token } = await addUser({
-              variables: { ...userFormData }
-            });
-            console.log("look here FOR DATA");
-            console.log("signup data", data);
-            Auth.login(data.addUser.token);
-
-            console.log("User successfully signed up!");
-          } catch (err) {
-            if (err.message.includes("dup key:")) {
-              const errorKey = err.message
-                .split("dup key: { ")[1]
-                .split(":")[0];
-              setError(
-                `Sorry... But an account with this ${errorKey} already exists`
-              );
-            }
-          }
-        }
-      } else {
-        setError(`Password and confirmation password do not match!`);
+      console.log("User successfully signed up!");
+    } catch (err) {
+      if (err.message.includes("dup key:")) {
+        const errorKey = err.message
+          .split("dup key: { ")[1]
+          .split(":")[0];
+        setError(
+          `Sorry... But an account with this ${errorKey} already exists`
+        );
       }
     }
+    // if (!isEmailValid(userFormData.email)) {
+    //   console.log("Email not valid");
+    //   setError(`Please enter a valid email address.`);
+    // } else {
+    //   console.log(`showPassword ${showPWConfirmation}`);
+    //   if (
+    //     showPWConfirmation &&
+    //     userFormData.password &&
+    //     userFormData.confirmPassword
+    //   ) {
+    //     delete userFormData.confirmPassword;
+    //     console.log(userFormData);
+
+    //     const form = event.currentTarget;
+    //     if (!form.checkValidity()) {
+    //       event.stopPropagation();
+    //     } else {
+    //       try {
+    //         // Exclude confirmPassword from form data
+    //         const { data, token } = await addUser({
+    //           variables: { ...userFormData }
+    //         });
+    //         console.log("look here FOR DATA");
+    //         console.log("signup data", data);
+    //         Auth.login(data.addUser.token);
+
+    //         console.log("User successfully signed up!");
+    //       } catch (err) {
+    //         if (err.message.includes("dup key:")) {
+    //           const errorKey = err.message
+    //             .split("dup key: { ")[1]
+    //             .split(":")[0];
+    //           setError(
+    //             `Sorry... But an account with this ${errorKey} already exists`
+    //           );
+    //         }
+    //       }
+    //     }
+    //   } else {
+    //     setError(`Password and confirmation password do not match!`);
+    //   }
+    // }
   };
 
   return (
@@ -225,8 +243,7 @@ const SignupForm = () => {
                 </div>
                 <div
                   className={`mt-2 h-6 ${
-                    (userFormData.password || userFormData.confirmPassword) &&
-                    userFormData.confirmPassword.length > 0
+                    (userFormData.password || userFormData.confirmPassword) 
                       ? "opacity-100"
                       : "opacity-0"
                   } transition-opacity duration-300`}

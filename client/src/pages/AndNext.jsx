@@ -24,6 +24,7 @@ const AndNext = ({ user }) => {
   let longestDream = "";
   useEffect(() => {
     const fetchedDreams = getClaudeResponse();
+    console.log (fetchedDreams)
     setDreams(
       fetchedDreams.map(dream => ({
         littleDream: dream,
