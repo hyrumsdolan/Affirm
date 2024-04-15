@@ -3,15 +3,17 @@ import { useNavigate } from "react-router-dom";
 // import MicrophoneButton from "./MicrophoneButton";
 import Button from "./Button";
 import { sendToClaude } from "../utils/callClaude";
+import { useMutation } from "@apollo/client";
+import { CALL_CLAUDE } from "../utils/mutations";
 import ProgressSpinner from "./ProgressSpinner";
 import useUserNavigation from "../utils/userNavigation";
 
-function TenYearDreamForm({ user }) {
+function TenYearDreamForm({user}) {
   const [dreamText, setDreamText] = useState("");
   const [lastAppendedTranscript, setLastAppendedTranscript] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const handleMutationCompleted = useUserNavigation();
-
+  const [callClaude] = useMutation(CALL_CLAUDE);
   const handleChange = event => {
     setDreamText(event.target.value);
   };
@@ -24,13 +26,17 @@ function TenYearDreamForm({ user }) {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (event) => {
+    event.preventDefault()
+    console.log("Saving dream:", dreamText);
     try {
-      console.log("Saving dream:", dreamText);
       setIsLoading(true);
-      await sendToClaude(dreamText);
-      await handleMutationCompleted();
-      setIsLoading(false);
+      // const testresponse = await sendToClaude(dreamText);
+      await callClaude({
+        variables: dreamText
+      })
+      // await handleMutationCompleted();
+      // setIsLoading(false);
 
       //Commented out code for testing loading!
       // setTimeout(() => {
@@ -53,30 +59,32 @@ function TenYearDreamForm({ user }) {
           </h2>
         </div>
       ) : (
-        <div className="flex h-full flex-col">
-          <div className="relative flex flex-grow">
-            <textarea
-              className="block w-full resize-none rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-300 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 dark:text-zinc-900 sm:text-sm"
-              value={dreamText}
-              onChange={handleChange}
-              placeholder="The best version of me is..."
-            />
-            <div className="absolute bottom-2 right-2">
-              {/* <MicrophoneButton onTranscript={handleTranscript} /> */}
+        <form onSubmit={handleSave}>
+          <div className="flex h-full flex-col">
+            <div className="relative flex flex-grow">
+              <textarea
+                className="block w-full resize-none rounded-md border border-gray-300 px-3 py-2 shadow-sm transition-all duration-300 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 dark:text-zinc-900 sm:text-sm"
+                value={dreamText}
+                onChange={handleChange}
+                placeholder="The best version of me is..."
+              />
+              <div className="absolute bottom-2 right-2">
+                {/* <MicrophoneButton onTranscript={handleTranscript} /> */}
+              </div>
             </div>
-          </div>
 
-          <Button
-            className="mt-4 w-full"
-            user={user}
-            saveToUser="bigdream"
-            isEnabled={dreamText.length > 10}
-            inputForDBSave={dreamText}
-            onClick={handleSave}
-          >
-            save & continue
-          </Button>
-        </div>
+            <Button
+              type="submit"
+              className="mt-4 w-full"
+              // user={user}
+              // saveToUser="bigdream"
+              // isEnabled={dreamText.length > 10}
+              // inputForDBSave={dreamText}
+            >
+              save & continue
+            </Button>
+          </div>
+        </form>
       )}
     </>
   );

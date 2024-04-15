@@ -1,7 +1,7 @@
 const { User, Entry, Dream, LittleDreams } = require('../models');
-const { signToken } = require('../utils/auth');
-const { AuthenticationError } = require('apollo-server-express');
-const claudeAPICall = require('../utils/claudeAPI');
+const { signToken, AuthenticationError } = require('../utils/auth');
+// const { AuthenticationError } = require('apollo-server-express');
+const {claudeAPICall} = require('../utils/claudeAPI');
 
 const resolvers = {
   Query: {
@@ -19,22 +19,22 @@ const resolvers = {
 
         return user;
       }
-
-      console.log('No Authenticated User Found, unable to get user data.');
+throw AuthenticationError
+      
     },
     entries: async (parent, args, context) => {
       if (context.user) {
         const user = await User.findOne({ _id: context.user._id }).populate('entries');
         return user.entries;
       }
-      throw new AuthenticationError('No Authenticated User Found, unable to get user entries.');
+      throw AuthenticationError;
     },
     entry: async (parent, { _id }, context) => {
       if (context.user) {
         const user = await User.findOne({ _id: context.user._id }).populate('entries');
         return user.entries.find((entry) => entry._id.toString() === _id);
       }
-      throw new AuthenticationError('No Authenticated User Found, unable to get user entry.');
+      throw AuthenticationError;
     },
   },
 
@@ -43,13 +43,13 @@ const resolvers = {
       const user = await User.findOne({ email });
 
       if (!user) {
-        throw new AuthenticationError("Can't login User not found!");
+        throw AuthenticationError;
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError("Can't login, Incorrect Password!");
+        throw AuthenticationError;
       }
       console.log(user);
       const token = signToken(user);
@@ -66,7 +66,7 @@ const resolvers = {
         const entry = await Entry.findOneAndUpdate({ _id }, { gratefulFor, dailyAffirmations, ultimateAffirmation }, { new: true });
         return entry;
       }
-      throw new AuthenticationError('User Not Logged in, unable to update entry');
+      throw AuthenticationError;
     },
     deleteEntry: async (parent, { _id }, context) => {
       if (context.user) {
@@ -74,50 +74,57 @@ const resolvers = {
         await User.findOneAndUpdate({ _id: context.user._id }, { $pull: { entries: _id } });
         return entry;
       }
-      throw new AuthenticationError('User Not Logged in, unable to delete entry');
+      throw AuthenticationError;
     },
     callClaude: async (parent, { input }, context) => {
+      console.log(input)
       if (context.user) {
         const response = await claudeAPICall(input);
-        return response;
+        const claudeRES = response.split (" | ") 
+        const updatedUser = {};
+        for (var i=0; i<claudeRES.length; i ++ ) {
+          await User.findOneAndUpdate({_id: context.user._id}, {$push: {clauderesponses: { body: claudeRES[i]}}}, {new: true})
+        }
+        console.log(updatedUser)
+        return updatedUser;
       }
-      throw new AuthenticationError('User unable to authenticate, unable to call Claude.');
+      throw AuthenticationError;
     },
     addBigDream: async (parent, { bigDream }, context) => {
       if (context.user) {
         try {
           // Find the user by ID (assuming you have the user ID in the context)
           const user = await User.findById(context.user._id).populate('dream');
+  console.log (user)
+          // if (user.dream) {
+            
+          //   user.dream.bigDream = bigDream;
+          //   await user.dream.save();
+          //   return user.dream;
+          // } else {
+          //   // If the user doesn't have a dream associated, create a new Dream document
+          //   const newDream = new Dream({
+          //     bigDream: bigDream,
+          //   });
 
-          if (user.dream) {
-            // If the user already has a dream associated, update only the bigDream field
-            user.dream.bigDream = bigDream;
-            await user.dream.save();
-            return user.dream;
-          } else {
-            // If the user doesn't have a dream associated, create a new Dream document
-            const newDream = new Dream({
-              bigDream: bigDream,
-            });
+          //   // Save the new dream to the database
+          //   await newDream.save();
 
-            // Save the new dream to the database
-            await newDream.save();
+          //   // Associate the new dream with the user
+          //   user.dream = newDream._id;
 
-            // Associate the new dream with the user
-            user.dream = newDream._id;
+          //   // Save the updated user
+          //   await user.save();
 
-            // Save the updated user
-            await user.save();
-
-            return newDream;
-          }
+          //   return newDream;
+          // }
         } catch (error) {
           console.error('Error updating or adding Big Dream to the user:', error);
           throw new Error('Unable to update or add big dream');
         }
       }
 
-      throw new AuthenticationError('User not logged in, unable to update or add big dream');
+      throw AuthenticationError('User not logged in, unable to update or add big dream');
     },
 
     addLittleDreams: async (parent, { littleDreams }, context) => {
@@ -156,7 +163,7 @@ const resolvers = {
           throw new Error('Unable to add little dreams');
         }
       }
-      throw new AuthenticationError('User not logged in, unable to add little dreams');
+      throw AuthenticationError('User not logged in, unable to add little dreams');
     },
 
     addUltimateGoal: async (parent, { ultimateGoal }, context) => {
@@ -181,7 +188,7 @@ const resolvers = {
           throw new Error('Unable to update ultimate goal');
         }
       }
-      throw new AuthenticationError('User not logged in, unable to update ultimate goal');
+      throw AuthenticationError('User not logged in, unable to update ultimate goal');
     },
     createEntry: async (parent, { gratefulFor, dailyAffirmations, ultimateAffirmation }, context) => {
       console.log('triggered');
@@ -216,7 +223,7 @@ const resolvers = {
           throw new Error('Failed to create entry');
         }
       }
-      throw new AuthenticationError('User not logged in, unable to create entry');
+      throw AuthenticationError('User not logged in, unable to create entry');
     },
   },
 };

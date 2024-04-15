@@ -1,22 +1,15 @@
 import { gql } from "@apollo/client";
-
+// getting null  on ten-year-dream-page works on appolo server
 export const GET_ME = gql`
-  query Query {
-    me {
+query Me {
+  me {
       _id
       firstName
       email
-      password
       pageProgress
-      dream {
-        _id
-        bigDream
-        littleDreams {
-          _id
-          littleDream
-          selected
-        }
-        ultimateGoal
+      clauderesponses {
+        body
+        claudeId
       }
       theme
     }
