@@ -24,7 +24,7 @@
   - User authentication
   - Daily journal entries
   - Goal tracking
-  - Speech to Text
+  - Text to Speech
 
   ## Installation
 

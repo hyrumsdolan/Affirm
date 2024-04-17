@@ -55,54 +55,72 @@ const SignupForm = () => {
   };
 
   // Handle form submit function
-  const handleFormSubmit = async event => {
-    console.log("Sign up button clicked");
+  const handleFormSubmit = async (event) => {
     setError("");
     event.preventDefault();
     console.log("Sign up button clicked");
+    try {
+      // Exclude confirmPassword from form data
+      const { data } = await addUser({
+        variables: { ...userFormData }
+      });
+      console.log("look here FOR DATA");
+      console.log("signup data", data);
+      Auth.login(data.addUser.token);
 
-    if (!isEmailValid(userFormData.email)) {
-      console.log("Email not valid");
-      setError(`Please enter a valid email address.`);
-    } else {
-      console.log(`showPassword ${showPWConfirmation}`);
-      if (
-        showPWConfirmation &&
-        userFormData.password &&
-        userFormData.confirmPassword
-      ) {
-        delete userFormData.confirmPassword;
-        console.log(userFormData);
-
-        const form = event.currentTarget;
-        if (!form.checkValidity()) {
-          event.stopPropagation();
-        } else {
-          try {
-            // Exclude confirmPassword from form data
-            const { data, token } = await addUser({
-              variables: { ...userFormData }
-            });
-            console.log("look here FOR DATA");
-            console.log("signup data", data);
-            Auth.login(data.addUser.token);
-
-            console.log("User successfully signed up!");
-          } catch (err) {
-            if (err.message.includes("dup key:")) {
-              const errorKey = err.message
-                .split("dup key: { ")[1]
-                .split(":")[0];
-              setError(
-                `Sorry... But an account with this ${errorKey} already exists`
-              );
-            }
-          }
-        }
-      } else {
-        setError(`Password and confirmation password do not match!`);
+      console.log("User successfully signed up!");
+    } catch (err) {
+      if (err.message.includes("dup key:")) {
+        const errorKey = err.message
+          .split("dup key: { ")[1]
+          .split(":")[0];
+        setError(
+          `Sorry... But an account with this ${errorKey} already exists`
+        );
       }
     }
+    // if (!isEmailValid(userFormData.email)) {
+    //   console.log("Email not valid");
+    //   setError(`Please enter a valid email address.`);
+    // } else {
+    //   console.log(`showPassword ${showPWConfirmation}`);
+    //   if (
+    //     showPWConfirmation &&
+    //     userFormData.password &&
+    //     userFormData.confirmPassword
+    //   ) {
+    //     delete userFormData.confirmPassword;
+    //     console.log(userFormData);
+
+    //     const form = event.currentTarget;
+    //     if (!form.checkValidity()) {
+    //       event.stopPropagation();
+    //     } else {
+    //       try {
+    //         // Exclude confirmPassword from form data
+    //         const { data, token } = await addUser({
+    //           variables: { ...userFormData }
+    //         });
+    //         console.log("look here FOR DATA");
+    //         console.log("signup data", data);
+    //         Auth.login(data.addUser.token);
+
+    //         console.log("User successfully signed up!");
+    //       } catch (err) {
+    //         if (err.message.includes("dup key:")) {
+    //           const errorKey = err.message
+    //             .split("dup key: { ")[1]
+    //             .split(":")[0];
+    //           setError(
+    //             `Sorry... But an account with this ${errorKey} already exists`
+    //           );
+    //         }
+    //       }
+    //     }
+    //   } else {
+    //     setError(`Password and confirmation password do not match!`);
+    //   }
+    // }
   };
 
   return (
@@ -115,7 +133,7 @@ const SignupForm = () => {
           </p>
         </>
       ) : (
-        <div className="mt-20 flex h-full flex-col justify-center align-middle md:mt-0 md:flex-row">
+        <div className="mt-20 flex h-full flex-col justify-center align-middle transition-all duration-300 dark:bg-zinc-900 dark:text-white md:mt-0 md:flex-row">
           <div className="relative flex w-full flex-col items-center justify-center md:w-3/5">
             <h2 className="mb-4 text-center text-3xl md:text-5xl">
               let's improve together
@@ -125,13 +143,15 @@ const SignupForm = () => {
               your best life.
             </p>
           </div>
-          <div className="mb-12 flex w-full flex-col items-center justify-center border-t border-gray-200 p-8 md:w-2/5 md:border-l md:border-t-0">
-            <h2 className="mb-4 text-center text-3xl md:text-5xl">Signup</h2>
+          <div className="mb-12 flex w-full flex-col items-center justify-center border-t border-gray-200 p-8 transition-all duration-300 dark:border-zinc-700 md:w-2/5 md:border-l md:border-t-0">
+            <h2 className="mb-4 text-center text-3xl text-black transition-all duration-300 dark:text-white md:text-5xl">
+              Signup
+            </h2>
             <form onSubmit={handleFormSubmit} className="w-full md:w-9/12">
               <div className="mb-4">
                 <label
                   htmlFor="firstName"
-                  className="mb-2 block font-thin text-gray-700"
+                  className="mb-2 block font-thin text-gray-700 transition-all duration-300 dark:text-zinc-200"
                 >
                   First Name:
                 </label>
@@ -142,13 +162,13 @@ const SignupForm = () => {
                   value={userFormData.firstName || ""}
                   onChange={handleInputChange}
                   required
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-900"
                 />
               </div>
               <div className="mb-4">
                 <label
                   htmlFor="email"
-                  className="mb-2 block font-thin text-gray-700"
+                  className="mb-2 block font-thin text-gray-700 transition-all duration-300 dark:text-zinc-200"
                 >
                   Email:
                 </label>
@@ -159,13 +179,13 @@ const SignupForm = () => {
                   value={userFormData.email}
                   onChange={handleInputChange}
                   required
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full rounded-md border border-gray-300 px-3 py-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-900"
                 />
               </div>
               <div className="mb-4">
                 <label
                   htmlFor="password"
-                  className="mb-2 block font-thin text-gray-700"
+                  className="mb-2 block font-thin text-gray-700 transition-all duration-300 dark:text-zinc-200"
                 >
                   Password:
                 </label>
@@ -177,7 +197,7 @@ const SignupForm = () => {
                     value={userFormData.password}
                     onChange={handleInputChange}
                     required
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 pr-7 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 pr-7 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-900"
                   />
                   <button
                     type="button"
@@ -195,7 +215,7 @@ const SignupForm = () => {
               <div className="mb-6">
                 <label
                   htmlFor="confirmPassword"
-                  className="mb-2 block font-thin text-gray-700"
+                  className="mb-2 block font-thin text-gray-700 transition-all duration-300 dark:text-zinc-200"
                 >
                   Confirm Password:
                 </label>
@@ -207,7 +227,7 @@ const SignupForm = () => {
                     value={userFormData.confirmPassword}
                     onChange={handleInputChange}
                     required
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 pr-7 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 pr-7 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-slate-900"
                   />
                   <button
                     type="button"
@@ -223,8 +243,7 @@ const SignupForm = () => {
                 </div>
                 <div
                   className={`mt-2 h-6 ${
-                    (userFormData.password || userFormData.confirmPassword) &&
-                    userFormData.confirmPassword.length > 0
+                    (userFormData.password || userFormData.confirmPassword) 
                       ? "opacity-100"
                       : "opacity-0"
                   } transition-opacity duration-300`}
@@ -242,7 +261,7 @@ const SignupForm = () => {
                 Sign up!
               </Button>
             </form>
-            <p className="mt-4 text-center">
+            <p className="mt-4 text-center text-black transition-all duration-300 dark:text-zinc-200">
               Already have an account?{" "}
               <a href="/" className="text-blue-500 hover:text-blue-700">
                 Login here

@@ -11,7 +11,21 @@ export const addDarkMode = () => {
 };
 
 export const toggleDarkMode = mode => {
-  if (mode == "dark") document.documentElement.classList.add("dark");
-  else if (mode == "light") document.documentElement.classList.remove("dark");
-  else document.documentElement.classList.toggle("dark");
+  if (mode == "dark") {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+  } else if (mode == "light") {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+  } else {
+    document.documentElement.classList.toggle("dark");
+    if (localStorage.theme != "") {
+      localStorage.setItem(
+        "theme",
+        localStorage.theme === "dark" ? "light" : "dark"
+      );
+    } else {
+      localStorage.setItem("theme", "dark");
+    }
+  }
 };

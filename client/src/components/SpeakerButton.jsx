@@ -29,7 +29,7 @@ function SpeakerButton({ audioSrc }) {
   return (
     <>
       <button
-        className="group rounded-full border-2 border-zinc-950 p-0.5 text-xl"
+        className="group rounded-full border-2 border-zinc-900 p-0.5 text-xl text-zinc-900 transition-all duration-300 dark:border-white dark:text-white"
         onClick={handleClick}
         aria-label={isPlaying ? "Pause audio" : "Play audio"}
       >

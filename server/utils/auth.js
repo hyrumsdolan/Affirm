@@ -1,10 +1,16 @@
-const { AuthenticationError } = require("apollo-server-express");
+const { GraphQLError } = require('graphql');
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const secret = process.env.AUTH_SECRET;
+// const secret = process.env.AUTH_SECRET;
+const secret = 'mysecretsshhhhh';
 const expiration = "2h";
 
 module.exports = {
+  AuthenticationError: new GraphQLError('Could not authenticate user.', {
+    extensions: {
+      code: 'UNAUTHENTICATED',
+    },
+  }),
   authMiddleware: function ({ req }) {
     let token = req.body.token || req.query.token || req.headers.authorization;
 

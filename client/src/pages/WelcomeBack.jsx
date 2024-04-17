@@ -164,7 +164,7 @@ const WelcomeBack = ({ user }) => {
             />
 
             <Button
-              className="m-auto"
+              className="m-auto mb-10"
               onClick={handleSave}
               saveToUser="entry"
               inputForDBSave={{

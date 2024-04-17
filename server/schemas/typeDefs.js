@@ -8,8 +8,12 @@ const typeDefs = `
     dream: Dream
     entries: [Entry]
     theme: String
+    clauderesponses: [clauderesponse]
   }
-
+type clauderesponse {
+  claudeId: ID!
+  body: String
+}
   type LittleDreams {
     _id: ID
     littleDream: String
@@ -48,8 +52,8 @@ const typeDefs = `
     loginUser(email: String!, password: String!): Auth
     updateEntry(_id: ID!, gratefulFor: [String], dailyAffrimations: [String], ultimateAffirmation: String): Entry
     deleteEntry(_id: ID!): Entry
-    callClaude(input: String!): String
-    addBigDream(bigDream: String!): Dream
+    callClaude(input: String!): User
+    addBigDream(bigDream: String!): User
     addLittleDreams(littleDreams: [String!]!): [LittleDreams]
     addUltimateGoal(ultimateGoal: String!): Dream
     createEntry(gratefulFor: [String!]!, dailyAffirmations: [String!]!, ultimateAffirmation: String!): Entry

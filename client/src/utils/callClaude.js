@@ -10,9 +10,8 @@ export const sendToClaude = async (input, targetStorage = 0) => {
       mutation: CALL_CLAUDE,
       variables: { input }
     });
-
+console.log(data)
     const result = data.callClaude;
-
     localStorage.setItem("claudeResponse", result);
     return result;
   } catch (error) {
